@@ -1,0 +1,4 @@
+<resources>
+    <dimen name="navigator_margin">5dp</dimen>
+    <dimen name="navigator_common_height">40dp</dimen>
+</resources>
