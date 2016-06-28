@@ -29,6 +29,10 @@ public class TestPagerIndicator extends View implements IPagerIndicator {
 
     public TestPagerIndicator(Context context) {
         super(context);
+        init(context);
+    }
+
+    private void init(Context context) {
         mPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
         mPaint.setStyle(Paint.Style.STROKE);
         setOutRectColor(Color.RED);
