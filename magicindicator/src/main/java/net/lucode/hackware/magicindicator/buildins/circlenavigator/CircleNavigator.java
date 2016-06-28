@@ -39,12 +39,12 @@ public class CircleNavigator extends View implements IPagerNavigator, NavigatorH
     }
 
     private void init(Context context) {
+        mNavigatorHelper = new NavigatorHelper();
+        mNavigatorHelper.setNavigatorScrollListener(this);
         mPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
         setRadius(UIUtil.dip2px(context, 3));
         setCircleSpacing(UIUtil.dip2px(context, 8));
         setStrokeWidth(UIUtil.dip2px(context, 1));
-        mNavigatorHelper = new NavigatorHelper();
-        mNavigatorHelper.setNavigatorScrollListener(this);
     }
 
     @Override
@@ -184,7 +184,7 @@ public class CircleNavigator extends View implements IPagerNavigator, NavigatorH
     }
 
     public void setCount(int count) {
-        mNavigatorHelper.setTotalCount(count);
+        mNavigatorHelper.setTotalCount(count);  // 此处不调用invalidate，让外部调用notifyDataSetChanged
     }
 
     @Override

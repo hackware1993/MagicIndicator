@@ -158,8 +158,8 @@ public class LinePagerIndicator extends View implements IPagerIndicator {
 
     public void setStartInterpolator(Interpolator startInterpolator) {
         mStartInterpolator = startInterpolator;
-        if (startInterpolator == null) {
-            startInterpolator = new LinearInterpolator();
+        if (mStartInterpolator == null) {
+            mStartInterpolator = new LinearInterpolator();
         }
     }
 
@@ -169,8 +169,8 @@ public class LinePagerIndicator extends View implements IPagerIndicator {
 
     public void setEndInterpolator(Interpolator endInterpolator) {
         mEndInterpolator = endInterpolator;
-        if (endInterpolator == null) {
-            endInterpolator = new LinearInterpolator();
+        if (mEndInterpolator == null) {
+            mEndInterpolator = new LinearInterpolator();
         }
     }
 }
