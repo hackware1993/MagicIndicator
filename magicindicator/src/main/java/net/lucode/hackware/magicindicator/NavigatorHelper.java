@@ -29,11 +29,9 @@ public class NavigatorHelper {
                 }
             }
         } else if (position == mCurrentIndex - 1) {
-            if (mCurrentIndex != position) {
-                if (mNavigatorScrollListener != null) {
-                    mNavigatorScrollListener.onLeave(mCurrentIndex, 1.0f - positionOffset, false);
-                    mNavigatorScrollListener.onEnter(position, 1.0f - positionOffset, false);
-                }
+            if (mNavigatorScrollListener != null) {
+                mNavigatorScrollListener.onLeave(mCurrentIndex, 1.0f - positionOffset, false);
+                mNavigatorScrollListener.onEnter(position, 1.0f - positionOffset, false);
             }
         }
     }

@@ -39,6 +39,7 @@ public class CommonNavigator extends FrameLayout implements IPagerNavigator, Nav
     private boolean mFitMode;   // 自适应模式
     private boolean mAlwaysScrollToCenter;  // 当前页始终居中显示
     private int mScrollState;
+
     private DataSetObserver mObserver = new DataSetObserver() {
 
         @Override
@@ -167,15 +168,16 @@ public class CommonNavigator extends FrameLayout implements IPagerNavigator, Nav
                 }
             }
         }
-        if (!smooth && mIndicator != null) {
-            mIndicator.onPageScrolled(index, 0.0f, 0);
-        }
     }
 
     /**
      * 刷新视图
      */
     public void refresh() {
+        if (mTitleContainer == null || mIndicatorContainer == null) {
+            return;
+        }
+
         mTitleContainer.removeAllViews();   // 清空所有view
         mIndicatorContainer.removeAllViews();
 
