@@ -20,7 +20,7 @@ public class NavigatorHelper {
 
     public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
         position = getSafeIndex(position);
-        if (position == mCurrentIndex) {
+        if (position == getCurrentIndex()) {
             int enterIndex = getSafeIndex(position + 1);
             if (position != enterIndex) {
                 if (mNavigatorScrollListener != null) {
@@ -28,9 +28,9 @@ public class NavigatorHelper {
                     mNavigatorScrollListener.onEnter(enterIndex, positionOffset, true);
                 }
             }
-        } else if (position == mCurrentIndex - 1) {
+        } else if (position == getCurrentIndex() - 1) {
             if (mNavigatorScrollListener != null) {
-                mNavigatorScrollListener.onLeave(mCurrentIndex, 1.0f - positionOffset, false);
+                mNavigatorScrollListener.onLeave(getCurrentIndex(), 1.0f - positionOffset, false);
                 mNavigatorScrollListener.onEnter(position, 1.0f - positionOffset, false);
             }
         }
