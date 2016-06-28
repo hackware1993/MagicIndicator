@@ -9,12 +9,7 @@ import android.content.Context;
 public final class UIUtil {
 
     public static int dip2px(Context context, double dpValue) {
-        final float density = context.getResources().getDisplayMetrics().density;
+        float density = context.getResources().getDisplayMetrics().density;
         return (int) (dpValue * density + 0.5);
-    }
-
-    public static int px2dip(Context context, double pxValue) {
-        final float density = context.getResources().getDisplayMetrics().density;
-        return (int) (pxValue / density + 0.5);
     }
 }
