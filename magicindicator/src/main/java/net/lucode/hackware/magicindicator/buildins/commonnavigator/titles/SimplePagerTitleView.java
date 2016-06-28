@@ -1,6 +1,7 @@
 package net.lucode.hackware.magicindicator.buildins.commonnavigator.titles;
 
 import android.content.Context;
+import android.graphics.Paint;
 import android.graphics.Rect;
 import android.text.TextUtils;
 import android.view.Gravity;
@@ -64,10 +65,9 @@ public class SimplePagerTitleView extends TextView implements IMeasurablePagerTi
 
     @Override
     public int getContentTop() {
-        Rect bound = new Rect();
-        getPaint().getTextBounds(getText().toString(), 0, getText().length(), bound);
-        int contentHeight = bound.bottom - bound.top;
-        return getHeight() / 2 - contentHeight / 2;
+        Paint.FontMetrics metrics = getPaint().getFontMetrics();
+        float contentHeight = metrics.bottom - metrics.top;
+        return (int) (getHeight() / 2 - contentHeight / 2);
     }
 
     @Override
@@ -80,10 +80,9 @@ public class SimplePagerTitleView extends TextView implements IMeasurablePagerTi
 
     @Override
     public int getContentBottom() {
-        Rect bound = new Rect();
-        getPaint().getTextBounds(getText().toString(), 0, getText().length(), bound);
-        int contentHeight = bound.bottom - bound.top;
-        return getHeight() / 2 + contentHeight / 2;
+        Paint.FontMetrics metrics = getPaint().getFontMetrics();
+        float contentHeight = metrics.bottom - metrics.top;
+        return (int) (getHeight() / 2 + contentHeight / 2);
     }
 
     public int getSelectedColor() {
