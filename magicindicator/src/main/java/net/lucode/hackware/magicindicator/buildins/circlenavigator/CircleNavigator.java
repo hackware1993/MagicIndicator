@@ -5,7 +5,6 @@ import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.PointF;
 import android.view.View;
-import android.view.ViewTreeObserver;
 import android.view.animation.Interpolator;
 import android.view.animation.LinearInterpolator;
 
@@ -111,15 +110,12 @@ public class CircleNavigator extends View implements IPagerNavigator, NavigatorH
     }
 
     @Override
-    public void onAttachToContainer() {
-        getViewTreeObserver().addOnPreDrawListener(new ViewTreeObserver.OnPreDrawListener() {
-            @Override
-            public boolean onPreDraw() {
-                getViewTreeObserver().removeOnPreDrawListener(this);
-                prepareCirclePoints();
-                return false;
-            }
-        });
+    protected void onSizeChanged(int w, int h, int oldw, int oldh) {
+        prepareCirclePoints();
+    }
+
+    @Override
+    public void onAttachToMagicIndicator() {
     }
 
     @Override
@@ -129,7 +125,7 @@ public class CircleNavigator extends View implements IPagerNavigator, NavigatorH
     }
 
     @Override
-    public void onDetachFromContainer() {
+    public void onDetachFromMagicIndicator() {
     }
 
     public int getRadius() {

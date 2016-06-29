@@ -16,7 +16,6 @@ import net.lucode.hackware.magicindicator.buildins.commonnavigator.abs.IPagerTit
  */
 public class ClipPagerTitleView extends View implements IPagerTitleView {
     private String mText;
-    private int mTextSize;
     private int mTextColor;
     private int mClipColor;
     private boolean mLeftToRight;
@@ -27,9 +26,13 @@ public class ClipPagerTitleView extends View implements IPagerTitleView {
 
     public ClipPagerTitleView(Context context) {
         super(context);
-        mTextSize = UIUtil.dip2px(context, 16);
+        init(context);
+    }
+
+    private void init(Context context) {
+        int textSize = UIUtil.dip2px(context, 16);
         mPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
-        mPaint.setTextSize(mTextSize);
+        mPaint.setTextSize(textSize);
         int padding = UIUtil.dip2px(context, 10);
         setPadding(padding, 0, padding, 0);
     }
@@ -80,15 +83,19 @@ public class ClipPagerTitleView extends View implements IPagerTitleView {
     protected void onDraw(Canvas canvas) {
         int x = (getWidth() - mTextBounds.width()) / 2;
         int y = (getHeight() + mTextBounds.height()) / 2;
+
+        // 画底层
         mPaint.setColor(mTextColor);
         canvas.drawText(mText, x, y, mPaint);
-        mPaint.setColor(mClipColor);
+
+        // 画clip层
         canvas.save(Canvas.CLIP_SAVE_FLAG);
         if (mLeftToRight) {
             canvas.clipRect(0, 0, getWidth() * mClipPercent, getHeight());
         } else {
             canvas.clipRect(getWidth() * (1 - mClipPercent), 0, getWidth(), getHeight());
         }
+        mPaint.setColor(mClipColor);
         canvas.drawText(mText, x, y, mPaint);
         canvas.restore();
     }
@@ -119,36 +126,22 @@ public class ClipPagerTitleView extends View implements IPagerTitleView {
         mPaint.getTextBounds(mText, 0, mText == null ? 0 : mText.length(), mTextBounds);
     }
 
-    public boolean isLeftToRight() {
-        return mLeftToRight;
-    }
-
-    public void setLeftToRight(boolean leftToRight) {
-        mLeftToRight = leftToRight;
-    }
-
-    public float getClipPercent() {
-        return mClipPercent;
-    }
-
-    public void setClipPercent(float clipPercent) {
-        mClipPercent = clipPercent;
-    }
-
     public String getText() {
         return mText;
     }
 
     public void setText(String text) {
         mText = text;
+        requestLayout();
     }
 
-    public int getTextSize() {
-        return mTextSize;
+    public float getTextSize() {
+        return mPaint.getTextSize();
     }
 
-    public void setTextSize(int textSize) {
-        mTextSize = textSize;
+    public void setTextSize(float textSize) {
+        mPaint.setTextSize(textSize);
+        requestLayout();
     }
 
     public int getTextColor() {
@@ -157,6 +150,7 @@ public class ClipPagerTitleView extends View implements IPagerTitleView {
 
     public void setTextColor(int textColor) {
         mTextColor = textColor;
+        invalidate();
     }
 
     public int getClipColor() {
@@ -165,5 +159,6 @@ public class ClipPagerTitleView extends View implements IPagerTitleView {
 
     public void setClipColor(int clipColor) {
         mClipColor = clipColor;
+        invalidate();
     }
 }

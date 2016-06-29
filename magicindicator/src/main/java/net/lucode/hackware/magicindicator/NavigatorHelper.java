@@ -10,7 +10,7 @@ import android.support.v4.view.ViewPager;
 public class NavigatorHelper {
     private int mCurrentIndex;
     private int mTotalCount;
-    private int mScrollState;
+    private int mScrollState = ViewPager.SCROLL_STATE_IDLE;
 
     private OnNavigatorScrollListener mNavigatorScrollListener;
 
@@ -117,6 +117,7 @@ public class NavigatorHelper {
     public void clear() {
         setTotalCount(0);
         setCurrentIndex(0);
+        setScrollState(ViewPager.SCROLL_STATE_IDLE);
     }
 
     public interface OnNavigatorScrollListener {

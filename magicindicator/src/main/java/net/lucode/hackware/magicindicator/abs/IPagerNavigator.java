@@ -12,9 +12,9 @@ public interface IPagerNavigator {
 
     void onPageScrollStateChanged(int state);
 
-    void onAttachToContainer();
+    void onAttachToMagicIndicator();
 
-    void onDetachFromContainer();
+    void onDetachFromMagicIndicator();
 
     void notifyDataSetChanged();
 }

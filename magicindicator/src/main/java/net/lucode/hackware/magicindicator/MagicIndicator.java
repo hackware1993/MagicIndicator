@@ -45,7 +45,7 @@ public class MagicIndicator extends FrameLayout {
             mNavigator.onPageScrollStateChanged(state);
         }
     }
-
+    
     public IPagerNavigator getNavigator() {
         return mNavigator;
     }
@@ -55,14 +55,14 @@ public class MagicIndicator extends FrameLayout {
             return;
         }
         if (mNavigator != null) {
-            mNavigator.onDetachFromContainer();
+            mNavigator.onDetachFromMagicIndicator();
         }
         mNavigator = navigator;
         removeAllViews();
         if (mNavigator instanceof View) {
             LayoutParams lp = new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT);
             addView((View) mNavigator, lp);
-            mNavigator.onAttachToContainer();
+            mNavigator.onAttachToMagicIndicator();
         }
     }
 }

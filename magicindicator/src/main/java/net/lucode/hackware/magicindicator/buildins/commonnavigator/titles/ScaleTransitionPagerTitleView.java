@@ -19,14 +19,14 @@ public class ScaleTransitionPagerTitleView extends ColorTransitionPagerTitleView
 
     @Override
     public void onLeave(int index, float leavePercent, boolean leftToRight) {
-        super.onLeave(index, leavePercent, leftToRight);
+        super.onLeave(index, leavePercent, leftToRight);    // 实现颜色渐变
         setScaleX(1.0f + (mMinScale - 1.0f) * mStartInterpolator.getInterpolation(leavePercent));
-        setScaleY(1.0f + (mMinScale - 1.0f) * leavePercent);
+        setScaleY(1.0f + (mMinScale - 1.0f) * mStartInterpolator.getInterpolation(leavePercent));
     }
 
     @Override
     public void onEnter(int index, float enterPercent, boolean leftToRight) {
-        super.onEnter(index, enterPercent, leftToRight);
+        super.onEnter(index, enterPercent, leftToRight);    // 实现颜色渐变
         setScaleX(mMinScale + (1.0f - mMinScale) * mStartInterpolator.getInterpolation(enterPercent));
         setScaleY(mMinScale + (1.0f - mMinScale) * mStartInterpolator.getInterpolation(enterPercent));
     }

@@ -139,6 +139,7 @@ public class CommonNavigator extends FrameLayout implements IPagerNavigator, Nav
             }
         }
 
+        // 如果view可见，在onPreDraw中可以取到坐标点
         getViewTreeObserver().addOnPreDrawListener(new ViewTreeObserver.OnPreDrawListener() {
             @Override
             public boolean onPreDraw() {
@@ -147,6 +148,14 @@ public class CommonNavigator extends FrameLayout implements IPagerNavigator, Nav
                 return false;
             }
         });
+    }
+
+    @Override
+    public void onWindowFocusChanged(boolean hasWindowFocus) {
+        super.onWindowFocusChanged(hasWindowFocus);
+        if (hasWindowFocus) {   // 当view不可见时，在onPreDraw中取到的坐标点全是0，需要在这里重新取
+            preparePositionData();
+        }
     }
 
     private void preparePositionData() {
@@ -197,12 +206,12 @@ public class CommonNavigator extends FrameLayout implements IPagerNavigator, Nav
     }
 
     @Override
-    public void onAttachToContainer() {
+    public void onAttachToMagicIndicator() {
         init();
     }
 
     @Override
-    public void onDetachFromContainer() {
+    public void onDetachFromMagicIndicator() {
     }
 
     public IPagerIndicator getPagerIndicator() {

@@ -19,19 +19,19 @@ public abstract class CommonNavigatorAdapter {
 
     public abstract IPagerIndicator getIndicator(Context context);
 
-    public void registerDataSetObserver(DataSetObserver observer) {
+    public final void registerDataSetObserver(DataSetObserver observer) {
         mDataSetObservable.registerObserver(observer);
     }
 
-    public void unregisterDataSetObserver(DataSetObserver observer) {
+    public final void unregisterDataSetObserver(DataSetObserver observer) {
         mDataSetObservable.unregisterObserver(observer);
     }
 
-    public void notifyDataSetChanged() {
+    public final void notifyDataSetChanged() {
         mDataSetObservable.notifyChanged();
     }
 
-    public void notifyDataSetInvalidated() {
+    public final void notifyDataSetInvalidated() {
         mDataSetObservable.notifyInvalidated();
     }
 }
