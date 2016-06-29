@@ -19,16 +19,16 @@ public interface IPagerTitleView {
     /**
      * 离开
      *
-     * @param offset 离开的百分比, 0.0f - 1.0f
+     * @param leavePercent 离开的百分比, 0.0f - 1.0f
      */
-    void onLeave(int index, float offset, boolean leftToRight);
+    void onLeave(int index, float leavePercent, boolean leftToRight);
 
     /**
      * 进入
      *
-     * @param offset 进入的百分比, 0.0f - 1.0f
+     * @param enterPercent 进入的百分比, 0.0f - 1.0f
      */
-    void onEnter(int index, float offset, boolean leftToRight);
+    void onEnter(int index, float enterPercent, boolean leftToRight);
 
     /**
      * ViewPager滚动变化对调

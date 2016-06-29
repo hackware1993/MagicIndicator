@@ -25,14 +25,14 @@ public class ColorTransitionPagerTitleView extends SimplePagerTitleView {
     }
 
     @Override
-    public void onLeave(int index, float offset, boolean leftToRight) {
-        int color = (Integer) ArgbEvaluatorHolder.eval(offset, mSelectedColor, mNormalColor);
+    public void onLeave(int index, float leavePercent, boolean leftToRight) {
+        int color = (Integer) ArgbEvaluatorHolder.eval(leavePercent, mSelectedColor, mNormalColor);
         setTextColor(color);
     }
 
     @Override
-    public void onEnter(int index, float offset, boolean leftToRight) {
-        int color = (Integer) ArgbEvaluatorHolder.eval(offset, mNormalColor, mSelectedColor);
+    public void onEnter(int index, float enterPercent, boolean leftToRight) {
+        int color = (Integer) ArgbEvaluatorHolder.eval(enterPercent, mNormalColor, mSelectedColor);
         setTextColor(color);
     }
 }

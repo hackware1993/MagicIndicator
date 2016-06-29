@@ -289,18 +289,18 @@ public class CommonNavigator extends FrameLayout implements IPagerNavigator, Nav
     }
 
     @Override
-    public void onEnter(int index, float positionOffset, boolean leftToRight) {
+    public void onEnter(int index, float enterPercent, boolean leftToRight) {
         View v = mTitleContainer.getChildAt(index);
         if (v instanceof IPagerTitleView) {
-            ((IPagerTitleView) v).onEnter(index, positionOffset, leftToRight);
+            ((IPagerTitleView) v).onEnter(index, enterPercent, leftToRight);
         }
     }
 
     @Override
-    public void onLeave(int index, float positionOffset, boolean leftToRight) {
+    public void onLeave(int index, float leavePercent, boolean leftToRight) {
         View v = mTitleContainer.getChildAt(index);
         if (v instanceof IPagerTitleView) {
-            ((IPagerTitleView) v).onLeave(index, positionOffset, leftToRight);
+            ((IPagerTitleView) v).onLeave(index, leavePercent, leftToRight);
         }
     }
 

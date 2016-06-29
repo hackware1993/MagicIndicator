@@ -25,11 +25,11 @@ public class DummyPagerTitleView extends View implements IPagerTitleView {
     }
 
     @Override
-    public void onLeave(int index, float offset, boolean leftToRight) {
+    public void onLeave(int index, float leavePercent, boolean leftToRight) {
     }
 
     @Override
-    public void onEnter(int index, float offset, boolean leftToRight) {
+    public void onEnter(int index, float enterPercent, boolean leftToRight) {
     }
 
     @Override

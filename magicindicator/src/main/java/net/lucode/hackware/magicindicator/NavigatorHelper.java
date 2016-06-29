@@ -95,8 +95,8 @@ public class NavigatorHelper {
     }
 
     public interface OnNavigatorScrollListener {
-        void onEnter(int index, float positionOffset, boolean leftToRight);
+        void onEnter(int index, float enterPercent, boolean leftToRight);
 
-        void onLeave(int index, float positionOffset, boolean leftToRight);
+        void onLeave(int index, float leavePercent, boolean leftToRight);
     }
 }

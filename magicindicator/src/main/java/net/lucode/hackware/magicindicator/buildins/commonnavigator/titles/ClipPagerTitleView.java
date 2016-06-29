@@ -102,16 +102,16 @@ public class ClipPagerTitleView extends View implements IPagerTitleView {
     }
 
     @Override
-    public void onLeave(int index, float offset, boolean leftToRight) {
+    public void onLeave(int index, float leavePercent, boolean leftToRight) {
         mLeftToRight = !leftToRight;
-        mClipPercent = 1.0f - offset;
+        mClipPercent = 1.0f - leavePercent;
         invalidate();
     }
 
     @Override
-    public void onEnter(int index, float offset, boolean leftToRight) {
+    public void onEnter(int index, float enterPercent, boolean leftToRight) {
         mLeftToRight = leftToRight;
-        mClipPercent = offset;
+        mClipPercent = enterPercent;
         invalidate();
     }
 

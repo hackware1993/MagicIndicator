@@ -188,10 +188,10 @@ public class CircleNavigator extends View implements IPagerNavigator, NavigatorH
     }
 
     @Override
-    public void onEnter(int index, float positionOffset, boolean leftToRight) {
+    public void onEnter(int index, float enterPercent, boolean leftToRight) {
     }
 
     @Override
-    public void onLeave(int index, float positionOffset, boolean leftToRight) {
+    public void onLeave(int index, float leavePercent, boolean leftToRight) {
     }
 }

@@ -18,17 +18,17 @@ public class ScaleTransitionPagerTitleView extends ColorTransitionPagerTitleView
     }
 
     @Override
-    public void onLeave(int index, float offset, boolean leftToRight) {
-        super.onLeave(index, offset, leftToRight);
-        setScaleX(1.0f + (mMinScale - 1.0f) * mStartInterpolator.getInterpolation(offset));
-        setScaleY(1.0f + (mMinScale - 1.0f) * offset);
+    public void onLeave(int index, float leavePercent, boolean leftToRight) {
+        super.onLeave(index, leavePercent, leftToRight);
+        setScaleX(1.0f + (mMinScale - 1.0f) * mStartInterpolator.getInterpolation(leavePercent));
+        setScaleY(1.0f + (mMinScale - 1.0f) * leavePercent);
     }
 
     @Override
-    public void onEnter(int index, float offset, boolean leftToRight) {
-        super.onEnter(index, offset, leftToRight);
-        setScaleX(mMinScale + (1.0f - mMinScale) * mStartInterpolator.getInterpolation(offset));
-        setScaleY(mMinScale + (1.0f - mMinScale) * mStartInterpolator.getInterpolation(offset));
+    public void onEnter(int index, float enterPercent, boolean leftToRight) {
+        super.onEnter(index, enterPercent, leftToRight);
+        setScaleX(mMinScale + (1.0f - mMinScale) * mStartInterpolator.getInterpolation(enterPercent));
+        setScaleY(mMinScale + (1.0f - mMinScale) * mStartInterpolator.getInterpolation(enterPercent));
     }
 
     public float getMinScale() {
