@@ -8,6 +8,7 @@ package net.lucode.hackware.magicindicator;
 public class NavigatorHelper {
     private int mCurrentIndex;
     private int mTotalCount;
+    private int mScrollState;
 
     private OnNavigatorScrollListener mNavigatorScrollListener;
 
@@ -15,32 +16,45 @@ public class NavigatorHelper {
     }
 
     public int getSafeIndex(int index) {
-        return Math.max(Math.min(index, mTotalCount - 1), 0);
+        return Math.max(Math.min(index, getTotalCount() - 1), 0);
     }
 
     public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-        position = getSafeIndex(position);
-        if (position == getCurrentIndex()) {
-            int enterIndex = getSafeIndex(position + 1);
-            if (position != enterIndex) {
-                if (mNavigatorScrollListener != null) {
-                    mNavigatorScrollListener.onLeave(position, positionOffset, true);
-                    mNavigatorScrollListener.onEnter(enterIndex, positionOffset, true);
-                }
+        if (mNavigatorScrollListener != null) {
+            int safePosition = getSafeIndex(position);
+            boolean leftToRight = safePosition >= getCurrentIndex();
+            int enterIndex;
+            int leaveIndex;
+            float enterPercent;
+            float leavePercent;
+            if (leftToRight) {
+                enterIndex = getSafeIndex(position + 1);
+                enterPercent = positionOffset;
+                leaveIndex = safePosition;
+                leavePercent = positionOffset;
+            } else {
+                enterIndex = safePosition;
+                enterPercent = 1.0f - positionOffset;
+                leaveIndex = getSafeIndex(safePosition + 1);
+                leavePercent = 1.0f - positionOffset;
             }
-        } else if (position == getCurrentIndex() - 1) {
-            if (mNavigatorScrollListener != null) {
-                mNavigatorScrollListener.onLeave(getCurrentIndex(), 1.0f - positionOffset, false);
-                mNavigatorScrollListener.onEnter(position, 1.0f - positionOffset, false);
+            mNavigatorScrollListener.onEnter(enterIndex, enterPercent, leftToRight);
+            mNavigatorScrollListener.onLeave(leaveIndex, leavePercent, leftToRight);
+            for (int i = 0; i < getTotalCount(); i++) {
+                if (i == enterIndex || i == leaveIndex) {
+                    continue;
+                }
+                mNavigatorScrollListener.onLeave(i, 1.0f, false);
             }
         }
     }
 
     public void onPageSelected(int position) {
-        mCurrentIndex = getSafeIndex(position);
+        setCurrentIndex(position);
     }
 
     public void onPageScrollStateChanged(int state) {
+        setScrollState(state);
     }
 
     public int getCurrentIndex() {
@@ -59,6 +73,14 @@ public class NavigatorHelper {
         mTotalCount = totalCount;
     }
 
+    public int getScrollState() {
+        return mScrollState;
+    }
+
+    public void setScrollState(int scrollState) {
+        mScrollState = scrollState;
+    }
+
     public OnNavigatorScrollListener getNavigatorScrollListener() {
         return mNavigatorScrollListener;
     }
@@ -68,8 +90,8 @@ public class NavigatorHelper {
     }
 
     public void clear() {
-        mCurrentIndex = 0;
-        mTotalCount = 0;
+        setTotalCount(0);
+        setCurrentIndex(0);
     }
 
     public interface OnNavigatorScrollListener {

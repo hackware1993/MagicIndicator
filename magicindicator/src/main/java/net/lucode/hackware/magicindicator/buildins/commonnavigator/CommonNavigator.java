@@ -2,7 +2,6 @@ package net.lucode.hackware.magicindicator.buildins.commonnavigator;
 
 import android.content.Context;
 import android.database.DataSetObserver;
-import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -38,7 +37,6 @@ public class CommonNavigator extends FrameLayout implements IPagerNavigator, Nav
     private NavigatorHelper mNavigatorHelper;
     private boolean mFitMode;   // 自适应模式
     private boolean mAlwaysScrollToCenter;  // 当前页始终居中显示
-    private int mScrollState;
 
     private DataSetObserver mObserver = new DataSetObserver() {
 
@@ -119,7 +117,7 @@ public class CommonNavigator extends FrameLayout implements IPagerNavigator, Nav
                     if (!child.isSelected()) {
                         child.setSelected(true);
                         ((IPagerTitleView) child).onSelect(i);
-                        if (mScrollState == ViewPager.SCROLL_STATE_IDLE) {
+                        if (!smooth) {
                             ((IPagerTitleView) child).onEnter(i, 1.0f, false);
                         }
                     }
@@ -127,7 +125,9 @@ public class CommonNavigator extends FrameLayout implements IPagerNavigator, Nav
                     if (child.isSelected()) {
                         child.setSelected(false);
                         ((IPagerTitleView) child).onDeselect(i);
-                        ((IPagerTitleView) child).onLeave(i, 1.0f, false);
+                        if (!smooth) {
+                            ((IPagerTitleView) child).onLeave(i, 1.0f, false);
+                        }
                     }
                 }
             }
@@ -263,7 +263,6 @@ public class CommonNavigator extends FrameLayout implements IPagerNavigator, Nav
     @Override
     public void onPageScrollStateChanged(int state) {
         mNavigatorHelper.onPageScrollStateChanged(state);
-        mScrollState = state;
         for (int i = 0, j = mNavigatorHelper.getTotalCount(); i < j; i++) {
             View v = mTitleContainer.getChildAt(i);
             if (v instanceof IPagerTitleView) {
