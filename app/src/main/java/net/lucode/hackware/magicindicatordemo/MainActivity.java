@@ -554,7 +554,6 @@ public class MainActivity extends Activity {
                 mDataList.add("欢迎关注");
                 mDataList.add("我的博客");
                 mDataList.add("hackware.lucode.net");
-                mAdapter.notifyDataSetChanged();
                 commonNavigator.notifyDataSetChanged();
                 commonNavigator1.notifyDataSetChanged();
                 commonNavigator2.notifyDataSetChanged();
@@ -568,6 +567,7 @@ public class MainActivity extends Activity {
                 commonNavigator10.notifyDataSetChanged();
                 circleNavigator.setCount(mDataList.size());
                 circleNavigator.notifyDataSetChanged();
+                mAdapter.notifyDataSetChanged();
             }
         }, 10000);
     }
