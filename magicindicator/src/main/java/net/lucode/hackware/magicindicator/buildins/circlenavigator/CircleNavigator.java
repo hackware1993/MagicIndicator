@@ -57,7 +57,7 @@ public class CircleNavigator extends View implements IPagerNavigator, NavigatorH
         mPaint.setStyle(Paint.Style.STROKE);
         mPaint.setStrokeWidth(mStrokeWidth);
         mPaint.setColor(mCircleColor);
-        for (int i = 0; i < mCirclePoints.size(); i++) {
+        for (int i = 0, j = mCirclePoints.size(); i < j; i++) {
             PointF pointF = mCirclePoints.get(i);
             canvas.drawCircle(pointF.x, pointF.y, mRadius, mPaint);
         }

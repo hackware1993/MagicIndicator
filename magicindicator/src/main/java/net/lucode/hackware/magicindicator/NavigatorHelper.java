@@ -43,7 +43,7 @@ public class NavigatorHelper {
                 }
                 mNavigatorScrollListener.onEnter(enterIndex, enterPercent, leftToRight);
                 mNavigatorScrollListener.onLeave(leaveIndex, leavePercent, leftToRight);
-                for (int i = 0; i < getTotalCount(); i++) {
+                for (int i = 0, j = getTotalCount(); i < j; i++) {
                     if (i == enterIndex || i == leaveIndex) {
                         continue;
                     }
@@ -51,9 +51,10 @@ public class NavigatorHelper {
                 }
             } else {
                 // 在IDLE状态下收到了onPageScrolled回调，表示完全滚动到了某一页
+                setCurrentIndex(safePosition);
                 mNavigatorScrollListener.onEnter(safePosition, 1.0f, false);
                 mNavigatorScrollListener.onSelected(safePosition);
-                for (int i = 0; i < getTotalCount(); i++) {
+                for (int i = 0, j = getTotalCount(); i < j; i++) {
                     if (i == safePosition) {
                         continue;
                     }
@@ -68,7 +69,7 @@ public class NavigatorHelper {
         setCurrentIndex(position);
         if (mNavigatorScrollListener != null) {
             mNavigatorScrollListener.onSelected(getCurrentIndex());
-            for (int i = 0; i < getTotalCount(); i++) {
+            for (int i = 0, j = getTotalCount(); i < j; i++) {
                 if (i == getCurrentIndex()) {
                     continue;
                 }

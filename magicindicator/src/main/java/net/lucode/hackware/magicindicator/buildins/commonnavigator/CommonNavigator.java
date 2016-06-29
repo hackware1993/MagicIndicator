@@ -116,7 +116,7 @@ public class CommonNavigator extends FrameLayout implements IPagerNavigator, Nav
         mTitleContainer.removeAllViews();   // 清空所有view
         mIndicatorContainer.removeAllViews();
 
-        for (int i = 0; i < mNavigatorHelper.getTotalCount(); i++) {
+        for (int i = 0, j = mNavigatorHelper.getTotalCount(); i < j; i++) {
             IPagerTitleView v = mAdapter.getItemView(getContext(), i);
             if (v instanceof View) {
                 View view = (View) v;
@@ -151,7 +151,7 @@ public class CommonNavigator extends FrameLayout implements IPagerNavigator, Nav
 
     private void preparePositionData() {
         List<PositionData> dataList = new ArrayList<PositionData>();
-        for (int i = 0; i < mNavigatorHelper.getTotalCount(); i++) {
+        for (int i = 0, j = mNavigatorHelper.getTotalCount(); i < j; i++) {
             View v = mTitleContainer.getChildAt(i);
             PositionData data = new PositionData();
             data.mLeft = v.getLeft();
