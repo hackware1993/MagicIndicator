@@ -94,11 +94,11 @@ public class ClipPagerTitleView extends View implements IPagerTitleView {
     }
 
     @Override
-    public void onSelect(int index) {
+    public void onSelected(int index) {
     }
 
     @Override
-    public void onDeselect(int index) {
+    public void onDeselected(int index) {
     }
 
     @Override
@@ -113,10 +113,6 @@ public class ClipPagerTitleView extends View implements IPagerTitleView {
         mLeftToRight = leftToRight;
         mClipPercent = enterPercent;
         invalidate();
-    }
-
-    @Override
-    public void onPageScrollStateChanged(int state) {
     }
 
     private void measureTextBounds() {

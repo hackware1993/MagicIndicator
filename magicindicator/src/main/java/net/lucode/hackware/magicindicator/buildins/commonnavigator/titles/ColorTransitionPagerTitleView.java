@@ -17,11 +17,11 @@ public class ColorTransitionPagerTitleView extends SimplePagerTitleView {
     }
 
     @Override
-    public void onSelect(int index) {
+    public void onSelected(int index) {
     }
 
     @Override
-    public void onDeselect(int index) {
+    public void onDeselected(int index) {
     }
 
     @Override

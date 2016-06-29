@@ -106,71 +106,6 @@ public class CommonNavigator extends FrameLayout implements IPagerNavigator, Nav
     }
 
     /**
-     * 选中当前项
-     */
-    private void selectCurrent(boolean smooth) {
-        int index = mNavigatorHelper.getCurrentIndex();
-        for (int i = 0; i < mNavigatorHelper.getTotalCount(); i++) {
-            View child = mTitleContainer.getChildAt(i);
-            if (child != null) {
-                if (index == i) {
-                    if (!child.isSelected()) {
-                        child.setSelected(true);
-                        ((IPagerTitleView) child).onSelect(i);
-                        if (!smooth) {
-                            ((IPagerTitleView) child).onEnter(i, 1.0f, false);
-                        }
-                    }
-                } else {
-                    if (child.isSelected()) {
-                        child.setSelected(false);
-                        ((IPagerTitleView) child).onDeselect(i);
-                        if (!smooth) {
-                            ((IPagerTitleView) child).onLeave(i, 1.0f, false);
-                        }
-                    }
-                }
-            }
-        }
-        if (!mFitMode) {
-            // 滚动定位到该项
-            View target = mTitleContainer.getChildAt(index);
-            if (target != null) {
-                if (mAlwaysScrollToCenter) {
-                    int centerX = target.getLeft() + (target.getRight() - target.getLeft()) / 2;
-                    if (centerX - mScrollView.getWidth() / 2 <= 0) {
-                        if (smooth) {
-                            mScrollView.smoothScrollTo(0, 0);
-                        } else {
-                            mScrollView.scrollTo(0, 0);
-                        }
-                    } else {
-                        if (smooth) {
-                            mScrollView.smoothScrollTo(centerX - mScrollView.getWidth() / 2, 0);
-                        } else {
-                            mScrollView.scrollTo(centerX - mScrollView.getWidth() / 2, 0);
-                        }
-                    }
-                } else {
-                    if (target.getLeft() - mScrollView.getScrollX() < 0) {
-                        if (smooth) {
-                            mScrollView.smoothScrollTo(target.getLeft(), 0);
-                        } else {
-                            mScrollView.scrollTo(target.getLeft(), 0);
-                        }
-                    } else if (mScrollView.getWidth() + mScrollView.getScrollX() < target.getRight()) {
-                        if (smooth) {
-                            mScrollView.smoothScrollTo(target.getRight() - mScrollView.getWidth(), 0);
-                        } else {
-                            mScrollView.scrollTo(target.getRight() - mScrollView.getWidth(), 0);
-                        }
-                    }
-                }
-            }
-        }
-    }
-
-    /**
      * 刷新视图
      */
     public void refresh() {
@@ -184,8 +119,6 @@ public class CommonNavigator extends FrameLayout implements IPagerNavigator, Nav
         for (int i = 0; i < mNavigatorHelper.getTotalCount(); i++) {
             IPagerTitleView v = mAdapter.getItemView(getContext(), i);
             if (v instanceof View) {
-                v.onDeselect(i);
-                v.onLeave(i, 1.0f, false);
                 View view = (View) v;
                 LinearLayout.LayoutParams lp;
                 if (mFitMode) {
@@ -243,7 +176,6 @@ public class CommonNavigator extends FrameLayout implements IPagerNavigator, Nav
             mIndicator.onPositionDataProvide(dataList);
             mIndicator.onPageScrolled(mNavigatorHelper.getCurrentIndex(), 0.0f, 0);
         }
-        selectCurrent(false);
     }
 
     @Override
@@ -257,18 +189,11 @@ public class CommonNavigator extends FrameLayout implements IPagerNavigator, Nav
     @Override
     public void onPageSelected(int position) {
         mNavigatorHelper.onPageSelected(position);
-        selectCurrent(true);
     }
 
     @Override
     public void onPageScrollStateChanged(int state) {
         mNavigatorHelper.onPageScrollStateChanged(state);
-        for (int i = 0, j = mNavigatorHelper.getTotalCount(); i < j; i++) {
-            View v = mTitleContainer.getChildAt(i);
-            if (v instanceof IPagerTitleView) {
-                ((IPagerTitleView) v).onPageScrollStateChanged(state);
-            }
-        }
     }
 
     @Override
@@ -304,7 +229,65 @@ public class CommonNavigator extends FrameLayout implements IPagerNavigator, Nav
         }
     }
 
-    public interface OnPagerTitleClickListener {
-        void click(int index);
+    private boolean mSmoothScroll = true;
+
+    public boolean isSmoothScroll() {
+        return mSmoothScroll;
+    }
+
+    public void setSmoothScroll(boolean smoothScroll) {
+        mSmoothScroll = smoothScroll;
+    }
+
+    @Override
+    public void onSelected(int index) {
+        View v = mTitleContainer.getChildAt(index);
+        if (v instanceof IPagerTitleView) {
+            ((IPagerTitleView) v).onSelected(index);
+        }
+        if (!mFitMode) {
+            // 滚动定位到该项
+            View target = mTitleContainer.getChildAt(index);
+            if (target != null) {
+                if (mAlwaysScrollToCenter) {
+                    int centerX = target.getLeft() + (target.getRight() - target.getLeft()) / 2;
+                    if (centerX - mScrollView.getWidth() / 2 <= 0) {
+                        if (mSmoothScroll) {
+                            mScrollView.smoothScrollTo(0, 0);
+                        } else {
+                            mScrollView.scrollTo(0, 0);
+                        }
+                    } else {
+                        if (mSmoothScroll) {
+                            mScrollView.smoothScrollTo(centerX - mScrollView.getWidth() / 2, 0);
+                        } else {
+                            mScrollView.scrollTo(centerX - mScrollView.getWidth() / 2, 0);
+                        }
+                    }
+                } else {
+                    if (target.getLeft() - mScrollView.getScrollX() < 0) {
+                        if (mSmoothScroll) {
+                            mScrollView.smoothScrollTo(target.getLeft(), 0);
+                        } else {
+                            mScrollView.scrollTo(target.getLeft(), 0);
+                        }
+                    } else if (mScrollView.getWidth() + mScrollView.getScrollX() < target.getRight()) {
+                        if (mSmoothScroll) {
+                            mScrollView.smoothScrollTo(target.getRight() - mScrollView.getWidth(), 0);
+                        } else {
+                            mScrollView.scrollTo(target.getRight() - mScrollView.getWidth(), 0);
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    @Override
+    public void onDeselected(int index) {
+        View v = mTitleContainer.getChildAt(index);
+        if (v instanceof IPagerTitleView) {
+            ((IPagerTitleView) v).onDeselected(index);
+        }
     }
 }

@@ -1,5 +1,7 @@
 package net.lucode.hackware.magicindicator;
 
+import android.support.v4.view.ViewPager;
+
 /**
  * 方便扩展IPagerNavigator的帮助类
  * 博客: http://hackware.lucode.net
@@ -22,35 +24,57 @@ public class NavigatorHelper {
     public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
         if (mNavigatorScrollListener != null) {
             int safePosition = getSafeIndex(position);
-            boolean leftToRight = safePosition >= getCurrentIndex();
-            int enterIndex;
-            int leaveIndex;
-            float enterPercent;
-            float leavePercent;
-            if (leftToRight) {
-                enterIndex = getSafeIndex(position + 1);
-                enterPercent = positionOffset;
-                leaveIndex = safePosition;
-                leavePercent = positionOffset;
-            } else {
-                enterIndex = safePosition;
-                enterPercent = 1.0f - positionOffset;
-                leaveIndex = getSafeIndex(safePosition + 1);
-                leavePercent = 1.0f - positionOffset;
-            }
-            mNavigatorScrollListener.onEnter(enterIndex, enterPercent, leftToRight);
-            mNavigatorScrollListener.onLeave(leaveIndex, leavePercent, leftToRight);
-            for (int i = 0; i < getTotalCount(); i++) {
-                if (i == enterIndex || i == leaveIndex) {
-                    continue;
+            if (getScrollState() != ViewPager.SCROLL_STATE_IDLE) {
+                boolean leftToRight = safePosition >= getCurrentIndex();
+                int enterIndex;
+                int leaveIndex;
+                float enterPercent;
+                float leavePercent;
+                if (leftToRight) {
+                    enterIndex = getSafeIndex(position + 1);
+                    enterPercent = positionOffset;
+                    leaveIndex = safePosition;
+                    leavePercent = positionOffset;
+                } else {
+                    enterIndex = safePosition;
+                    enterPercent = 1.0f - positionOffset;
+                    leaveIndex = getSafeIndex(safePosition + 1);
+                    leavePercent = 1.0f - positionOffset;
                 }
-                mNavigatorScrollListener.onLeave(i, 1.0f, false);
+                mNavigatorScrollListener.onEnter(enterIndex, enterPercent, leftToRight);
+                mNavigatorScrollListener.onLeave(leaveIndex, leavePercent, leftToRight);
+                for (int i = 0; i < getTotalCount(); i++) {
+                    if (i == enterIndex || i == leaveIndex) {
+                        continue;
+                    }
+                    mNavigatorScrollListener.onLeave(i, 1.0f, false);
+                }
+            } else {
+                // 在IDLE状态下收到了onPageScrolled回调，表示完全滚动到了某一页
+                mNavigatorScrollListener.onEnter(safePosition, 1.0f, false);
+                mNavigatorScrollListener.onSelected(safePosition);
+                for (int i = 0; i < getTotalCount(); i++) {
+                    if (i == safePosition) {
+                        continue;
+                    }
+                    mNavigatorScrollListener.onLeave(i, 1.0f, false);
+                    mNavigatorScrollListener.onDeselected(i);
+                }
             }
         }
     }
 
     public void onPageSelected(int position) {
         setCurrentIndex(position);
+        if (mNavigatorScrollListener != null) {
+            mNavigatorScrollListener.onSelected(getCurrentIndex());
+            for (int i = 0; i < getTotalCount(); i++) {
+                if (i == getCurrentIndex()) {
+                    continue;
+                }
+                mNavigatorScrollListener.onDeselected(i);
+            }
+        }
     }
 
     public void onPageScrollStateChanged(int state) {
@@ -98,5 +122,9 @@ public class NavigatorHelper {
         void onEnter(int index, float enterPercent, boolean leftToRight);
 
         void onLeave(int index, float leavePercent, boolean leftToRight);
+
+        void onSelected(int index);
+
+        void onDeselected(int index);
     }
 }

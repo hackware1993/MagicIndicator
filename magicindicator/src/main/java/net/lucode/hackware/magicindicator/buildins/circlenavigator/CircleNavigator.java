@@ -194,4 +194,12 @@ public class CircleNavigator extends View implements IPagerNavigator, NavigatorH
     @Override
     public void onLeave(int index, float leavePercent, boolean leftToRight) {
     }
+
+    @Override
+    public void onSelected(int index) {
+    }
+
+    @Override
+    public void onDeselected(int index) {
+    }
 }

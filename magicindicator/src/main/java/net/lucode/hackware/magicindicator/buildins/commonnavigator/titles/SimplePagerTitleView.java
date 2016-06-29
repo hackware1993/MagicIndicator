@@ -34,12 +34,12 @@ public class SimplePagerTitleView extends TextView implements IMeasurablePagerTi
     }
 
     @Override
-    public void onSelect(int index) {
+    public void onSelected(int index) {
         setTextColor(mSelectedColor);
     }
 
     @Override
-    public void onDeselect(int index) {
+    public void onDeselected(int index) {
         setTextColor(mNormalColor);
     }
 
@@ -49,10 +49,6 @@ public class SimplePagerTitleView extends TextView implements IMeasurablePagerTi
 
     @Override
     public void onEnter(int index, float enterPercent, boolean leftToRight) {
-    }
-
-    @Override
-    public void onPageScrollStateChanged(int state) {
     }
 
     @Override
