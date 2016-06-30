@@ -41,6 +41,7 @@ public class CommonNavigator extends FrameLayout implements IPagerNavigator, Nav
 
         @Override
         public void onChanged() {
+            mNavigatorHelper.setTotalCount(mAdapter.getCount());
             init();
         }
 
@@ -83,7 +84,7 @@ public class CommonNavigator extends FrameLayout implements IPagerNavigator, Nav
         mAdapter = adapter;
         if (mAdapter != null) {
             mAdapter.registerDataSetObserver(mObserver);
-            mNavigatorHelper.setTotalCount(mAdapter.getCount());
+            adapter.notifyDataSetChanged();
         } else {
             mNavigatorHelper.clear();
             init();
@@ -125,7 +126,6 @@ public class CommonNavigator extends FrameLayout implements IPagerNavigator, Nav
                 mTitleContainer.addView(view, lp);
             }
         }
-
         if (mAdapter != null) {
             mIndicator = mAdapter.getIndicator(getContext());
             if (mIndicator instanceof View) {
@@ -138,10 +138,13 @@ public class CommonNavigator extends FrameLayout implements IPagerNavigator, Nav
     @Override
     protected void onLayout(boolean changed, int left, int top, int right, int bottom) {
         super.onLayout(changed, left, top, right, bottom);
-        preparePositionData();
+        if (mAdapter != null) {
+            preparePositionData();
+        }
     }
 
     private void preparePositionData() {
+        // 获取title的位置信息，为打造不同的指示器、各种效果提供可能
         List<PositionData> dataList = new ArrayList<PositionData>();
         for (int i = 0, j = mNavigatorHelper.getTotalCount(); i < j; i++) {
             View v = mTitleContainer.getChildAt(i);
@@ -164,29 +167,39 @@ public class CommonNavigator extends FrameLayout implements IPagerNavigator, Nav
             }
             dataList.add(data);
         }
+
+        // 将title的位置信息设置到指示器，并定位到当前位置
         if (mIndicator != null) {
             mIndicator.onPositionDataProvide(dataList);
             mIndicator.onPageScrolled(mNavigatorHelper.getCurrentIndex(), 0.0f, 0);
         }
-        mNavigatorHelper.onPageSelected(mNavigatorHelper.getCurrentIndex());    // 解决极端情况下title显示问题
+
+        // 初始化title的位置
+        mNavigatorHelper.onPageSelected(mNavigatorHelper.getCurrentIndex());
     }
 
     @Override
     public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-        mNavigatorHelper.onPageScrolled(position, positionOffset, positionOffsetPixels);
-        if (mIndicator != null) {
-            mIndicator.onPageScrolled(mNavigatorHelper.getSafeIndex(position), positionOffset, positionOffsetPixels);
+        if (mAdapter != null) {
+            mNavigatorHelper.onPageScrolled(position, positionOffset, positionOffsetPixels);
+            if (mIndicator != null) {
+                mIndicator.onPageScrolled(mNavigatorHelper.getSafeIndex(position), positionOffset, positionOffsetPixels);
+            }
         }
     }
 
     @Override
     public void onPageSelected(int position) {
-        mNavigatorHelper.onPageSelected(position);
+        if (mAdapter != null) {
+            mNavigatorHelper.onPageSelected(position);
+        }
     }
 
     @Override
     public void onPageScrollStateChanged(int state) {
-        mNavigatorHelper.onPageScrollStateChanged(state);
+        if (mAdapter != null) {
+            mNavigatorHelper.onPageScrollStateChanged(state);
+        }
     }
 
     @Override
@@ -208,6 +221,9 @@ public class CommonNavigator extends FrameLayout implements IPagerNavigator, Nav
 
     @Override
     public void onEnter(int index, float enterPercent, boolean leftToRight) {
+        if (mTitleContainer == null) {
+            return;
+        }
         View v = mTitleContainer.getChildAt(index);
         if (v instanceof IPagerTitleView) {
             ((IPagerTitleView) v).onEnter(index, enterPercent, leftToRight);
@@ -216,6 +232,9 @@ public class CommonNavigator extends FrameLayout implements IPagerNavigator, Nav
 
     @Override
     public void onLeave(int index, float leavePercent, boolean leftToRight) {
+        if (mTitleContainer == null) {
+            return;
+        }
         View v = mTitleContainer.getChildAt(index);
         if (v instanceof IPagerTitleView) {
             ((IPagerTitleView) v).onLeave(index, leavePercent, leftToRight);
@@ -232,6 +251,9 @@ public class CommonNavigator extends FrameLayout implements IPagerNavigator, Nav
 
     @Override
     public void onSelected(int index) {
+        if (mTitleContainer == null || mScrollView == null) {
+            return;
+        }
         View v = mTitleContainer.getChildAt(index);
         if (v instanceof IPagerTitleView) {
             ((IPagerTitleView) v).onSelected(index);
@@ -276,6 +298,9 @@ public class CommonNavigator extends FrameLayout implements IPagerNavigator, Nav
 
     @Override
     public void onDeselected(int index) {
+        if (mTitleContainer == null) {
+            return;
+        }
         View v = mTitleContainer.getChildAt(index);
         if (v instanceof IPagerTitleView) {
             ((IPagerTitleView) v).onDeselected(index);
