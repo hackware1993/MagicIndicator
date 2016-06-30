@@ -492,6 +492,12 @@ public class MainActivity extends Activity {
         final CircleNavigator circleNavigator = new CircleNavigator(this);
         circleNavigator.setCount(mDataList.size());
         circleNavigator.setCircleColor(Color.RED);
+        circleNavigator.setCircleClickListener(new CircleNavigator.OnCircleClickListener() {
+            @Override
+            public void onClick(int index) {
+                mPager.setCurrentItem(index);
+            }
+        });
         magic_indicator11.setNavigator(circleNavigator);
 
         mPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
@@ -547,7 +553,7 @@ public class MainActivity extends Activity {
 
         mPager.setCurrentItem(1);
 
-        mPager.postDelayed(new Runnable() {
+/*        mPager.postDelayed(new Runnable() {
             @Override
             public void run() {
                 mDataList.clear();
@@ -569,6 +575,6 @@ public class MainActivity extends Activity {
                 circleNavigator.notifyDataSetChanged();
                 mAdapter.notifyDataSetChanged();
             }
-        }, 10000);
+        }, 10000);*/
     }
 }

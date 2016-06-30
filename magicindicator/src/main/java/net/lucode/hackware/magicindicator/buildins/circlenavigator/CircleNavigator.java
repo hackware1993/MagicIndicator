@@ -4,7 +4,9 @@ import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.PointF;
+import android.view.MotionEvent;
 import android.view.View;
+import android.view.ViewConfiguration;
 import android.view.animation.Interpolator;
 import android.view.animation.LinearInterpolator;
 
@@ -32,6 +34,13 @@ public class CircleNavigator extends View implements IPagerNavigator, NavigatorH
     private List<PointF> mCirclePoints = new ArrayList<PointF>();
     private float mIndicatorX;
 
+    // 事件回调
+    private boolean mTouchable;
+    private OnCircleClickListener mCircleClickListener;
+    private float mDownX;
+    private float mDownY;
+    private int mTouchSlop;
+
     public CircleNavigator(Context context) {
         super(context);
         init(context);
@@ -41,6 +50,7 @@ public class CircleNavigator extends View implements IPagerNavigator, NavigatorH
         mNavigatorHelper = new NavigatorHelper();
         mNavigatorHelper.setNavigatorScrollListener(this);
         mPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
+        mTouchSlop = ViewConfiguration.get(context).getScaledTouchSlop();
         setRadius(UIUtil.dip2px(context, 3));
         setCircleSpacing(UIUtil.dip2px(context, 8));
         setStrokeWidth(UIUtil.dip2px(context, 1));
@@ -97,6 +107,41 @@ public class CircleNavigator extends View implements IPagerNavigator, NavigatorH
         mIndicatorX = current.x + (next.x - current.x) * mStartInterpolator.getInterpolation(positionOffset);
 
         invalidate();
+    }
+
+    @Override
+    public boolean onTouchEvent(MotionEvent event) {
+        float x = event.getX();
+        float y = event.getY();
+        switch (event.getAction()) {
+            case MotionEvent.ACTION_DOWN:
+                if (mTouchable) {
+                    mDownX = x;
+                    mDownY = y;
+                    return true;
+                }
+                break;
+            case MotionEvent.ACTION_UP:
+                if (mCircleClickListener != null) {
+                    if (Math.abs(x - mDownX) <= mTouchSlop && Math.abs(y - mDownY) <= mTouchSlop) {
+                        float max = Float.MAX_VALUE;
+                        int index = 0;
+                        for (int i = 0; i < mCirclePoints.size(); i++) {
+                            PointF pointF = mCirclePoints.get(i);
+                            float offset = Math.abs(pointF.x - x);
+                            if (offset < max) {
+                                max = offset;
+                                index = i;
+                            }
+                        }
+                        mCircleClickListener.onClick(index);
+                    }
+                }
+                break;
+            default:
+                break;
+        }
+        return super.onTouchEvent(event);
     }
 
     @Override
@@ -198,5 +243,28 @@ public class CircleNavigator extends View implements IPagerNavigator, NavigatorH
 
     @Override
     public void onDeselected(int index) {
+    }
+
+    public boolean isTouchable() {
+        return mTouchable;
+    }
+
+    public void setTouchable(boolean touchable) {
+        mTouchable = touchable;
+    }
+
+    public OnCircleClickListener getCircleClickListener() {
+        return mCircleClickListener;
+    }
+
+    public void setCircleClickListener(OnCircleClickListener circleClickListener) {
+        if (!mTouchable) {
+            mTouchable = true;
+        }
+        mCircleClickListener = circleClickListener;
+    }
+
+    public interface OnCircleClickListener {
+        void onClick(int index);
     }
 }
