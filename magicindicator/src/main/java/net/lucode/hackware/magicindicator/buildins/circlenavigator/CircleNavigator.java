@@ -110,7 +110,8 @@ public class CircleNavigator extends View implements IPagerNavigator, NavigatorH
     }
 
     @Override
-    protected void onSizeChanged(int w, int h, int oldw, int oldh) {
+    protected void onLayout(boolean changed, int left, int top, int right, int bottom) {
+        super.onLayout(changed, left, top, right, bottom);
         prepareCirclePoints();
     }
 
