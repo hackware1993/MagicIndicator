@@ -86,6 +86,7 @@ public class CommonNavigator extends FrameLayout implements IPagerNavigator, Nav
             mNavigatorHelper.setTotalCount(mAdapter.getCount());
         } else {
             mNavigatorHelper.clear();
+            init();
         }
     }
 
@@ -103,13 +104,13 @@ public class CommonNavigator extends FrameLayout implements IPagerNavigator, Nav
         mIndicatorContainer = (LinearLayout) root.findViewById(R.id.indicator_container);
         mTitleContainer = (LinearLayout) root.findViewById(R.id.title_container);
 
-        refresh();
+        initTitlesAndIndicator();
     }
 
     /**
-     * 刷新视图
+     * 初始化title和indicator
      */
-    private void refresh() {
+    private void initTitlesAndIndicator() {
         for (int i = 0, j = mNavigatorHelper.getTotalCount(); i < j; i++) {
             IPagerTitleView v = mAdapter.getItemView(getContext(), i);
             if (v instanceof View) {

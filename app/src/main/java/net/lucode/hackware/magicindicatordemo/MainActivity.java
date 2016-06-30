@@ -576,5 +576,12 @@ public class MainActivity extends Activity {
                 mAdapter.notifyDataSetChanged();
             }
         }, 10000);*/
+
+        mPager.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                commonNavigator.setAdapter(null);
+            }
+        }, 5000);
     }
 }
