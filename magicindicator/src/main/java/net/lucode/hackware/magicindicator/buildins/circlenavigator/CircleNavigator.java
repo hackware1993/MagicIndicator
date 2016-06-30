@@ -80,16 +80,18 @@ public class CircleNavigator extends View implements IPagerNavigator, NavigatorH
     private void prepareCirclePoints() {
         mCirclePoints.clear();
         int count = mNavigatorHelper.getTotalCount();
-        int y = getHeight() / 2;
-        int measureWidth = count * mRadius * 2 + (count - 1) * mCircleSpacing;
-        int centerSpacing = mRadius * 2 + mCircleSpacing;
-        int startX = (getWidth() - measureWidth) / 2 + mRadius;
-        for (int i = 0; i < count; i++) {
-            PointF pointF = new PointF(startX, y);
-            mCirclePoints.add(pointF);
-            startX += centerSpacing;
+        if (count > 0) {
+            int y = getHeight() / 2;
+            int measureWidth = count * mRadius * 2 + (count - 1) * mCircleSpacing;
+            int centerSpacing = mRadius * 2 + mCircleSpacing;
+            int startX = (getWidth() - measureWidth) / 2 + mRadius;
+            for (int i = 0; i < count; i++) {
+                PointF pointF = new PointF(startX, y);
+                mCirclePoints.add(pointF);
+                startX += centerSpacing;
+            }
+            mIndicatorX = mCirclePoints.get(mNavigatorHelper.getCurrentIndex()).x;
         }
-        mIndicatorX = mCirclePoints.get(mNavigatorHelper.getCurrentIndex()).x;
     }
 
     @Override
@@ -221,11 +223,11 @@ public class CircleNavigator extends View implements IPagerNavigator, NavigatorH
         }
     }
 
-    public int getCount() {
+    public int getCircleCount() {
         return mNavigatorHelper.getTotalCount();
     }
 
-    public void setCount(int count) {
+    public void setCircleCount(int count) {
         mNavigatorHelper.setTotalCount(count);  // 此处不调用invalidate，让外部调用notifyDataSetChanged
     }
 
