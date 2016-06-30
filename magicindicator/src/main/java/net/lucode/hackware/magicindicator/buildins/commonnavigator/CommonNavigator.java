@@ -2,6 +2,7 @@ package net.lucode.hackware.magicindicator.buildins.commonnavigator;
 
 import android.content.Context;
 import android.database.DataSetObserver;
+import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -51,6 +52,7 @@ public class CommonNavigator extends FrameLayout implements IPagerNavigator, Nav
     };
 
     private boolean mSmoothScroll = true;
+    private boolean mFollowTouch = true;
 
     public CommonNavigator(Context context) {
         super(context);
@@ -168,6 +170,8 @@ public class CommonNavigator extends FrameLayout implements IPagerNavigator, Nav
             dataList.add(data);
         }
 
+        mPositionList = new ArrayList<PositionData>(dataList);
+
         // 将title的位置信息设置到指示器，并定位到当前位置
         if (mIndicator != null) {
             mIndicator.onPositionDataProvide(dataList);
@@ -185,6 +189,16 @@ public class CommonNavigator extends FrameLayout implements IPagerNavigator, Nav
             if (mIndicator != null) {
                 mIndicator.onPageScrolled(mNavigatorHelper.getSafeIndex(position), positionOffset, positionOffsetPixels);
             }
+
+            // 手指跟随滚动
+            if (mFollowTouch && mScrollView != null && mPositionList.size() > 0) {
+                int nextPosition = Math.min(mPositionList.size() - 1, position + 1);
+                PositionData current = mPositionList.get(position);
+                PositionData next = mPositionList.get(nextPosition);
+                int scrollTo = current.horizontalCenter() - mScrollView.getWidth() / 2;
+                int nextScrollTo = next.horizontalCenter() - mScrollView.getWidth() / 2;
+                mScrollView.scrollTo((int) (scrollTo + (nextScrollTo - scrollTo) * positionOffset), 0);
+            }
         }
     }
 
@@ -195,9 +209,16 @@ public class CommonNavigator extends FrameLayout implements IPagerNavigator, Nav
         }
     }
 
+    private int mCurrentScrollX;
+
     @Override
     public void onPageScrollStateChanged(int state) {
         if (mAdapter != null) {
+            if (mScrollView != null) {
+                if (mNavigatorHelper.getScrollState() == ViewPager.SCROLL_STATE_IDLE && state != ViewPager.SCROLL_STATE_IDLE) {
+                    mCurrentScrollX = mScrollView.getScrollX();
+                }
+            }
             mNavigatorHelper.onPageScrollStateChanged(state);
         }
     }
@@ -219,9 +240,11 @@ public class CommonNavigator extends FrameLayout implements IPagerNavigator, Nav
         mAlwaysScrollToCenter = is;
     }
 
+    private List<PositionData> mPositionList = new ArrayList<PositionData>();
+
     @Override
     public void onEnter(int index, float enterPercent, boolean leftToRight) {
-        if (mTitleContainer == null) {
+        if (mTitleContainer == null || mScrollView == null) {
             return;
         }
         View v = mTitleContainer.getChildAt(index);
@@ -249,6 +272,14 @@ public class CommonNavigator extends FrameLayout implements IPagerNavigator, Nav
         mSmoothScroll = smoothScroll;
     }
 
+    public boolean isFollowTouch() {
+        return mFollowTouch;
+    }
+
+    public void setFollowTouch(boolean followTouch) {
+        mFollowTouch = followTouch;
+    }
+
     @Override
     public void onSelected(int index) {
         if (mTitleContainer == null || mScrollView == null) {
@@ -258,7 +289,7 @@ public class CommonNavigator extends FrameLayout implements IPagerNavigator, Nav
         if (v instanceof IPagerTitleView) {
             ((IPagerTitleView) v).onSelected(index);
         }
-        if (!mFitMode) {
+        if (!mFitMode && !mFollowTouch) {
             // 滚动定位到该项
             View target = mTitleContainer.getChildAt(index);
             if (target != null) {

@@ -89,6 +89,7 @@ public class MainActivity extends Activity {
         // 今日头条式
         final MagicIndicator magicIndicator = (MagicIndicator) findViewById(R.id.magic_indicator);
         final CommonNavigator commonNavigator = new CommonNavigator(this);
+        commonNavigator.setFollowTouch(false);
         commonNavigator.setAdapter(new CommonNavigatorAdapter() {
 
             @Override
@@ -121,6 +122,7 @@ public class MainActivity extends Activity {
         // 当前页始终定位到中间
         final MagicIndicator magic_indicator1 = (MagicIndicator) findViewById(R.id.magic_indicator1);
         final CommonNavigator commonNavigator1 = new CommonNavigator(this);
+        commonNavigator1.setFollowTouch(false);
         commonNavigator1.setAdapter(new CommonNavigatorAdapter() {
             @Override
             public int getCount() {
@@ -161,6 +163,7 @@ public class MainActivity extends Activity {
         // 当前页不定位到中间
         final MagicIndicator magic_indicator2 = (MagicIndicator) findViewById(R.id.magic_indicator2);
         final CommonNavigator commonNavigator2 = new CommonNavigator(this);
+        commonNavigator2.setFollowTouch(false);
         commonNavigator2.setAdapter(new CommonNavigatorAdapter() {
             @Override
             public int getCount() {

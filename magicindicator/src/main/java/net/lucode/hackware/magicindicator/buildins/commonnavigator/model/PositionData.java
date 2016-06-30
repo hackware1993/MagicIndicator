@@ -30,4 +30,12 @@ public class PositionData {
     public int contentHeight() {
         return mContentBottom - mContentTop;
     }
+
+    public int horizontalCenter() {
+        return mLeft + width() / 2;
+    }
+
+    public int verticalCenter() {
+        return mTop + height() / 2;
+    }
 }
