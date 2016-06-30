@@ -45,7 +45,7 @@ public class MagicIndicator extends FrameLayout {
             mNavigator.onPageScrollStateChanged(state);
         }
     }
-    
+
     public IPagerNavigator getNavigator() {
         return mNavigator;
     }

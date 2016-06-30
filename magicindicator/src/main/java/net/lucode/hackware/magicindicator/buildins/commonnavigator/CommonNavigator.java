@@ -5,7 +5,6 @@ import android.database.DataSetObserver;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.ViewTreeObserver;
 import android.widget.FrameLayout;
 import android.widget.HorizontalScrollView;
 import android.widget.LinearLayout;
@@ -42,13 +41,15 @@ public class CommonNavigator extends FrameLayout implements IPagerNavigator, Nav
 
         @Override
         public void onChanged() {
-            refresh();
+            init();
         }
 
         @Override
         public void onInvalidated() {
         }
     };
+
+    private boolean mSmoothScroll = true;
 
     public CommonNavigator(Context context) {
         super(context);
@@ -108,14 +109,7 @@ public class CommonNavigator extends FrameLayout implements IPagerNavigator, Nav
     /**
      * 刷新视图
      */
-    public void refresh() {
-        if (mTitleContainer == null || mIndicatorContainer == null) {
-            return;
-        }
-
-        mTitleContainer.removeAllViews();   // 清空所有view
-        mIndicatorContainer.removeAllViews();
-
+    private void refresh() {
         for (int i = 0, j = mNavigatorHelper.getTotalCount(); i < j; i++) {
             IPagerTitleView v = mAdapter.getItemView(getContext(), i);
             if (v instanceof View) {
@@ -138,24 +132,12 @@ public class CommonNavigator extends FrameLayout implements IPagerNavigator, Nav
                 mIndicatorContainer.addView((View) mIndicator, lp);
             }
         }
-
-        // 如果view可见，在onPreDraw中可以取到坐标点
-        getViewTreeObserver().addOnPreDrawListener(new ViewTreeObserver.OnPreDrawListener() {
-            @Override
-            public boolean onPreDraw() {
-                getViewTreeObserver().removeOnPreDrawListener(this);
-                preparePositionData();
-                return false;
-            }
-        });
     }
 
     @Override
-    public void onWindowFocusChanged(boolean hasWindowFocus) {
-        super.onWindowFocusChanged(hasWindowFocus);
-        if (hasWindowFocus) {   // 当view不可见时，在onPreDraw中取到的坐标点全是0，需要在这里重新取
-            preparePositionData();
-        }
+    protected void onLayout(boolean changed, int left, int top, int right, int bottom) {
+        super.onLayout(changed, left, top, right, bottom);
+        preparePositionData();
     }
 
     private void preparePositionData() {
@@ -185,6 +167,7 @@ public class CommonNavigator extends FrameLayout implements IPagerNavigator, Nav
             mIndicator.onPositionDataProvide(dataList);
             mIndicator.onPageScrolled(mNavigatorHelper.getCurrentIndex(), 0.0f, 0);
         }
+        mNavigatorHelper.onPageSelected(mNavigatorHelper.getCurrentIndex());    // 解决极端情况下title显示问题
     }
 
     @Override
@@ -237,8 +220,6 @@ public class CommonNavigator extends FrameLayout implements IPagerNavigator, Nav
             ((IPagerTitleView) v).onLeave(index, leavePercent, leftToRight);
         }
     }
-
-    private boolean mSmoothScroll = true;
 
     public boolean isSmoothScroll() {
         return mSmoothScroll;
