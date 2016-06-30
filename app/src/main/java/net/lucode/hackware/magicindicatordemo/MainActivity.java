@@ -490,7 +490,7 @@ public class MainActivity extends Activity {
         // 圆圈式
         final MagicIndicator magic_indicator11 = (MagicIndicator) findViewById(R.id.magic_indicator11);
         final CircleNavigator circleNavigator = new CircleNavigator(this);
-        circleNavigator.setCount(mDataList.size());
+        circleNavigator.setCircleCount(mDataList.size());
         circleNavigator.setCircleColor(Color.RED);
         circleNavigator.setCircleClickListener(new CircleNavigator.OnCircleClickListener() {
             @Override
@@ -577,11 +577,11 @@ public class MainActivity extends Activity {
             }
         }, 10000);*/
 
-        mPager.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                commonNavigator.setAdapter(null);
-            }
-        }, 5000);
+//        mPager.postDelayed(new Runnable() {
+//            @Override
+//            public void run() {
+//                commonNavigator.setAdapter(null);
+//            }
+//        }, 5000);
     }
 }
