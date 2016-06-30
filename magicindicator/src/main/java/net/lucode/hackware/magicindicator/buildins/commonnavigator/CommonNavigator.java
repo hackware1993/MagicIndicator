@@ -2,7 +2,6 @@ package net.lucode.hackware.magicindicator.buildins.commonnavigator;
 
 import android.content.Context;
 import android.database.DataSetObserver;
-import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -209,16 +208,9 @@ public class CommonNavigator extends FrameLayout implements IPagerNavigator, Nav
         }
     }
 
-    private int mCurrentScrollX;
-
     @Override
     public void onPageScrollStateChanged(int state) {
         if (mAdapter != null) {
-            if (mScrollView != null) {
-                if (mNavigatorHelper.getScrollState() == ViewPager.SCROLL_STATE_IDLE && state != ViewPager.SCROLL_STATE_IDLE) {
-                    mCurrentScrollX = mScrollView.getScrollX();
-                }
-            }
             mNavigatorHelper.onPageScrollStateChanged(state);
         }
     }
@@ -244,7 +236,7 @@ public class CommonNavigator extends FrameLayout implements IPagerNavigator, Nav
 
     @Override
     public void onEnter(int index, float enterPercent, boolean leftToRight) {
-        if (mTitleContainer == null || mScrollView == null) {
+        if (mTitleContainer == null) {
             return;
         }
         View v = mTitleContainer.getChildAt(index);
@@ -282,14 +274,14 @@ public class CommonNavigator extends FrameLayout implements IPagerNavigator, Nav
 
     @Override
     public void onSelected(int index) {
-        if (mTitleContainer == null || mScrollView == null) {
+        if (mTitleContainer == null) {
             return;
         }
         View v = mTitleContainer.getChildAt(index);
         if (v instanceof IPagerTitleView) {
             ((IPagerTitleView) v).onSelected(index);
         }
-        if (!mFitMode && !mFollowTouch) {
+        if (!mFitMode && !mFollowTouch && mScrollView != null) {
             // 滚动定位到该项
             View target = mTitleContainer.getChildAt(index);
             if (target != null) {
