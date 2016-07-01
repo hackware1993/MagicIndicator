@@ -74,7 +74,9 @@ public class CircleNavigator extends View implements IPagerNavigator, NavigatorH
 
     private void drawIndicator(Canvas canvas) {
         mPaint.setStyle(Paint.Style.FILL);
-        canvas.drawCircle(mIndicatorX, getHeight() / 2, mRadius, mPaint);
+        if (mCirclePoints.size() > 0) {
+            canvas.drawCircle(mIndicatorX, getHeight() / 2, mRadius, mPaint);
+        }
     }
 
     private void prepareCirclePoints() {
