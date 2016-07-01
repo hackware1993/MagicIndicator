@@ -90,6 +90,7 @@ public class MainActivity extends Activity {
         final MagicIndicator magicIndicator = (MagicIndicator) findViewById(R.id.magic_indicator);
         final CommonNavigator commonNavigator = new CommonNavigator(this);
         commonNavigator.setFollowTouch(false);
+        commonNavigator.setRightPadding(UIUtil.dip2px(MainActivity.this, 50));
         commonNavigator.setAdapter(new CommonNavigatorAdapter() {
 
             @Override

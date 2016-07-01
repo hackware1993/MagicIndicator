@@ -36,7 +36,12 @@ public class CommonNavigator extends FrameLayout implements IPagerNavigator, Nav
     private NavigatorHelper mNavigatorHelper;
     private boolean mFitMode;   // 自适应模式
     private boolean mAlwaysScrollToCenter;  // 当前页始终居中显示
-
+    private boolean mSmoothScroll = true;
+    private boolean mFollowTouch = true;
+    private float mScrollPivotX = 0.5f;
+    private List<PositionData> mPositionList = new ArrayList<PositionData>();
+    private int mRightPadding;
+    private int mLeftPadding;
     private DataSetObserver mObserver = new DataSetObserver() {
 
         @Override
@@ -49,11 +54,6 @@ public class CommonNavigator extends FrameLayout implements IPagerNavigator, Nav
         public void onInvalidated() {
         }
     };
-
-    private boolean mSmoothScroll = true;
-    private boolean mFollowTouch = true;
-    private float mScrollPivotX = 0.5f;
-    private List<PositionData> mPositionList = new ArrayList<PositionData>();
 
     public CommonNavigator(Context context) {
         super(context);
@@ -104,7 +104,11 @@ public class CommonNavigator extends FrameLayout implements IPagerNavigator, Nav
             root = LayoutInflater.from(getContext()).inflate(R.layout.pager_navigator_layout, this);
         }
 
-        mScrollView = (HorizontalScrollView) root.findViewById(R.id.scroll_view);   // mFill为true时，mScrollView为null
+        mScrollView = (HorizontalScrollView) root.findViewById(R.id.scroll_view);   // mFitMode为true时，mScrollView为null
+        if (!mFitMode) {
+            mScrollView.setPadding(mLeftPadding, 0, mRightPadding, 0);
+        }
+
         mIndicatorContainer = (LinearLayout) root.findViewById(R.id.indicator_container);
         mTitleContainer = (LinearLayout) root.findViewById(R.id.title_container);
 
@@ -199,7 +203,7 @@ public class CommonNavigator extends FrameLayout implements IPagerNavigator, Nav
                 PositionData next = mPositionList.get(nextPosition);
                 float scrollTo = current.horizontalCenter() - mScrollView.getWidth() * mScrollPivotX;
                 float nextScrollTo = next.horizontalCenter() - mScrollView.getWidth() * mScrollPivotX;
-                mScrollView.scrollTo((int) (scrollTo + (nextScrollTo - scrollTo) * positionOffset), 0);
+                mScrollView.scrollTo((int) (scrollTo + (nextScrollTo - scrollTo) * positionOffset) + (mLeftPadding + mRightPadding) / 2, 0);
             }
         }
     }
@@ -311,15 +315,31 @@ public class CommonNavigator extends FrameLayout implements IPagerNavigator, Nav
                     } else {
                         mScrollView.scrollTo(current.mLeft, 0);
                     }
-                } else if (mScrollView.getScrollX() + getWidth() < current.mRight) {
+                } else if (mScrollView.getScrollX() + getWidth() < current.mRight + mRightPadding + mLeftPadding) {
                     if (mSmoothScroll) {
-                        mScrollView.smoothScrollTo(current.mRight - getWidth(), 0);
+                        mScrollView.smoothScrollTo(current.mRight - getWidth() + mLeftPadding + mRightPadding, 0);
                     } else {
-                        mScrollView.scrollTo(current.mRight - getWidth(), 0);
+                        mScrollView.scrollTo(current.mRight - getWidth() + mLeftPadding + mRightPadding, 0);
                     }
                 }
             }
         }
+    }
+
+    public int getRightPadding() {
+        return mRightPadding;
+    }
+
+    public void setRightPadding(int rightPadding) {
+        mRightPadding = rightPadding;
+    }
+
+    public int getLeftPadding() {
+        return mLeftPadding;
+    }
+
+    public void setLeftPadding(int leftPadding) {
+        mLeftPadding = leftPadding;
     }
 
     @Override
