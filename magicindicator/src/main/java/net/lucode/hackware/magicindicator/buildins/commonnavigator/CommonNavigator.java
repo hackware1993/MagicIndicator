@@ -178,7 +178,8 @@ public class CommonNavigator extends FrameLayout implements IPagerNavigator, Nav
         }
 
         // 初始化title的位置
-        mNavigatorHelper.onPageSelected(mNavigatorHelper.getCurrentIndex());
+        onPageSelected(mNavigatorHelper.getCurrentIndex());
+        onPageScrolled(mNavigatorHelper.getCurrentIndex(), 0.0f, 0);
     }
 
     @Override
