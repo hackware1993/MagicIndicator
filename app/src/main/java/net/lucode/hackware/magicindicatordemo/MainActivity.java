@@ -164,6 +164,7 @@ public class MainActivity extends Activity {
         final MagicIndicator magic_indicator2 = (MagicIndicator) findViewById(R.id.magic_indicator2);
         final CommonNavigator commonNavigator2 = new CommonNavigator(this);
         commonNavigator2.setFollowTouch(false);
+        commonNavigator2.setAlwaysScrollToCenter(true);
         commonNavigator2.setAdapter(new CommonNavigatorAdapter() {
             @Override
             public int getCount() {
