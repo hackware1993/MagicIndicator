@@ -52,6 +52,8 @@ public class CommonNavigator extends FrameLayout implements IPagerNavigator, Nav
 
     private boolean mSmoothScroll = true;
     private boolean mFollowTouch = true;
+    private float mScrollPivotX = 0.5f;
+    private List<PositionData> mPositionList = new ArrayList<PositionData>();
 
     public CommonNavigator(Context context) {
         super(context);
@@ -195,11 +197,19 @@ public class CommonNavigator extends FrameLayout implements IPagerNavigator, Nav
                 int nextPosition = Math.min(mPositionList.size() - 1, position + 1);
                 PositionData current = mPositionList.get(position);
                 PositionData next = mPositionList.get(nextPosition);
-                int scrollTo = current.horizontalCenter() - mScrollView.getWidth() / 2;
-                int nextScrollTo = next.horizontalCenter() - mScrollView.getWidth() / 2;
+                float scrollTo = current.horizontalCenter() - mScrollView.getWidth() * mScrollPivotX;
+                float nextScrollTo = next.horizontalCenter() - mScrollView.getWidth() * mScrollPivotX;
                 mScrollView.scrollTo((int) (scrollTo + (nextScrollTo - scrollTo) * positionOffset), 0);
             }
         }
+    }
+
+    public float getScrollPivotX() {
+        return mScrollPivotX;
+    }
+
+    public void setScrollPivotX(float scrollPivotX) {
+        mScrollPivotX = scrollPivotX;
     }
 
     @Override
@@ -232,8 +242,6 @@ public class CommonNavigator extends FrameLayout implements IPagerNavigator, Nav
     public void setAlwaysScrollToCenter(boolean is) {
         mAlwaysScrollToCenter = is;
     }
-
-    private List<PositionData> mPositionList = new ArrayList<PositionData>();
 
     @Override
     public void onEnter(int index, float enterPercent, boolean leftToRight) {
@@ -282,40 +290,13 @@ public class CommonNavigator extends FrameLayout implements IPagerNavigator, Nav
         if (v instanceof IPagerTitleView) {
             ((IPagerTitleView) v).onSelected(index);
         }
-        if (!mFitMode && !mFollowTouch && mScrollView != null) {
-            // 滚动定位到该项
-            View target = mTitleContainer.getChildAt(index);
-            if (target != null) {
-                if (mAlwaysScrollToCenter) {
-                    int centerX = target.getLeft() + (target.getRight() - target.getLeft()) / 2;
-                    if (centerX - mScrollView.getWidth() / 2 <= 0) {
-                        if (mSmoothScroll) {
-                            mScrollView.smoothScrollTo(0, 0);
-                        } else {
-                            mScrollView.scrollTo(0, 0);
-                        }
-                    } else {
-                        if (mSmoothScroll) {
-                            mScrollView.smoothScrollTo(centerX - mScrollView.getWidth() / 2, 0);
-                        } else {
-                            mScrollView.scrollTo(centerX - mScrollView.getWidth() / 2, 0);
-                        }
-                    }
-                } else {
-                    if (target.getLeft() - mScrollView.getScrollX() < 0) {
-                        if (mSmoothScroll) {
-                            mScrollView.smoothScrollTo(target.getLeft(), 0);
-                        } else {
-                            mScrollView.scrollTo(target.getLeft(), 0);
-                        }
-                    } else if (mScrollView.getWidth() + mScrollView.getScrollX() < target.getRight()) {
-                        if (mSmoothScroll) {
-                            mScrollView.smoothScrollTo(target.getRight() - mScrollView.getWidth(), 0);
-                        } else {
-                            mScrollView.scrollTo(target.getRight() - mScrollView.getWidth(), 0);
-                        }
-                    }
-                }
+        if (!mFitMode && !mFollowTouch && mScrollView != null && mPositionList.size() > 0) {
+            PositionData current = mPositionList.get(index);
+            float scrollTo = current.horizontalCenter() - mScrollView.getWidth() * mScrollPivotX;
+            if (mSmoothScroll) {
+                mScrollView.smoothScrollTo((int) (scrollTo), 0);
+            } else {
+                mScrollView.scrollTo((int) (scrollTo), 0);
             }
         }
     }

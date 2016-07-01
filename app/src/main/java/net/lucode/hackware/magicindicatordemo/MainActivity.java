@@ -119,7 +119,7 @@ public class MainActivity extends Activity {
         });
         magicIndicator.setNavigator(commonNavigator);
 
-        // 当前页始终定位到中间
+        // 当前页不定位到中间
         final MagicIndicator magic_indicator1 = (MagicIndicator) findViewById(R.id.magic_indicator1);
         final CommonNavigator commonNavigator1 = new CommonNavigator(this);
         commonNavigator1.setFollowTouch(false);
@@ -160,11 +160,12 @@ public class MainActivity extends Activity {
         });
         magic_indicator1.setNavigator(commonNavigator1);
 
-        // 当前页不定位到中间
+        // 当前页始终定位到中间
         final MagicIndicator magic_indicator2 = (MagicIndicator) findViewById(R.id.magic_indicator2);
         final CommonNavigator commonNavigator2 = new CommonNavigator(this);
         commonNavigator2.setFollowTouch(false);
         commonNavigator2.setAlwaysScrollToCenter(true);
+        commonNavigator2.setScrollPivotX(0.15f);
         commonNavigator2.setAdapter(new CommonNavigatorAdapter() {
             @Override
             public int getCount() {
@@ -460,7 +461,7 @@ public class MainActivity extends Activity {
         // 小尖角式
         final MagicIndicator magic_indicator10 = (MagicIndicator) findViewById(R.id.magic_indicator10);
         final CommonNavigator commonNavigator10 = new CommonNavigator(this);
-        commonNavigator10.setAlwaysScrollToCenter(true);
+        commonNavigator10.setScrollPivotX(0.15f);
         commonNavigator10.setAdapter(new CommonNavigatorAdapter() {
             @Override
             public int getCount() {
