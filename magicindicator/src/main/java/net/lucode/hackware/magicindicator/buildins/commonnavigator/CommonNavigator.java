@@ -239,6 +239,10 @@ public class CommonNavigator extends FrameLayout implements IPagerNavigator, Nav
         return mIndicator;
     }
 
+    public boolean isAlwaysScrollToCenter() {
+        return mAlwaysScrollToCenter;
+    }
+
     public void setAlwaysScrollToCenter(boolean is) {
         mAlwaysScrollToCenter = is;
     }
@@ -292,11 +296,28 @@ public class CommonNavigator extends FrameLayout implements IPagerNavigator, Nav
         }
         if (!mFitMode && !mFollowTouch && mScrollView != null && mPositionList.size() > 0) {
             PositionData current = mPositionList.get(index);
-            float scrollTo = current.horizontalCenter() - mScrollView.getWidth() * mScrollPivotX;
-            if (mSmoothScroll) {
-                mScrollView.smoothScrollTo((int) (scrollTo), 0);
+            if (mAlwaysScrollToCenter) {
+                float scrollTo = current.horizontalCenter() - mScrollView.getWidth() * mScrollPivotX;
+                if (mSmoothScroll) {
+                    mScrollView.smoothScrollTo((int) (scrollTo), 0);
+                } else {
+                    mScrollView.scrollTo((int) (scrollTo), 0);
+                }
             } else {
-                mScrollView.scrollTo((int) (scrollTo), 0);
+                // 如果当前项被部分遮挡，则滚动显示完全
+                if (mScrollView.getScrollX() > current.mLeft) {
+                    if (mSmoothScroll) {
+                        mScrollView.smoothScrollTo(current.mLeft, 0);
+                    } else {
+                        mScrollView.scrollTo(current.mLeft, 0);
+                    }
+                } else if (mScrollView.getScrollX() + getWidth() < current.mRight) {
+                    if (mSmoothScroll) {
+                        mScrollView.smoothScrollTo(current.mRight - getWidth(), 0);
+                    } else {
+                        mScrollView.scrollTo(current.mRight - getWidth(), 0);
+                    }
+                }
             }
         }
     }
