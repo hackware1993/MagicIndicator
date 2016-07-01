@@ -165,7 +165,7 @@ public class MainActivity extends Activity {
         final MagicIndicator magic_indicator2 = (MagicIndicator) findViewById(R.id.magic_indicator2);
         final CommonNavigator commonNavigator2 = new CommonNavigator(this);
         commonNavigator2.setFollowTouch(false);
-        commonNavigator2.setAlwaysScrollToCenter(true);
+        commonNavigator2.setEnablePivotScroll(true);
         commonNavigator2.setScrollPivotX(0.15f);
         commonNavigator2.setAdapter(new CommonNavigatorAdapter() {
             @Override
@@ -202,7 +202,7 @@ public class MainActivity extends Activity {
         // 自适应模式
         final MagicIndicator magic_indicator3 = (MagicIndicator) findViewById(R.id.magic_indicator3);
         final CommonNavigator commonNavigator3 = new CommonNavigator(this);
-        commonNavigator3.setFitMode(true);  // 自适应模式
+        commonNavigator3.setAdjustMode(true);  // 自适应模式
         commonNavigator3.setAdapter(new CommonNavigatorAdapter() {
             @Override
             public int getCount() {
@@ -240,7 +240,7 @@ public class MainActivity extends Activity {
         // 自适应模式，带插值器
         final MagicIndicator magic_indicator4 = (MagicIndicator) findViewById(R.id.magic_indicator4);
         final CommonNavigator commonNavigator4 = new CommonNavigator(this);
-        commonNavigator4.setFitMode(true);  // 自适应模式
+        commonNavigator4.setAdjustMode(true);  // 自适应模式
         commonNavigator4.setAdapter(new CommonNavigatorAdapter() {
             @Override
             public int getCount() {
@@ -279,7 +279,7 @@ public class MainActivity extends Activity {
         // 缩放 + 颜色渐变
         final MagicIndicator magic_indicator5 = (MagicIndicator) findViewById(R.id.magic_indicator5);
         final CommonNavigator commonNavigator5 = new CommonNavigator(this);
-        commonNavigator5.setAlwaysScrollToCenter(true);
+        commonNavigator5.setEnablePivotScroll(true);
         commonNavigator5.setScrollPivotX(0.8f);
         commonNavigator5.setAdapter(new CommonNavigatorAdapter() {
             @Override
@@ -320,7 +320,7 @@ public class MainActivity extends Activity {
         // 只有指示器，没有title
         final MagicIndicator magic_indicator6 = (MagicIndicator) findViewById(R.id.magic_indicator6);
         final CommonNavigator commonNavigator6 = new CommonNavigator(this);
-        commonNavigator6.setFitMode(true);
+        commonNavigator6.setAdjustMode(true);
         commonNavigator6.setAdapter(new CommonNavigatorAdapter() {
             @Override
             public int getCount() {
@@ -347,7 +347,7 @@ public class MainActivity extends Activity {
         // 带吸附效果
         final MagicIndicator magic_indicator7 = (MagicIndicator) findViewById(R.id.magic_indicator7);
         final CommonNavigator commonNavigator7 = new CommonNavigator(this);
-        commonNavigator7.setAlwaysScrollToCenter(true);
+        commonNavigator7.setEnablePivotScroll(true);
         commonNavigator7.setAdapter(new CommonNavigatorAdapter() {
             @Override
             public int getCount() {
@@ -388,7 +388,7 @@ public class MainActivity extends Activity {
         // 贝塞尔曲线
         final MagicIndicator magic_indicator8 = (MagicIndicator) findViewById(R.id.magic_indicator8);
         final CommonNavigator commonNavigator8 = new CommonNavigator(this);
-        commonNavigator8.setAlwaysScrollToCenter(true);
+        commonNavigator8.setEnablePivotScroll(true);
         commonNavigator8.setAdapter(new CommonNavigatorAdapter() {
             @Override
             public int getCount() {
@@ -429,7 +429,7 @@ public class MainActivity extends Activity {
         // 天天快报式
         final MagicIndicator magic_indicator9 = (MagicIndicator) findViewById(R.id.magic_indicator9);
         final CommonNavigator commonNavigator9 = new CommonNavigator(this);
-        commonNavigator9.setAlwaysScrollToCenter(true);
+        commonNavigator9.setEnablePivotScroll(true);
         commonNavigator9.setAdapter(new CommonNavigatorAdapter() {
             @Override
             public int getCount() {

@@ -34,14 +34,21 @@ public class CommonNavigator extends FrameLayout implements IPagerNavigator, Nav
 
     private CommonNavigatorAdapter mAdapter;
     private NavigatorHelper mNavigatorHelper;
-    private boolean mFitMode;   // 自适应模式
-    private boolean mAlwaysScrollToCenter;  // 当前页始终居中显示
-    private boolean mSmoothScroll = true;
-    private boolean mFollowTouch = true;
-    private float mScrollPivotX = 0.5f;
-    private List<PositionData> mPositionList = new ArrayList<PositionData>();
+
+    /**
+     * 提供给外部的参数配置
+     */
+    /****************************************************/
+    private boolean mAdjustMode;   // 自适应模式，为true表示title均分宽度，适用于数目固定的、少量的title
+    private boolean mEnablePivotScroll; // 启动中心点滚动
+    private float mScrollPivotX = 0.5f; // 滚动中心点 0.0f - 1.0f
+    private boolean mSmoothScroll = true;   // 是否平滑滚动，适用于 !mAdjustMode && !mFollowTouch
+    private boolean mFollowTouch = true;    // 是否手指跟随滚动
     private int mRightPadding;
     private int mLeftPadding;
+    /****************************************************/
+
+    private List<PositionData> mPositionList = new ArrayList<PositionData>();
     private DataSetObserver mObserver = new DataSetObserver() {
 
         @Override
@@ -69,8 +76,12 @@ public class CommonNavigator extends FrameLayout implements IPagerNavigator, Nav
         }
     }
 
-    public void setFitMode(boolean is) {
-        mFitMode = is;
+    public boolean isAdjustMode() {
+        return mAdjustMode;
+    }
+
+    public void setAdjustMode(boolean is) {
+        mAdjustMode = is;
     }
 
     public CommonNavigatorAdapter getAdapter() {
@@ -98,14 +109,14 @@ public class CommonNavigator extends FrameLayout implements IPagerNavigator, Nav
         removeAllViews();
 
         View root;
-        if (mFitMode) {
+        if (mAdjustMode) {
             root = LayoutInflater.from(getContext()).inflate(R.layout.pager_navigator_layout_no_scroll, this);
         } else {
             root = LayoutInflater.from(getContext()).inflate(R.layout.pager_navigator_layout, this);
         }
 
         mScrollView = (HorizontalScrollView) root.findViewById(R.id.scroll_view);   // mFitMode为true时，mScrollView为null
-        if (!mFitMode) {
+        if (!mAdjustMode) {
             mScrollView.setPadding(mLeftPadding, 0, mRightPadding, 0);
         }
 
@@ -124,7 +135,7 @@ public class CommonNavigator extends FrameLayout implements IPagerNavigator, Nav
             if (v instanceof View) {
                 View view = (View) v;
                 LinearLayout.LayoutParams lp;
-                if (mFitMode) {
+                if (mAdjustMode) {
                     lp = new LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.MATCH_PARENT);
                     lp.weight = 1;
                 } else {
@@ -197,13 +208,17 @@ public class CommonNavigator extends FrameLayout implements IPagerNavigator, Nav
             }
 
             // 手指跟随滚动
-            if (mFollowTouch && mScrollView != null && mPositionList.size() > 0) {
-                int nextPosition = Math.min(mPositionList.size() - 1, position + 1);
-                PositionData current = mPositionList.get(position);
-                PositionData next = mPositionList.get(nextPosition);
-                float scrollTo = current.horizontalCenter() - mScrollView.getWidth() * mScrollPivotX;
-                float nextScrollTo = next.horizontalCenter() - mScrollView.getWidth() * mScrollPivotX;
-                mScrollView.scrollTo((int) (scrollTo + (nextScrollTo - scrollTo) * positionOffset) + (mLeftPadding + mRightPadding) / 2, 0);
+            if (mScrollView != null && mPositionList.size() > 0) {
+                if (mFollowTouch) {
+                    int nextPosition = Math.min(mPositionList.size() - 1, position + 1);
+                    PositionData current = mPositionList.get(position);
+                    PositionData next = mPositionList.get(nextPosition);
+                    float scrollTo = current.horizontalCenter() - mScrollView.getWidth() * mScrollPivotX;
+                    float nextScrollTo = next.horizontalCenter() - mScrollView.getWidth() * mScrollPivotX;
+                    mScrollView.scrollTo((int) (scrollTo + (nextScrollTo - scrollTo) * positionOffset) + (mLeftPadding + mRightPadding) / 2, 0);
+                } else {
+                    // TODO 实现待选中项完全显示出来
+                }
             }
         }
     }
@@ -243,12 +258,12 @@ public class CommonNavigator extends FrameLayout implements IPagerNavigator, Nav
         return mIndicator;
     }
 
-    public boolean isAlwaysScrollToCenter() {
-        return mAlwaysScrollToCenter;
+    public boolean isEnablePivotScroll() {
+        return mEnablePivotScroll;
     }
 
-    public void setAlwaysScrollToCenter(boolean is) {
-        mAlwaysScrollToCenter = is;
+    public void setEnablePivotScroll(boolean is) {
+        mEnablePivotScroll = is;
     }
 
     @Override
@@ -298,10 +313,10 @@ public class CommonNavigator extends FrameLayout implements IPagerNavigator, Nav
         if (v instanceof IPagerTitleView) {
             ((IPagerTitleView) v).onSelected(index);
         }
-        if (!mFitMode && !mFollowTouch && mScrollView != null && mPositionList.size() > 0) {
+        if (!mAdjustMode && !mFollowTouch && mScrollView != null && mPositionList.size() > 0) {
             PositionData current = mPositionList.get(index);
-            if (mAlwaysScrollToCenter) {
-                float scrollTo = current.horizontalCenter() - mScrollView.getWidth() * mScrollPivotX;
+            if (mEnablePivotScroll) {
+                float scrollTo = current.horizontalCenter() - mScrollView.getWidth() * mScrollPivotX + (mLeftPadding + mRightPadding) / 2;
                 if (mSmoothScroll) {
                     mScrollView.smoothScrollTo((int) (scrollTo), 0);
                 } else {
