@@ -280,6 +280,7 @@ public class MainActivity extends Activity {
         final MagicIndicator magic_indicator5 = (MagicIndicator) findViewById(R.id.magic_indicator5);
         final CommonNavigator commonNavigator5 = new CommonNavigator(this);
         commonNavigator5.setAlwaysScrollToCenter(true);
+        commonNavigator5.setScrollPivotX(0.8f);
         commonNavigator5.setAdapter(new CommonNavigatorAdapter() {
             @Override
             public int getCount() {
