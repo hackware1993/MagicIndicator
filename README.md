@@ -1,5 +1,5 @@
 # MagicIndicator
-A powerfull and extensible ViewPager indicator framework.
+A powerful and extensible ViewPager indicator framework.
 
 ![magicindicaotor.gif](https://github.com/hackware1993/MagicIndicator/blob/master/magicindicator.gif)
 
@@ -38,7 +38,7 @@ A powerfull and extensible ViewPager indicator framework.
   </LinearLayout>
   ```
 
-4. find **magicindicator** by code, init it:
+4. find **magicindicator** through code, initialize it:
 
   ```
   final MagicIndicator magicIndicator = (MagicIndicator) findViewById(R.id.magic_indicator);
@@ -72,7 +72,7 @@ A powerfull and extensible ViewPager indicator framework.
   });
   magicIndicator.setNavigator(commonNavigator);
   ```
-5. bind **magicindicator** on ViewPager:
+5. bind **magicindicator** to ViewPager:
 
   ```
   mPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
