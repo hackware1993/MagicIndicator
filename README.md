@@ -4,6 +4,8 @@ A powerful and extensible ViewPager indicator framework.
 ![magicindicaotor.gif](https://github.com/hackware1993/MagicIndicator/blob/master/magicindicator.gif)
 
 # Usage
+Simple steps, you can integrate **MagicIndicator**:
+
 1. checkout out **MagicIndicator**, which contains source code and demo.
 2. import module **magicindicator** and add dependency:
 
