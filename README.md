@@ -98,12 +98,12 @@ Now, emjoy yourself !
 
 More effects adding...
 
-# Who developed ?
+# Who developed?
 
-hackware1993@gmail.com.
+hackware1993@gmail.com
 
-cfb1993@163.com.
+cfb1993@163.com
 
-An intermittent perfectionist.
+An intermittent perfectionist
 
 Visit [My Blog](http://hackware.lucode.net) for more articles about MagicIndicator.
