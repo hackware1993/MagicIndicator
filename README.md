@@ -94,6 +94,16 @@ A powerful and extensible ViewPager indicator framework.
   });
   ```
 
-Now, emjoy yourself!
+Now, emjoy yourself !
+
+More effects adding...
+
+# Who developed ?
+
+hackware1993@gmail.com.
+
+cfb1993@163.com.
+
+An intermittent perfectionist.
 
 Visit [My Blog](http://hackware.lucode.net) for more articles about MagicIndicator.
