@@ -6,7 +6,7 @@ A powerful and extensible ViewPager indicator framework.
 # Usage
 Simple steps, you can integrate **MagicIndicator**:
 
-1. checkout out **MagicIndicator**, which contains source code and demo.
+1. checkout out **MagicIndicator**, which contains source code and demo
 2. import module **magicindicator** and add dependency:
 
   ```
@@ -96,7 +96,7 @@ Simple steps, you can integrate **MagicIndicator**:
   });
   ```
 
-Now, emjoy yourself !
+Now, emjoy yourself!
 
 More effects adding...
 
