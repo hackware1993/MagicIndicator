@@ -523,7 +523,7 @@ public class MainActivity extends Activity {
                 commonPagerTitleView.setContentView(R.layout.simple_pager_title_layout);
 
                 // 初始化
-                ImageView titleImg = (ImageView) commonPagerTitleView.findViewById(R.id.title_img);
+                final ImageView titleImg = (ImageView) commonPagerTitleView.findViewById(R.id.title_img);
                 titleImg.setImageResource(R.mipmap.ic_launcher);
                 final TextView titleText = (TextView) commonPagerTitleView.findViewById(R.id.title_text);
                 titleText.setText(mDataList.get(index));
@@ -542,10 +542,14 @@ public class MainActivity extends Activity {
 
                     @Override
                     public void onLeave(int index, float leavePercent, boolean leftToRight) {
+                        titleImg.setScaleX(1.3f + (0.8f - 1.3f) * leavePercent);
+                        titleImg.setScaleY(1.3f + (0.8f - 1.3f) * leavePercent);
                     }
 
                     @Override
                     public void onEnter(int index, float enterPercent, boolean leftToRight) {
+                        titleImg.setScaleX(0.8f + (1.3f - 0.8f) * enterPercent);
+                        titleImg.setScaleY(0.8f + (1.3f - 0.8f) * enterPercent);
                     }
                 });
 
