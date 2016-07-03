@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.AccelerateInterpolator;
 import android.view.animation.DecelerateInterpolator;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import net.lucode.hackware.magicindicator.MagicIndicator;
@@ -27,6 +28,7 @@ import net.lucode.hackware.magicindicator.buildins.commonnavigator.indicators.Tr
 import net.lucode.hackware.magicindicator.buildins.commonnavigator.indicators.WrapPagerIndicator;
 import net.lucode.hackware.magicindicator.buildins.commonnavigator.titles.ClipPagerTitleView;
 import net.lucode.hackware.magicindicator.buildins.commonnavigator.titles.ColorTransitionPagerTitleView;
+import net.lucode.hackware.magicindicator.buildins.commonnavigator.titles.CommonPagerTitleView;
 import net.lucode.hackware.magicindicator.buildins.commonnavigator.titles.DummyPagerTitleView;
 import net.lucode.hackware.magicindicator.buildins.commonnavigator.titles.ScaleTransitionPagerTitleView;
 import net.lucode.hackware.magicindicator.buildins.commonnavigator.titles.SimplePagerTitleView;
@@ -507,6 +509,65 @@ public class MainActivity extends Activity {
         });
         magic_indicator11.setNavigator(circleNavigator);
 
+        // 通用式
+        final MagicIndicator magic_indicator12 = (MagicIndicator) findViewById(R.id.magic_indicator12);
+        CommonNavigator commonNavigator12 = new CommonNavigator(this);
+        commonNavigator12.setAdapter(new CommonNavigatorAdapter() {
+
+            @Override
+            public int getCount() {
+                return mDataList == null ? 0 : mDataList.size();
+            }
+
+            @Override
+            public IPagerTitleView getItemView(Context context, final int index) {
+                CommonPagerTitleView commonPagerTitleView = new CommonPagerTitleView(MainActivity.this);
+                commonPagerTitleView.setContentView(R.layout.simple_pager_title_layout);
+
+                // 初始化
+                ImageView titleImg = (ImageView) commonPagerTitleView.findViewById(R.id.title_img);
+                titleImg.setImageResource(R.mipmap.ic_launcher);
+                final TextView titleText = (TextView) commonPagerTitleView.findViewById(R.id.title_text);
+                titleText.setText(mDataList.get(index));
+
+                commonPagerTitleView.setOnPagerTitleChangeListener(new CommonPagerTitleView.OnPagerTitleChangeListener() {
+
+                    @Override
+                    public void onSelected(int index) {
+                        titleText.setTextColor(Color.RED);
+                    }
+
+                    @Override
+                    public void onDeselected(int index) {
+                        titleText.setTextColor(Color.BLACK);
+                    }
+
+                    @Override
+                    public void onLeave(int index, float leavePercent, boolean leftToRight) {
+                    }
+
+                    @Override
+                    public void onEnter(int index, float enterPercent, boolean leftToRight) {
+                    }
+                });
+
+                commonPagerTitleView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        mPager.setCurrentItem(index);
+                    }
+                });
+
+                return commonPagerTitleView;
+            }
+
+            @Override
+            public IPagerIndicator getIndicator(Context context) {
+                return null;
+            }
+        });
+        magic_indicator12.setNavigator(commonNavigator12);
+
         mPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
 
             @Override
@@ -523,6 +584,7 @@ public class MainActivity extends Activity {
                 magic_indicator9.onPageScrolled(position, positionOffset, positionOffsetPixels);
                 magic_indicator10.onPageScrolled(position, positionOffset, positionOffsetPixels);
                 magic_indicator11.onPageScrolled(position, positionOffset, positionOffsetPixels);
+                magic_indicator12.onPageScrolled(position, positionOffset, positionOffsetPixels);
             }
 
             @Override
@@ -539,6 +601,7 @@ public class MainActivity extends Activity {
                 magic_indicator9.onPageSelected(position);
                 magic_indicator10.onPageSelected(position);
                 magic_indicator11.onPageSelected(position);
+                magic_indicator12.onPageSelected(position);
             }
 
             @Override
@@ -555,10 +618,11 @@ public class MainActivity extends Activity {
                 magic_indicator9.onPageScrollStateChanged(state);
                 magic_indicator10.onPageScrollStateChanged(state);
                 magic_indicator11.onPageScrollStateChanged(state);
+                magic_indicator12.onPageScrollStateChanged(state);
             }
         });
 
-        mPager.setCurrentItem(1);
+//        mPager.setCurrentItem(1);
 
 /*        mPager.postDelayed(new Runnable() {
             @Override
@@ -578,17 +642,17 @@ public class MainActivity extends Activity {
                 commonNavigator8.notifyDataSetChanged();
                 commonNavigator9.notifyDataSetChanged();
                 commonNavigator10.notifyDataSetChanged();
-                circleNavigator.setCount(mDataList.size());
+                circleNavigator.setCircleCount(mDataList.size());
                 circleNavigator.notifyDataSetChanged();
                 mAdapter.notifyDataSetChanged();
             }
         }, 10000);*/
 
-//        mPager.postDelayed(new Runnable() {
-//            @Override
-//            public void run() {
-//                commonNavigator.setAdapter(null);
-//            }
-//        }, 5000);
+/*        mPager.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                commonNavigator.setAdapter(null);
+            }
+        }, 5000);*/
     }
 }
