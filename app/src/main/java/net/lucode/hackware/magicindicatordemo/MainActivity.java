@@ -37,17 +37,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class MainActivity extends Activity {
+    String[] channels = new String[]{"科技", "汽车", "互联网", "hackware.lucode.net", "奇闻异事", "搞笑", "段子", "趣图", "健康", "时尚", "教育", "星座", "育儿", "游戏", "家居", "美食", "旅游", "历史", "情感"};
     private ViewPager mPager;
     private List<String> mDataList = new ArrayList<String>();
-
-    String[] channels = new String[]{"科技", "汽车", "互联网", "hackware.lucode.net", "奇闻异事", "搞笑", "段子", "趣图", "健康", "时尚", "教育", "星座", "育儿", "游戏", "家居", "美食", "旅游", "历史", "情感"};
-
-    {
-        for (int i = 0; i < channels.length; i++) {
-            mDataList.add(channels[i]);
-        }
-    }
-
     private PagerAdapter mAdapter = new PagerAdapter() {
 
         @Override
@@ -79,6 +71,12 @@ public class MainActivity extends Activity {
             return POSITION_NONE;
         }
     };
+
+    {
+        for (int i = 0; i < channels.length; i++) {
+            mDataList.add(channels[i]);
+        }
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

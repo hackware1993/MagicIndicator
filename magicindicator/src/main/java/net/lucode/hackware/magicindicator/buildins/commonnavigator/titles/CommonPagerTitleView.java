@@ -6,15 +6,16 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 
-import net.lucode.hackware.magicindicator.buildins.commonnavigator.abs.IPagerTitleView;
+import net.lucode.hackware.magicindicator.buildins.commonnavigator.abs.IMeasurablePagerTitleView;
 
 /**
  * 通用的指示器标题，子元素内容由外部提供，事件回传给外部
  * 博客: http://hackware.lucode.net
  * Created by hackware on 2016/7/3.
  */
-public class CommonPagerTitleView extends FrameLayout implements IPagerTitleView {
+public class CommonPagerTitleView extends FrameLayout implements IMeasurablePagerTitleView {
     private OnPagerTitleChangeListener mOnPagerTitleChangeListener;
+    private ContentPositionDataProvider mContentPositionDataProvider;
 
     public CommonPagerTitleView(Context context) {
         super(context);
@@ -26,6 +27,14 @@ public class CommonPagerTitleView extends FrameLayout implements IPagerTitleView
 
     public void setOnPagerTitleChangeListener(OnPagerTitleChangeListener onPagerTitleChangeListener) {
         mOnPagerTitleChangeListener = onPagerTitleChangeListener;
+    }
+
+    public ContentPositionDataProvider getContentPositionDataProvider() {
+        return mContentPositionDataProvider;
+    }
+
+    public void setContentPositionDataProvider(ContentPositionDataProvider contentPositionDataProvider) {
+        mContentPositionDataProvider = contentPositionDataProvider;
     }
 
     @Override
@@ -54,6 +63,38 @@ public class CommonPagerTitleView extends FrameLayout implements IPagerTitleView
         if (mOnPagerTitleChangeListener != null) {
             mOnPagerTitleChangeListener.onEnter(index, enterPercent, leftToRight);
         }
+    }
+
+    @Override
+    public int getContentLeft() {
+        if (mContentPositionDataProvider != null) {
+            return mContentPositionDataProvider.getContentLeft();
+        }
+        return getLeft();
+    }
+
+    @Override
+    public int getContentTop() {
+        if (mContentPositionDataProvider != null) {
+            return mContentPositionDataProvider.getContentTop();
+        }
+        return getTop();
+    }
+
+    @Override
+    public int getContentRight() {
+        if (mContentPositionDataProvider != null) {
+            return mContentPositionDataProvider.getContentRight();
+        }
+        return getRight();
+    }
+
+    @Override
+    public int getContentBottom() {
+        if (mContentPositionDataProvider != null) {
+            return mContentPositionDataProvider.getContentBottom();
+        }
+        return getBottom();
     }
 
     /**
@@ -88,5 +129,15 @@ public class CommonPagerTitleView extends FrameLayout implements IPagerTitleView
         void onLeave(int index, float leavePercent, boolean leftToRight);
 
         void onEnter(int index, float enterPercent, boolean leftToRight);
+    }
+
+    public interface ContentPositionDataProvider {
+        int getContentLeft();
+
+        int getContentTop();
+
+        int getContentRight();
+
+        int getContentBottom();
     }
 }
