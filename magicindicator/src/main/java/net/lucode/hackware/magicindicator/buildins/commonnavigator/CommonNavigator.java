@@ -2,6 +2,7 @@ package net.lucode.hackware.magicindicator.buildins.commonnavigator;
 
 import android.content.Context;
 import android.database.DataSetObserver;
+import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -188,13 +189,13 @@ public class CommonNavigator extends FrameLayout implements IPagerNavigator, Nav
 
         mPositionList = new ArrayList<PositionData>(dataList);
 
-        // 将title的位置信息设置到指示器，并定位到当前位置
+        // 将title的位置信息设置到指示器
         if (mIndicator != null) {
             mIndicator.onPositionDataProvide(dataList);
-            mIndicator.onPageScrolled(mNavigatorHelper.getCurrentIndex(), 0.0f, 0);
         }
 
         // 初始化title的位置
+        onPageScrollStateChanged(ViewPager.SCROLL_STATE_IDLE);
         onPageSelected(mNavigatorHelper.getCurrentIndex());
         onPageScrolled(mNavigatorHelper.getCurrentIndex(), 0.0f, 0);
     }
@@ -202,6 +203,7 @@ public class CommonNavigator extends FrameLayout implements IPagerNavigator, Nav
     @Override
     public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
         if (mAdapter != null) {
+
             mNavigatorHelper.onPageScrolled(position, positionOffset, positionOffsetPixels);
             if (mIndicator != null) {
                 mIndicator.onPageScrolled(mNavigatorHelper.getSafeIndex(position), positionOffset, positionOffsetPixels);
@@ -216,7 +218,7 @@ public class CommonNavigator extends FrameLayout implements IPagerNavigator, Nav
                     float scrollTo = current.horizontalCenter() - mScrollView.getWidth() * mScrollPivotX;
                     float nextScrollTo = next.horizontalCenter() - mScrollView.getWidth() * mScrollPivotX;
                     mScrollView.scrollTo((int) (scrollTo + (nextScrollTo - scrollTo) * positionOffset) + (mLeftPadding + mRightPadding) / 2, 0);
-                } else {
+                } else if (!mEnablePivotScroll) {
                     // TODO 实现待选中项完全显示出来
                 }
             }
@@ -235,6 +237,9 @@ public class CommonNavigator extends FrameLayout implements IPagerNavigator, Nav
     public void onPageSelected(int position) {
         if (mAdapter != null) {
             mNavigatorHelper.onPageSelected(position);
+            if (mIndicator != null) {
+                mIndicator.onPageSelected(position);
+            }
         }
     }
 
@@ -242,6 +247,9 @@ public class CommonNavigator extends FrameLayout implements IPagerNavigator, Nav
     public void onPageScrollStateChanged(int state) {
         if (mAdapter != null) {
             mNavigatorHelper.onPageScrollStateChanged(state);
+            if (mIndicator != null) {
+                mIndicator.onPageScrollStateChanged(state);
+            }
         }
     }
 

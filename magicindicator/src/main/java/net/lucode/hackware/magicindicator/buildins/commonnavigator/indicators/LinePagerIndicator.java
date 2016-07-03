@@ -88,6 +88,14 @@ public class LinePagerIndicator extends View implements IPagerIndicator {
     }
 
     @Override
+    public void onPageSelected(int position) {
+    }
+
+    @Override
+    public void onPageScrollStateChanged(int state) {
+    }
+
+    @Override
     public void onPositionDataProvide(List<PositionData> dataList) {
         mPositionDataList = dataList;
     }

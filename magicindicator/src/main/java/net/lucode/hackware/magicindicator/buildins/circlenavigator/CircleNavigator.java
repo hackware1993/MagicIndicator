@@ -51,9 +51,9 @@ public class CircleNavigator extends View implements IPagerNavigator, NavigatorH
         mNavigatorHelper.setNavigatorScrollListener(this);
         mPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
         mTouchSlop = ViewConfiguration.get(context).getScaledTouchSlop();
-        setRadius(UIUtil.dip2px(context, 3));
-        setCircleSpacing(UIUtil.dip2px(context, 8));
-        setStrokeWidth(UIUtil.dip2px(context, 1));
+        mRadius = UIUtil.dip2px(context, 3);
+        mCircleSpacing = UIUtil.dip2px(context, 8);
+        mStrokeWidth = UIUtil.dip2px(context, 1);
     }
 
     @Override
@@ -160,7 +160,6 @@ public class CircleNavigator extends View implements IPagerNavigator, NavigatorH
 
     @Override
     protected void onLayout(boolean changed, int left, int top, int right, int bottom) {
-        super.onLayout(changed, left, top, right, bottom);
         prepareCirclePoints();
     }
 

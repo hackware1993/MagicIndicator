@@ -66,6 +66,14 @@ public class AbsorbPagerIndicator extends LinePagerIndicator {
         invalidate();
     }
 
+    @Override
+    public void onPageSelected(int position) {
+    }
+
+    @Override
+    public void onPageScrollStateChanged(int state) {
+    }
+
     public int getAnchorDistance() {
         return mAnchorDistance;
     }

@@ -18,13 +18,13 @@ public class NavigatorHelper {
     }
 
     public int getSafeIndex(int index) {
-        return Math.max(Math.min(index, getTotalCount() - 1), 0);
+        return Math.max(Math.min(index, mTotalCount - 1), 0);
     }
 
     public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
         if (mNavigatorScrollListener != null) {
             int safePosition = getSafeIndex(position);
-            if (getScrollState() != ViewPager.SCROLL_STATE_IDLE) {
+            if (mScrollState != ViewPager.SCROLL_STATE_IDLE) {
                 boolean leftToRight = safePosition >= getCurrentIndex();
                 int enterIndex;
                 int leaveIndex;
@@ -43,7 +43,7 @@ public class NavigatorHelper {
                 }
                 mNavigatorScrollListener.onEnter(enterIndex, enterPercent, leftToRight);
                 mNavigatorScrollListener.onLeave(leaveIndex, leavePercent, leftToRight);
-                for (int i = 0, j = getTotalCount(); i < j; i++) {
+                for (int i = 0, j = mTotalCount; i < j; i++) {
                     if (i == enterIndex || i == leaveIndex) {
                         continue;
                     }
@@ -51,10 +51,10 @@ public class NavigatorHelper {
                 }
             } else {
                 // 在IDLE状态下收到了onPageScrolled回调，表示完全滚动到了某一页
-                setCurrentIndex(safePosition);
+                mCurrentIndex = safePosition;
                 mNavigatorScrollListener.onEnter(safePosition, 1.0f, false);
                 mNavigatorScrollListener.onSelected(safePosition);
-                for (int i = 0, j = getTotalCount(); i < j; i++) {
+                for (int i = 0, j = mTotalCount; i < j; i++) {
                     if (i == safePosition) {
                         continue;
                     }
@@ -66,11 +66,11 @@ public class NavigatorHelper {
     }
 
     public void onPageSelected(int position) {
-        setCurrentIndex(position);
+        int currentIndex = setCurrentIndex(position);
         if (mNavigatorScrollListener != null) {
-            mNavigatorScrollListener.onSelected(getCurrentIndex());
-            for (int i = 0, j = getTotalCount(); i < j; i++) {
-                if (i == getCurrentIndex()) {
+            mNavigatorScrollListener.onSelected(currentIndex);
+            for (int i = 0, j = mTotalCount; i < j; i++) {
+                if (i == currentIndex) {
                     continue;
                 }
                 mNavigatorScrollListener.onDeselected(i);
@@ -79,15 +79,16 @@ public class NavigatorHelper {
     }
 
     public void onPageScrollStateChanged(int state) {
-        setScrollState(state);
+        mScrollState = state;
     }
 
     public int getCurrentIndex() {
         return getSafeIndex(mCurrentIndex);
     }
 
-    public void setCurrentIndex(int currentIndex) {
+    public int setCurrentIndex(int currentIndex) {
         mCurrentIndex = getSafeIndex(currentIndex);
+        return mCurrentIndex;
     }
 
     public int getTotalCount() {
@@ -115,9 +116,9 @@ public class NavigatorHelper {
     }
 
     public void clear() {
-        setTotalCount(0);
-        setCurrentIndex(0);
-        setScrollState(ViewPager.SCROLL_STATE_IDLE);
+        mTotalCount = 0;
+        mCurrentIndex = 0;
+        mScrollState = ViewPager.SCROLL_STATE_IDLE;
     }
 
     public interface OnNavigatorScrollListener {
