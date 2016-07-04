@@ -116,9 +116,9 @@ public class CommonNavigator extends FrameLayout implements IPagerNavigator, Nav
             root = LayoutInflater.from(getContext()).inflate(R.layout.pager_navigator_layout, this);
         }
 
-        mScrollView = (HorizontalScrollView) root.findViewById(R.id.scroll_view);   // mFitMode为true时，mScrollView为null
+        mScrollView = (HorizontalScrollView) root.findViewById(R.id.scroll_view);   // mAdjustMode为true时，mScrollView为null
         if (!mAdjustMode) {
-            mScrollView.setPadding(mLeftPadding, 0, mRightPadding, 0);
+            mScrollView.getChildAt(0).setPadding(mLeftPadding, 0, mRightPadding, 0);    // TODO padding的效果尚未达到预期
         }
 
         mIndicatorContainer = (LinearLayout) root.findViewById(R.id.indicator_container);
@@ -217,7 +217,7 @@ public class CommonNavigator extends FrameLayout implements IPagerNavigator, Nav
                     PositionData next = mPositionList.get(nextPosition);
                     float scrollTo = current.horizontalCenter() - mScrollView.getWidth() * mScrollPivotX;
                     float nextScrollTo = next.horizontalCenter() - mScrollView.getWidth() * mScrollPivotX;
-                    mScrollView.scrollTo((int) (scrollTo + (nextScrollTo - scrollTo) * positionOffset) + (mLeftPadding + mRightPadding) / 2, 0);
+                    mScrollView.scrollTo((int) (scrollTo + (nextScrollTo - scrollTo) * positionOffset), 0);
                 } else if (!mEnablePivotScroll) {
                     // TODO 实现待选中项完全显示出来
                 }
@@ -324,7 +324,7 @@ public class CommonNavigator extends FrameLayout implements IPagerNavigator, Nav
         if (!mAdjustMode && !mFollowTouch && mScrollView != null && mPositionList.size() > 0) {
             PositionData current = mPositionList.get(index);
             if (mEnablePivotScroll) {
-                float scrollTo = current.horizontalCenter() - mScrollView.getWidth() * mScrollPivotX + (mLeftPadding + mRightPadding) / 2;
+                float scrollTo = current.horizontalCenter() - mScrollView.getWidth() * mScrollPivotX;
                 if (mSmoothScroll) {
                     mScrollView.smoothScrollTo((int) (scrollTo), 0);
                 } else {
@@ -338,11 +338,11 @@ public class CommonNavigator extends FrameLayout implements IPagerNavigator, Nav
                     } else {
                         mScrollView.scrollTo(current.mLeft, 0);
                     }
-                } else if (mScrollView.getScrollX() + getWidth() < current.mRight + mRightPadding + mLeftPadding) {
+                } else if (mScrollView.getScrollX() + getWidth() < current.mRight) {
                     if (mSmoothScroll) {
-                        mScrollView.smoothScrollTo(current.mRight - getWidth() + mLeftPadding + mRightPadding, 0);
+                        mScrollView.smoothScrollTo(current.mRight - getWidth(), 0);
                     } else {
-                        mScrollView.scrollTo(current.mRight - getWidth() + mLeftPadding + mRightPadding, 0);
+                        mScrollView.scrollTo(current.mRight - getWidth(), 0);
                     }
                 }
             }

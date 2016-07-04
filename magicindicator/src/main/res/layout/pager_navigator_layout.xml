@@ -23,4 +23,5 @@
             android:orientation="horizontal" />
 
     </FrameLayout>
+
 </HorizontalScrollView>
