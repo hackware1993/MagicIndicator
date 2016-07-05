@@ -3,7 +3,8 @@ package net.lucode.hackware.magicindicator;
 import android.support.v4.view.ViewPager;
 
 /**
- * 方便扩展IPagerNavigator的帮助类
+ * 方便扩展IPagerNavigator的帮助类，将ViewPager的3个回调方法转换成
+ * onSelected、onDeselected、onEnter等回调，方便扩展
  * 博客: http://hackware.lucode.net
  * Created by hackware on 2016/6/26.
  */
@@ -41,8 +42,11 @@ public class NavigatorHelper {
                     leaveIndex = getSafeIndex(safePosition + 1);
                     leavePercent = 1.0f - positionOffset;
                 }
+
                 mNavigatorScrollListener.onEnter(enterIndex, enterPercent, leftToRight);
                 mNavigatorScrollListener.onLeave(leaveIndex, leavePercent, leftToRight);
+
+                // 简单粗暴，有待优化
                 for (int i = 0, j = mTotalCount; i < j; i++) {
                     if (i == enterIndex || i == leaveIndex) {
                         continue;

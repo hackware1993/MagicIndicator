@@ -49,17 +49,20 @@ public class CommonNavigator extends FrameLayout implements IPagerNavigator, Nav
     private int mLeftPadding;
     /****************************************************/
 
+    // 保存每个title的位置信息，为扩展indicator提供保障
     private List<PositionData> mPositionList = new ArrayList<PositionData>();
+
     private DataSetObserver mObserver = new DataSetObserver() {
 
         @Override
         public void onChanged() {
-            mNavigatorHelper.setTotalCount(mAdapter.getCount());
+            mNavigatorHelper.setTotalCount(mAdapter.getCount());    // 如果使用helper，应始终保证helper中的totalCount为最新
             init();
         }
 
         @Override
         public void onInvalidated() {
+            // 没什么用，暂不做处理
         }
     };
 
@@ -101,7 +104,7 @@ public class CommonNavigator extends FrameLayout implements IPagerNavigator, Nav
             mAdapter.registerDataSetObserver(mObserver);
             adapter.notifyDataSetChanged();
         } else {
-            mNavigatorHelper.clear();
+            mNavigatorHelper.clear();   // 重要
             init();
         }
     }
@@ -138,7 +141,7 @@ public class CommonNavigator extends FrameLayout implements IPagerNavigator, Nav
                 LinearLayout.LayoutParams lp;
                 if (mAdjustMode) {
                     lp = new LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.MATCH_PARENT);
-                    lp.weight = 1;
+                    lp.weight = 1;  // 均分宽度，后期将支持在adapter中自定义weight
                 } else {
                     lp = new LinearLayout.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.MATCH_PARENT);
                 }
@@ -255,7 +258,7 @@ public class CommonNavigator extends FrameLayout implements IPagerNavigator, Nav
 
     @Override
     public void onAttachToMagicIndicator() {
-        init();
+        init(); // 将初始化延迟到这里
     }
 
     @Override
