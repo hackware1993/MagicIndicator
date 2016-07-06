@@ -91,6 +91,7 @@ public class MainActivity extends Activity {
         final CommonNavigator commonNavigator = new CommonNavigator(this);
         commonNavigator.setFollowTouch(false);
         commonNavigator.setRightPadding(UIUtil.dip2px(MainActivity.this, 50));
+        commonNavigator.setLeftPadding(UIUtil.dip2px(MainActivity.this, 80));
         commonNavigator.setAdapter(new CommonNavigatorAdapter() {
 
             @Override
@@ -531,23 +532,23 @@ public class MainActivity extends Activity {
                 commonPagerTitleView.setOnPagerTitleChangeListener(new CommonPagerTitleView.OnPagerTitleChangeListener() {
 
                     @Override
-                    public void onSelected(int index) {
+                    public void onSelected(int index, int totalCount) {
                         titleText.setTextColor(Color.RED);
                     }
 
                     @Override
-                    public void onDeselected(int index) {
+                    public void onDeselected(int index, int totalCount) {
                         titleText.setTextColor(Color.BLACK);
                     }
 
                     @Override
-                    public void onLeave(int index, float leavePercent, boolean leftToRight) {
+                    public void onLeave(int index, int totalCount, float leavePercent, boolean leftToRight) {
                         titleImg.setScaleX(1.3f + (0.8f - 1.3f) * leavePercent);
                         titleImg.setScaleY(1.3f + (0.8f - 1.3f) * leavePercent);
                     }
 
                     @Override
-                    public void onEnter(int index, float enterPercent, boolean leftToRight) {
+                    public void onEnter(int index, int totalCount, float enterPercent, boolean leftToRight) {
                         titleImg.setScaleX(0.8f + (1.3f - 0.8f) * enterPercent);
                         titleImg.setScaleY(0.8f + (1.3f - 0.8f) * enterPercent);
                     }

@@ -38,30 +38,30 @@ public class CommonPagerTitleView extends FrameLayout implements IMeasurablePage
     }
 
     @Override
-    public void onSelected(int index) {
+    public void onSelected(int index, int totalCount) {
         if (mOnPagerTitleChangeListener != null) {
-            mOnPagerTitleChangeListener.onSelected(index);
+            mOnPagerTitleChangeListener.onSelected(index, totalCount);
         }
     }
 
     @Override
-    public void onDeselected(int index) {
+    public void onDeselected(int index, int totalCount) {
         if (mOnPagerTitleChangeListener != null) {
-            mOnPagerTitleChangeListener.onDeselected(index);
+            mOnPagerTitleChangeListener.onDeselected(index, totalCount);
         }
     }
 
     @Override
-    public void onLeave(int index, float leavePercent, boolean leftToRight) {
+    public void onLeave(int index, int totalCount, float leavePercent, boolean leftToRight) {
         if (mOnPagerTitleChangeListener != null) {
-            mOnPagerTitleChangeListener.onLeave(index, leavePercent, leftToRight);
+            mOnPagerTitleChangeListener.onLeave(index, totalCount, leavePercent, leftToRight);
         }
     }
 
     @Override
-    public void onEnter(int index, float enterPercent, boolean leftToRight) {
+    public void onEnter(int index, int totalCount, float enterPercent, boolean leftToRight) {
         if (mOnPagerTitleChangeListener != null) {
-            mOnPagerTitleChangeListener.onEnter(index, enterPercent, leftToRight);
+            mOnPagerTitleChangeListener.onEnter(index, totalCount, enterPercent, leftToRight);
         }
     }
 
@@ -122,13 +122,13 @@ public class CommonPagerTitleView extends FrameLayout implements IMeasurablePage
     }
 
     public interface OnPagerTitleChangeListener {
-        void onSelected(int index);
+        void onSelected(int index, int totalCount);
 
-        void onDeselected(int index);
+        void onDeselected(int index, int totalCount);
 
-        void onLeave(int index, float leavePercent, boolean leftToRight);
+        void onLeave(int index, int totalCount, float leavePercent, boolean leftToRight);
 
-        void onEnter(int index, float enterPercent, boolean leftToRight);
+        void onEnter(int index, int totalCount, float enterPercent, boolean leftToRight);
     }
 
     public interface ContentPositionDataProvider {

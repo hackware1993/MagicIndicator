@@ -279,24 +279,24 @@ public class CommonNavigator extends FrameLayout implements IPagerNavigator, Nav
     }
 
     @Override
-    public void onEnter(int index, float enterPercent, boolean leftToRight) {
+    public void onEnter(int index, int totalCount, float enterPercent, boolean leftToRight) {
         if (mTitleContainer == null) {
             return;
         }
         View v = mTitleContainer.getChildAt(index);
         if (v instanceof IPagerTitleView) {
-            ((IPagerTitleView) v).onEnter(index, enterPercent, leftToRight);
+            ((IPagerTitleView) v).onEnter(index, totalCount, enterPercent, leftToRight);
         }
     }
 
     @Override
-    public void onLeave(int index, float leavePercent, boolean leftToRight) {
+    public void onLeave(int index, int totalCount, float leavePercent, boolean leftToRight) {
         if (mTitleContainer == null) {
             return;
         }
         View v = mTitleContainer.getChildAt(index);
         if (v instanceof IPagerTitleView) {
-            ((IPagerTitleView) v).onLeave(index, leavePercent, leftToRight);
+            ((IPagerTitleView) v).onLeave(index, totalCount, leavePercent, leftToRight);
         }
     }
 
@@ -317,13 +317,13 @@ public class CommonNavigator extends FrameLayout implements IPagerNavigator, Nav
     }
 
     @Override
-    public void onSelected(int index) {
+    public void onSelected(int index, int totalCount) {
         if (mTitleContainer == null) {
             return;
         }
         View v = mTitleContainer.getChildAt(index);
         if (v instanceof IPagerTitleView) {
-            ((IPagerTitleView) v).onSelected(index);
+            ((IPagerTitleView) v).onSelected(index, totalCount);
         }
         if (!mAdjustMode && !mFollowTouch && mScrollView != null && mPositionList.size() > 0) {
             int currentIndex = Math.min(mPositionList.size() - 1, index);
@@ -371,13 +371,13 @@ public class CommonNavigator extends FrameLayout implements IPagerNavigator, Nav
     }
 
     @Override
-    public void onDeselected(int index) {
+    public void onDeselected(int index, int totalCount) {
         if (mTitleContainer == null) {
             return;
         }
         View v = mTitleContainer.getChildAt(index);
         if (v instanceof IPagerTitleView) {
-            ((IPagerTitleView) v).onDeselected(index);
+            ((IPagerTitleView) v).onDeselected(index, totalCount);
         }
     }
 }

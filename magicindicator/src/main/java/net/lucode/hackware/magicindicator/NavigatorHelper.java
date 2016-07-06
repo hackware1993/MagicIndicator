@@ -43,27 +43,27 @@ public class NavigatorHelper {
                     leavePercent = 1.0f - positionOffset;
                 }
 
-                mNavigatorScrollListener.onEnter(enterIndex, enterPercent, leftToRight);
-                mNavigatorScrollListener.onLeave(leaveIndex, leavePercent, leftToRight);
+                mNavigatorScrollListener.onEnter(enterIndex, mTotalCount, enterPercent, leftToRight);
+                mNavigatorScrollListener.onLeave(leaveIndex, mTotalCount, leavePercent, leftToRight);
 
                 // 简单粗暴，有待优化
                 for (int i = 0, j = mTotalCount; i < j; i++) {
                     if (i == enterIndex || i == leaveIndex) {
                         continue;
                     }
-                    mNavigatorScrollListener.onLeave(i, 1.0f, false);
+                    mNavigatorScrollListener.onLeave(i, mTotalCount, 1.0f, false);
                 }
             } else {
                 // 在IDLE状态下收到了onPageScrolled回调，表示完全滚动到了某一页
                 mCurrentIndex = safePosition;
-                mNavigatorScrollListener.onEnter(safePosition, 1.0f, false);
-                mNavigatorScrollListener.onSelected(safePosition);
+                mNavigatorScrollListener.onEnter(safePosition, mTotalCount, 1.0f, false);
+                mNavigatorScrollListener.onSelected(safePosition, mTotalCount);
                 for (int i = 0, j = mTotalCount; i < j; i++) {
                     if (i == safePosition) {
                         continue;
                     }
-                    mNavigatorScrollListener.onLeave(i, 1.0f, false);
-                    mNavigatorScrollListener.onDeselected(i);
+                    mNavigatorScrollListener.onLeave(i, mTotalCount, 1.0f, false);
+                    mNavigatorScrollListener.onDeselected(i, mTotalCount);
                 }
             }
         }
@@ -72,12 +72,12 @@ public class NavigatorHelper {
     public void onPageSelected(int position) {
         int currentIndex = setCurrentIndex(position);
         if (mNavigatorScrollListener != null) {
-            mNavigatorScrollListener.onSelected(currentIndex);
+            mNavigatorScrollListener.onSelected(currentIndex, mTotalCount);
             for (int i = 0, j = mTotalCount; i < j; i++) {
                 if (i == currentIndex) {
                     continue;
                 }
-                mNavigatorScrollListener.onDeselected(i);
+                mNavigatorScrollListener.onDeselected(i, mTotalCount);
             }
         }
     }
@@ -126,12 +126,12 @@ public class NavigatorHelper {
     }
 
     public interface OnNavigatorScrollListener {
-        void onEnter(int index, float enterPercent, boolean leftToRight);
+        void onEnter(int index, int totalCount, float enterPercent, boolean leftToRight);
 
-        void onLeave(int index, float leavePercent, boolean leftToRight);
+        void onLeave(int index, int totalCount, float leavePercent, boolean leftToRight);
 
-        void onSelected(int index);
+        void onSelected(int index, int totalCount);
 
-        void onDeselected(int index);
+        void onDeselected(int index, int totalCount);
     }
 }
