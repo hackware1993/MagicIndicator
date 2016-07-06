@@ -69,8 +69,9 @@ public class LinePagerIndicator extends View implements IPagerIndicator {
         }
 
         // 计算锚点位置
+        int currentPosition = Math.min(mPositionDataList.size() - 1, position);
         int nextPosition = Math.min(mPositionDataList.size() - 1, position + 1);
-        PositionData current = mPositionDataList.get(position);
+        PositionData current = mPositionDataList.get(currentPosition);
         PositionData next = mPositionDataList.get(nextPosition);
 
         float leftX = mWrapContentMode ? current.mContentLeft : current.mLeft;

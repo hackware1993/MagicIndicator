@@ -104,8 +104,9 @@ public class CircleNavigator extends View implements IPagerNavigator, NavigatorH
             return;
         }
 
+        int currentPosition = Math.min(mCirclePoints.size() - 1, position);
         int nextPosition = Math.min(mCirclePoints.size() - 1, position + 1);
-        PointF current = mCirclePoints.get(position);
+        PointF current = mCirclePoints.get(currentPosition);
         PointF next = mCirclePoints.get(nextPosition);
 
         mIndicatorX = current.x + (next.x - current.x) * mStartInterpolator.getInterpolation(positionOffset);

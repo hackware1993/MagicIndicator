@@ -209,14 +209,15 @@ public class CommonNavigator extends FrameLayout implements IPagerNavigator, Nav
 
             mNavigatorHelper.onPageScrolled(position, positionOffset, positionOffsetPixels);
             if (mIndicator != null) {
-                mIndicator.onPageScrolled(mNavigatorHelper.getSafeIndex(position), positionOffset, positionOffsetPixels);
+                mIndicator.onPageScrolled(position, positionOffset, positionOffsetPixels);
             }
 
             // 手指跟随滚动
             if (mScrollView != null && mPositionList.size() > 0) {
                 if (mFollowTouch) {
+                    int currentPosition = Math.min(mPositionList.size() - 1, position);
                     int nextPosition = Math.min(mPositionList.size() - 1, position + 1);
-                    PositionData current = mPositionList.get(position);
+                    PositionData current = mPositionList.get(currentPosition);
                     PositionData next = mPositionList.get(nextPosition);
                     float scrollTo = current.horizontalCenter() - mScrollView.getWidth() * mScrollPivotX;
                     float nextScrollTo = next.horizontalCenter() - mScrollView.getWidth() * mScrollPivotX;
@@ -325,7 +326,8 @@ public class CommonNavigator extends FrameLayout implements IPagerNavigator, Nav
             ((IPagerTitleView) v).onSelected(index);
         }
         if (!mAdjustMode && !mFollowTouch && mScrollView != null && mPositionList.size() > 0) {
-            PositionData current = mPositionList.get(index);
+            int currentIndex = Math.min(mPositionList.size() - 1, index);
+            PositionData current = mPositionList.get(currentIndex);
             if (mEnablePivotScroll) {
                 float scrollTo = current.horizontalCenter() - mScrollView.getWidth() * mScrollPivotX;
                 if (mSmoothScroll) {

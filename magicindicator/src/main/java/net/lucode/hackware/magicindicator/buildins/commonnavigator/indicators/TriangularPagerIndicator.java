@@ -62,8 +62,10 @@ public class TriangularPagerIndicator extends View implements IPagerIndicator {
             return;
         }
 
+        // 计算锚点位置
+        int currentPosition = Math.min(mPositionDataList.size() - 1, position);
         int nextPosition = Math.min(mPositionDataList.size() - 1, position + 1);
-        PositionData current = mPositionDataList.get(position);
+        PositionData current = mPositionDataList.get(currentPosition);
         PositionData next = mPositionDataList.get(nextPosition);
 
         float leftX = current.mLeft + (current.mRight - current.mLeft) / 2;

@@ -74,13 +74,15 @@ public class TestPagerIndicator extends View implements IPagerIndicator {
         }
 
         // 计算锚点位置
+        int currentPosition = Math.min(mPositionDataList.size() - 1, position);
         int nextPosition = Math.min(mPositionDataList.size() - 1, position + 1);
-        PositionData current = mPositionDataList.get(position);
+        PositionData current = mPositionDataList.get(currentPosition);
         PositionData next = mPositionDataList.get(nextPosition);
 
         float outLeft = current.mLeft + (next.mLeft - current.mLeft) * positionOffset;
         float outRight = current.mRight + (next.mRight - current.mRight) * positionOffset;
         mOutRect = new RectF(outLeft, current.mTop, outRight, current.mBottom);
+
         float innerLeft = current.mContentLeft + (next.mContentLeft - current.mContentLeft) * positionOffset;
         float innerRight = current.mContentRight + (next.mContentRight - current.mContentRight) * positionOffset;
         mInnerRect = new RectF(innerLeft, current.mContentTop, innerRight, current.mContentBottom);
