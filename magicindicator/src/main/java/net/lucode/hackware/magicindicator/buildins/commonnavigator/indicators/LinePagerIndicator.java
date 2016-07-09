@@ -22,36 +22,43 @@ import java.util.List;
  * Created by hackware on 2016/6/26.
  */
 public class LinePagerIndicator extends View implements IPagerIndicator {
-    protected List<PositionData> mPositionDataList;
+    public static final int MODE_MATCH_EDGE = 0;   // 直线宽度 == title宽度 - 2 * mXOffset
+    public static final int MODE_WRAP_CONTENT = 1;    // 直线宽度 == title内容宽度 - 2 * mXOffset
+    public static final int MODE_EXACTLY = 2;  // 直线宽度 == mLineWidth
 
-    protected float mYOffset;
-    protected float mLineHeight;
-    protected float mRoundRadius;
-    protected boolean mWrapContentMode;
-    protected Interpolator mStartInterpolator = new LinearInterpolator();
-    protected Interpolator mEndInterpolator = new LinearInterpolator();
+    private int mMode;  // 默认为MODE_MATCH_EDGE模式
 
-    protected float mStartX;
-    protected float mEndX;
+    // 控制动画
+    private Interpolator mStartInterpolator = new LinearInterpolator();
+    private Interpolator mEndInterpolator = new LinearInterpolator();
 
-    protected Paint mPaint;
-    protected List<String> mColorList;
+    private float mYOffset;   // 相对于底部的偏移量，如果你想让直线位于title上方，设置它即可
+    private float mLineHeight;
+    private float mXOffset;
+    private float mLineWidth;
+    private float mRoundRadius;
+
+    private Paint mPaint;
+    private List<PositionData> mPositionDataList;
+    private List<String> mColorList;
+
+    private RectF mLineRect = new RectF();
 
     public LinePagerIndicator(Context context) {
         super(context);
         init(context);
     }
 
-    protected void init(Context context) {
+    private void init(Context context) {
         mPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
         mPaint.setStyle(Paint.Style.FILL);
-        setLineHeight(UIUtil.dip2px(context, 3));
+        mLineHeight = UIUtil.dip2px(context, 3);
+        mLineWidth = UIUtil.dip2px(context, 10);
     }
 
     @Override
     protected void onDraw(Canvas canvas) {
-        RectF rectF = new RectF(mStartX, getHeight() - mLineHeight - mYOffset, mEndX, getHeight() - mYOffset);
-        canvas.drawRoundRect(rectF, mRoundRadius, mRoundRadius, mPaint);
+        canvas.drawRoundRect(mLineRect, mRoundRadius, mRoundRadius, mPaint);
     }
 
     @Override
@@ -74,16 +81,31 @@ public class LinePagerIndicator extends View implements IPagerIndicator {
         PositionData current = mPositionDataList.get(currentPosition);
         PositionData next = mPositionDataList.get(nextPosition);
 
-        float leftX = mWrapContentMode ? current.mContentLeft : current.mLeft;
-        float nextLeftX = mWrapContentMode ? next.mContentLeft : next.mLeft;
-        float rightX = mWrapContentMode ? current.mContentRight : current.mRight;
-        float nextRightX = mWrapContentMode ? next.mContentRight : next.mRight;
+        float leftX;
+        float nextLeftX;
+        float rightX;
+        float nextRightX;
+        if (mMode == MODE_MATCH_EDGE) {
+            leftX = current.mLeft + mXOffset;
+            nextLeftX = next.mLeft + mXOffset;
+            rightX = current.mRight - mXOffset;
+            nextRightX = next.mRight - mXOffset;
+        } else if (mMode == MODE_WRAP_CONTENT) {
+            leftX = current.mContentLeft + mXOffset;
+            nextLeftX = next.mContentLeft + mXOffset;
+            rightX = current.mContentRight - mXOffset;
+            nextRightX = next.mContentRight - mXOffset;
+        } else {    // MODE_EXACTLY
+            leftX = current.mLeft + (current.width() - mLineWidth) / 2;
+            nextLeftX = next.mLeft + (next.width() - mLineWidth) / 2;
+            rightX = current.mLeft + (current.width() + mLineWidth) / 2;
+            nextRightX = next.mLeft + (next.width() + mLineWidth) / 2;
+        }
 
-        float startX = leftX + (nextLeftX - leftX) * mStartInterpolator.getInterpolation(positionOffset);
-        setStartX(startX);
-
-        float endX = rightX + (nextRightX - rightX) * mEndInterpolator.getInterpolation(positionOffset);
-        setEndX(endX);
+        mLineRect.left = leftX + (nextLeftX - leftX) * mStartInterpolator.getInterpolation(positionOffset);
+        mLineRect.right = rightX + (nextRightX - rightX) * mEndInterpolator.getInterpolation(positionOffset);
+        mLineRect.top = getHeight() - mLineHeight - mYOffset;
+        mLineRect.bottom = getHeight() - mYOffset;
 
         invalidate();
     }
@@ -109,20 +131,12 @@ public class LinePagerIndicator extends View implements IPagerIndicator {
         mYOffset = yOffset;
     }
 
-    protected float getStartX() {
-        return mStartX;
+    public float getXOffset() {
+        return mXOffset;
     }
 
-    protected void setStartX(float startX) {
-        mStartX = startX;
-    }
-
-    protected float getEndX() {
-        return mEndX;
-    }
-
-    protected void setEndX(float endX) {
-        mEndX = endX;
+    public void setXOffset(float xOffset) {
+        mXOffset = xOffset;
     }
 
     public float getLineHeight() {
@@ -133,12 +147,32 @@ public class LinePagerIndicator extends View implements IPagerIndicator {
         mLineHeight = lineHeight;
     }
 
+    public float getLineWidth() {
+        return mLineWidth;
+    }
+
+    public void setLineWidth(float lineWidth) {
+        mLineWidth = lineWidth;
+    }
+
     public float getRoundRadius() {
         return mRoundRadius;
     }
 
     public void setRoundRadius(float roundRadius) {
         mRoundRadius = roundRadius;
+    }
+
+    public int getMode() {
+        return mMode;
+    }
+
+    public void setMode(int mode) {
+        if (mode == MODE_EXACTLY || mode == MODE_MATCH_EDGE || mode == MODE_WRAP_CONTENT) {
+            mMode = mode;
+        } else {
+            throw new IllegalArgumentException("mode " + mode + " not supported.");
+        }
     }
 
     public Paint getPaint() {
@@ -151,14 +185,6 @@ public class LinePagerIndicator extends View implements IPagerIndicator {
 
     public void setColorList(List<String> colorList) {
         mColorList = colorList;
-    }
-
-    public boolean isWrapContentMode() {
-        return mWrapContentMode;
-    }
-
-    public void setWrapContentMode(boolean wrapContentMode) {
-        mWrapContentMode = wrapContentMode;
     }
 
     public Interpolator getStartInterpolator() {

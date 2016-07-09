@@ -20,10 +20,10 @@ import java.util.List;
  * Created by hackware on 2016/6/26.
  */
 public class TriangularPagerIndicator extends View implements IPagerIndicator {
-    protected List<PositionData> mPositionDataList;
-    protected Paint mPaint;
-    protected int mLineHeight;
-    protected int mLineColor;
+    private List<PositionData> mPositionDataList;
+    private Paint mPaint;
+    private int mLineHeight;
+    private int mLineColor;
     private int mTriangleHeight;
     private int mTriangleWidth;
 
@@ -39,9 +39,9 @@ public class TriangularPagerIndicator extends View implements IPagerIndicator {
     private void init(Context context) {
         mPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
         mPaint.setStyle(Paint.Style.FILL);
-        setLineHeight(UIUtil.dip2px(context, 3));
-        setTriangleWidth(UIUtil.dip2px(context, 14));
-        setTriangleHeight(UIUtil.dip2px(context, 8));
+        mLineHeight = UIUtil.dip2px(context, 3);
+        mTriangleWidth = UIUtil.dip2px(context, 14);
+        mTriangleHeight = UIUtil.dip2px(context, 8);
     }
 
     @Override

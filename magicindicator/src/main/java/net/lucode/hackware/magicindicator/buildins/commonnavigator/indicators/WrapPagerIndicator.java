@@ -21,15 +21,15 @@ import java.util.List;
  * Created by hackware on 2016/6/26.
  */
 public class WrapPagerIndicator extends View implements IPagerIndicator {
-    protected int mVerticalPadding;
-    protected int mHorizontalPadding;
-    protected int mFillColor;
-    protected float mRoundRadius;
-    protected Interpolator mStartInterpolator = new LinearInterpolator();
-    protected Interpolator mEndInterpolator = new LinearInterpolator();
+    private int mVerticalPadding;
+    private int mHorizontalPadding;
+    private int mFillColor;
+    private float mRoundRadius;
+    private Interpolator mStartInterpolator = new LinearInterpolator();
+    private Interpolator mEndInterpolator = new LinearInterpolator();
 
-    protected List<PositionData> mPositionDataList;
-    protected Paint mPaint;
+    private List<PositionData> mPositionDataList;
+    private Paint mPaint;
 
     private RectF mRect = new RectF();
     private boolean mRoundRadiusSet;
@@ -42,12 +42,8 @@ public class WrapPagerIndicator extends View implements IPagerIndicator {
     private void init(Context context) {
         mPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
         mPaint.setStyle(Paint.Style.FILL);
-        setVerticalPadding(UIUtil.dip2px(context, 6));
-        setHorizontalPadding(UIUtil.dip2px(context, 10));
-    }
-
-    public Paint getPaint() {
-        return mPaint;
+        mVerticalPadding = UIUtil.dip2px(context, 6);
+        mHorizontalPadding = UIUtil.dip2px(context, 10);
     }
 
     @Override
@@ -68,12 +64,10 @@ public class WrapPagerIndicator extends View implements IPagerIndicator {
         PositionData current = mPositionDataList.get(currentPosition);
         PositionData next = mPositionDataList.get(nextPosition);
 
-        float left = current.mContentLeft - mHorizontalPadding + (next.mContentLeft - current.mContentLeft) * mEndInterpolator.getInterpolation(positionOffset);
-        float top = current.mContentTop - mVerticalPadding;
-        float right = current.mContentRight + mHorizontalPadding + (next.mContentRight - current.mContentRight) * mStartInterpolator.getInterpolation(positionOffset);
-        float bottom = current.mContentBottom + mVerticalPadding;
-
-        mRect = new RectF(left, top, right, bottom);
+        mRect.left = current.mContentLeft - mHorizontalPadding + (next.mContentLeft - current.mContentLeft) * mEndInterpolator.getInterpolation(positionOffset);
+        mRect.top = current.mContentTop - mVerticalPadding;
+        mRect.right = current.mContentRight + mHorizontalPadding + (next.mContentRight - current.mContentRight) * mStartInterpolator.getInterpolation(positionOffset);
+        mRect.bottom = current.mContentBottom + mVerticalPadding;
 
         if (!mRoundRadiusSet) {
             mRoundRadius = mRect.height() / 2;
@@ -93,6 +87,10 @@ public class WrapPagerIndicator extends View implements IPagerIndicator {
     @Override
     public void onPositionDataProvide(List<PositionData> dataList) {
         mPositionDataList = dataList;
+    }
+
+    public Paint getPaint() {
+        return mPaint;
     }
 
     public int getVerticalPadding() {

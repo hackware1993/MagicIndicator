@@ -19,13 +19,13 @@ import java.util.List;
  * Created by hackware on 2016/6/26.
  */
 public class TestPagerIndicator extends View implements IPagerIndicator {
-    protected Paint mPaint;
-    protected int mOutRectColor;
-    protected int mInnerRectColor;
-    protected RectF mOutRect;
-    protected RectF mInnerRect;
+    private Paint mPaint;
+    private int mOutRectColor;
+    private int mInnerRectColor;
+    private RectF mOutRect = new RectF();
+    private RectF mInnerRect = new RectF();
 
-    protected List<PositionData> mPositionDataList;
+    private List<PositionData> mPositionDataList;
 
     public TestPagerIndicator(Context context) {
         super(context);
@@ -35,8 +35,54 @@ public class TestPagerIndicator extends View implements IPagerIndicator {
     private void init(Context context) {
         mPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
         mPaint.setStyle(Paint.Style.STROKE);
-        setOutRectColor(Color.RED);
-        setInnerRectColor(Color.GREEN);
+        mOutRectColor = Color.RED;
+        mInnerRectColor = Color.GREEN;
+    }
+
+    @Override
+    protected void onDraw(Canvas canvas) {
+        mPaint.setColor(mOutRectColor);
+        canvas.drawRect(mOutRect, mPaint);
+        mPaint.setColor(mInnerRectColor);
+        canvas.drawRect(mInnerRect, mPaint);
+    }
+
+    @Override
+    public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+        if (mPositionDataList == null || mPositionDataList.isEmpty()) {
+            return;
+        }
+
+        // 计算锚点位置
+        int currentPosition = Math.min(mPositionDataList.size() - 1, position);
+        int nextPosition = Math.min(mPositionDataList.size() - 1, position + 1);
+        PositionData current = mPositionDataList.get(currentPosition);
+        PositionData next = mPositionDataList.get(nextPosition);
+
+        mOutRect.left = current.mLeft + (next.mLeft - current.mLeft) * positionOffset;
+        mOutRect.top = current.mTop;
+        mOutRect.right = current.mRight + (next.mRight - current.mRight) * positionOffset;
+        mOutRect.bottom = current.mBottom;
+
+        mInnerRect.left = current.mContentLeft + (next.mContentLeft - current.mContentLeft) * positionOffset;
+        mInnerRect.top = current.mContentTop;
+        mInnerRect.right = current.mContentRight + (next.mContentRight - current.mContentRight) * positionOffset;
+        mInnerRect.bottom = current.mBottom;
+
+        invalidate();
+    }
+
+    @Override
+    public void onPageSelected(int position) {
+    }
+
+    @Override
+    public void onPageScrollStateChanged(int state) {
+    }
+
+    @Override
+    public void onPositionDataProvide(List<PositionData> dataList) {
+        mPositionDataList = dataList;
     }
 
     public int getOutRectColor() {
@@ -53,53 +99,5 @@ public class TestPagerIndicator extends View implements IPagerIndicator {
 
     public void setInnerRectColor(int innerRectColor) {
         mInnerRectColor = innerRectColor;
-    }
-
-    @Override
-    protected void onDraw(Canvas canvas) {
-        if (mOutRect != null) {
-            mPaint.setColor(mOutRectColor);
-            canvas.drawRect(mOutRect, mPaint);
-        }
-        if (mInnerRect != null) {
-            mPaint.setColor(mInnerRectColor);
-            canvas.drawRect(mInnerRect, mPaint);
-        }
-    }
-
-    @Override
-    public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-        if (mPositionDataList == null || mPositionDataList.isEmpty()) {
-            return;
-        }
-
-        // 计算锚点位置
-        int currentPosition = Math.min(mPositionDataList.size() - 1, position);
-        int nextPosition = Math.min(mPositionDataList.size() - 1, position + 1);
-        PositionData current = mPositionDataList.get(currentPosition);
-        PositionData next = mPositionDataList.get(nextPosition);
-
-        float outLeft = current.mLeft + (next.mLeft - current.mLeft) * positionOffset;
-        float outRight = current.mRight + (next.mRight - current.mRight) * positionOffset;
-        mOutRect = new RectF(outLeft, current.mTop, outRight, current.mBottom);
-
-        float innerLeft = current.mContentLeft + (next.mContentLeft - current.mContentLeft) * positionOffset;
-        float innerRight = current.mContentRight + (next.mContentRight - current.mContentRight) * positionOffset;
-        mInnerRect = new RectF(innerLeft, current.mContentTop, innerRight, current.mContentBottom);
-
-        invalidate();
-    }
-
-    @Override
-    public void onPageSelected(int position) {
-    }
-
-    @Override
-    public void onPageScrollStateChanged(int state) {
-    }
-
-    @Override
-    public void onPositionDataProvide(List<PositionData> dataList) {
-        mPositionDataList = dataList;
     }
 }

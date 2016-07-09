@@ -21,7 +21,6 @@ import net.lucode.hackware.magicindicator.buildins.commonnavigator.CommonNavigat
 import net.lucode.hackware.magicindicator.buildins.commonnavigator.abs.CommonNavigatorAdapter;
 import net.lucode.hackware.magicindicator.buildins.commonnavigator.abs.IPagerIndicator;
 import net.lucode.hackware.magicindicator.buildins.commonnavigator.abs.IPagerTitleView;
-import net.lucode.hackware.magicindicator.buildins.commonnavigator.indicators.AbsorbPagerIndicator;
 import net.lucode.hackware.magicindicator.buildins.commonnavigator.indicators.BezierPagerIndicator;
 import net.lucode.hackware.magicindicator.buildins.commonnavigator.indicators.LinePagerIndicator;
 import net.lucode.hackware.magicindicator.buildins.commonnavigator.indicators.TriangularPagerIndicator;
@@ -91,7 +90,7 @@ public class MainActivity extends Activity {
         final CommonNavigator commonNavigator = new CommonNavigator(this);
         commonNavigator.setFollowTouch(false);
         commonNavigator.setRightPadding(UIUtil.dip2px(MainActivity.this, 50));
-        commonNavigator.setLeftPadding(UIUtil.dip2px(MainActivity.this, 80));
+//        commonNavigator.setLeftPadding(UIUtil.dip2px(MainActivity.this, 80));
         commonNavigator.setAdapter(new CommonNavigatorAdapter() {
 
             @Override
@@ -149,7 +148,7 @@ public class MainActivity extends Activity {
             @Override
             public IPagerIndicator getIndicator(Context context) {
                 LinePagerIndicator indicator = new LinePagerIndicator(context);
-                indicator.setWrapContentMode(true);
+                indicator.setMode(LinePagerIndicator.MODE_WRAP_CONTENT);
                 List<String> colorList = new ArrayList<String>();
                 colorList.add("#ff4a42");
                 colorList.add("#fcde64");
@@ -309,6 +308,7 @@ public class MainActivity extends Activity {
                 LinePagerIndicator indicator = new LinePagerIndicator(context);
                 indicator.setStartInterpolator(new AccelerateInterpolator());
                 indicator.setEndInterpolator(new DecelerateInterpolator(1.6f));
+                indicator.setYOffset(UIUtil.dip2px(context, 39));
                 indicator.setLineHeight(UIUtil.dip2px(context, 1));
                 List<String> colorList = new ArrayList<String>();
                 colorList.add("#c683fe");
@@ -372,8 +372,13 @@ public class MainActivity extends Activity {
 
             @Override
             public IPagerIndicator getIndicator(Context context) {
-                AbsorbPagerIndicator indicator = new AbsorbPagerIndicator(context);
+                LinePagerIndicator indicator = new LinePagerIndicator(context);
+                indicator.setMode(LinePagerIndicator.MODE_EXACTLY);
                 indicator.setLineHeight(UIUtil.dip2px(context, 6));
+                indicator.setLineWidth(UIUtil.dip2px(context, 10));
+                indicator.setRoundRadius(UIUtil.dip2px(context, 3));
+                indicator.setStartInterpolator(new AccelerateInterpolator());
+                indicator.setEndInterpolator(new DecelerateInterpolator(2.0f));
                 List<String> colorList = new ArrayList<String>();
                 colorList.add("#ff4a42");
                 colorList.add("#fcde64");
