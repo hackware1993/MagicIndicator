@@ -9,6 +9,7 @@ import android.support.v4.view.ViewPager;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewTreeObserver;
 import android.view.animation.AccelerateInterpolator;
 import android.view.animation.DecelerateInterpolator;
 import android.widget.ImageView;
@@ -174,7 +175,7 @@ public class MainActivity extends Activity {
 
             @Override
             public IPagerTitleView getItemView(Context context, final int index) {
-                ColorTransitionPagerTitleView colorTransitionPagerTitleView = new ColorTransitionPagerTitleView(context);
+                final ColorTransitionPagerTitleView colorTransitionPagerTitleView = new ColorTransitionPagerTitleView(context);
                 colorTransitionPagerTitleView.setText(mDataList.get(index));
                 colorTransitionPagerTitleView.setNormalColor(Color.GRAY);
                 colorTransitionPagerTitleView.setSelectedColor(Color.BLACK);
@@ -184,6 +185,19 @@ public class MainActivity extends Activity {
                         mPager.setCurrentItem(index);
                     }
                 });
+                if (index == 3) {
+                    colorTransitionPagerTitleView.getViewTreeObserver().addOnPreDrawListener(new ViewTreeObserver.OnPreDrawListener() {
+                        @Override
+                        public boolean onPreDraw() {
+                            colorTransitionPagerTitleView.getViewTreeObserver().removeOnPreDrawListener(this);
+                            BadgeView badgeView = new BadgeView(MainActivity.this);
+                            badgeView.setTargetView(colorTransitionPagerTitleView);
+                            badgeView.setBadgeGravity(Gravity.TOP | Gravity.CENTER_HORIZONTAL);
+                            badgeView.setBadgeCount(1);
+                            return false;
+                        }
+                    });
+                }
                 return colorTransitionPagerTitleView;
             }
 
@@ -210,7 +224,7 @@ public class MainActivity extends Activity {
 
             @Override
             public IPagerTitleView getItemView(Context context, final int index) {
-                ColorTransitionPagerTitleView colorTransitionPagerTitleView = new ColorTransitionPagerTitleView(context);
+                final ColorTransitionPagerTitleView colorTransitionPagerTitleView = new ColorTransitionPagerTitleView(context);
                 colorTransitionPagerTitleView.setText(mDataList.get(index));
                 colorTransitionPagerTitleView.setNormalColor(Color.GRAY);
                 colorTransitionPagerTitleView.setSelectedColor(Color.BLACK);
@@ -220,6 +234,20 @@ public class MainActivity extends Activity {
                         mPager.setCurrentItem(index);
                     }
                 });
+                if (index == 0) {   // 演示使用小红点，更好的方式是实现带小红点的IPagerTitleView
+                    colorTransitionPagerTitleView.getViewTreeObserver().addOnPreDrawListener(new ViewTreeObserver.OnPreDrawListener() {
+                        @Override
+                        public boolean onPreDraw() {
+                            colorTransitionPagerTitleView.getViewTreeObserver().removeOnPreDrawListener(this);
+                            BadgeView badgeView = new BadgeView(MainActivity.this);
+                            badgeView.setTargetView(colorTransitionPagerTitleView);
+                            badgeView.setBadgeGravity(Gravity.CENTER_VERTICAL | Gravity.RIGHT);
+                            badgeView.setBadgeCount(3);
+                            badgeView.setBadgeMargin(1);
+                            return false;
+                        }
+                    });
+                }
                 return colorTransitionPagerTitleView;
             }
 
