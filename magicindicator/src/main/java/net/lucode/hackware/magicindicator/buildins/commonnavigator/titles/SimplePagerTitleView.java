@@ -17,8 +17,8 @@ import net.lucode.hackware.magicindicator.buildins.commonnavigator.abs.IMeasurab
  * Created by hackware on 2016/6/26.
  */
 public class SimplePagerTitleView extends TextView implements IMeasurablePagerTitleView {
-    protected int mSelectedColor;
-    protected int mNormalColor;
+    private int mSelectedColor;
+    private int mNormalColor;
 
     public SimplePagerTitleView(Context context) {
         super(context, null);

@@ -21,22 +21,6 @@ public class CommonPagerTitleView extends FrameLayout implements IMeasurablePage
         super(context);
     }
 
-    public OnPagerTitleChangeListener getOnPagerTitleChangeListener() {
-        return mOnPagerTitleChangeListener;
-    }
-
-    public void setOnPagerTitleChangeListener(OnPagerTitleChangeListener onPagerTitleChangeListener) {
-        mOnPagerTitleChangeListener = onPagerTitleChangeListener;
-    }
-
-    public ContentPositionDataProvider getContentPositionDataProvider() {
-        return mContentPositionDataProvider;
-    }
-
-    public void setContentPositionDataProvider(ContentPositionDataProvider contentPositionDataProvider) {
-        mContentPositionDataProvider = contentPositionDataProvider;
-    }
-
     @Override
     public void onSelected(int index, int totalCount) {
         if (mOnPagerTitleChangeListener != null) {
@@ -119,6 +103,22 @@ public class CommonPagerTitleView extends FrameLayout implements IMeasurablePage
     public void setContentView(int layoutId) {
         View child = LayoutInflater.from(getContext()).inflate(layoutId, null);
         setContentView(child, null);
+    }
+
+    public OnPagerTitleChangeListener getOnPagerTitleChangeListener() {
+        return mOnPagerTitleChangeListener;
+    }
+
+    public void setOnPagerTitleChangeListener(OnPagerTitleChangeListener onPagerTitleChangeListener) {
+        mOnPagerTitleChangeListener = onPagerTitleChangeListener;
+    }
+
+    public ContentPositionDataProvider getContentPositionDataProvider() {
+        return mContentPositionDataProvider;
+    }
+
+    public void setContentPositionDataProvider(ContentPositionDataProvider contentPositionDataProvider) {
+        mContentPositionDataProvider = contentPositionDataProvider;
     }
 
     public interface OnPagerTitleChangeListener {
