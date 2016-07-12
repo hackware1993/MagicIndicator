@@ -198,9 +198,10 @@ public class CommonNavigator extends FrameLayout implements IPagerNavigator, Nav
         }
 
         // 初始化title的位置
-        onPageScrollStateChanged(ViewPager.SCROLL_STATE_IDLE);
-        onPageSelected(mNavigatorHelper.getCurrentIndex());
-        onPageScrolled(mNavigatorHelper.getCurrentIndex(), 0.0f, 0);
+        if (mNavigatorHelper.getScrollState() == ViewPager.SCROLL_STATE_IDLE) {
+            onPageSelected(mNavigatorHelper.getCurrentIndex());
+            onPageScrolled(mNavigatorHelper.getCurrentIndex(), 0.0f, 0);
+        }
     }
 
     @Override
