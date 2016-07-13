@@ -135,13 +135,13 @@ public class CommonNavigator extends FrameLayout implements IPagerNavigator, Nav
      */
     private void initTitlesAndIndicator() {
         for (int i = 0, j = mNavigatorHelper.getTotalCount(); i < j; i++) {
-            IPagerTitleView v = mAdapter.getItemView(getContext(), i);
+            IPagerTitleView v = mAdapter.getTitleView(getContext(), i);
             if (v instanceof View) {
                 View view = (View) v;
                 LinearLayout.LayoutParams lp;
                 if (mAdjustMode) {
                     lp = new LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.MATCH_PARENT);
-                    lp.weight = 1;  // 均分宽度，后期将支持在adapter中自定义weight
+                    lp.weight = mAdapter.getTitleWeight(getContext(), i);
                 } else {
                     lp = new LinearLayout.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.MATCH_PARENT);
                 }

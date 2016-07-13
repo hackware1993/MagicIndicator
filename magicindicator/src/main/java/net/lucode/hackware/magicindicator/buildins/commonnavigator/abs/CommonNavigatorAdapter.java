@@ -15,9 +15,13 @@ public abstract class CommonNavigatorAdapter {
 
     public abstract int getCount();
 
-    public abstract IPagerTitleView getItemView(Context context, int index);
+    public abstract IPagerTitleView getTitleView(Context context, int index);
 
     public abstract IPagerIndicator getIndicator(Context context);
+
+    public float getTitleWeight(Context context, int index) {
+        return 1;
+    }
 
     public final void registerDataSetObserver(DataSetObserver observer) {
         mDataSetObservable.registerObserver(observer);

@@ -99,7 +99,7 @@ public class MainActivity extends Activity {
             }
 
             @Override
-            public IPagerTitleView getItemView(Context context, final int index) {
+            public IPagerTitleView getTitleView(Context context, final int index) {
                 ClipPagerTitleView clipPagerTitleView = new ClipPagerTitleView(context);
                 clipPagerTitleView.setText(mDataList.get(index));
                 clipPagerTitleView.setTextColor(Color.parseColor("#f2c4c4"));
@@ -131,7 +131,7 @@ public class MainActivity extends Activity {
             }
 
             @Override
-            public IPagerTitleView getItemView(Context context, final int index) {
+            public IPagerTitleView getTitleView(Context context, final int index) {
                 ColorTransitionPagerTitleView colorTransitionPagerTitleView = new ColorTransitionPagerTitleView(context);
                 colorTransitionPagerTitleView.setText(mDataList.get(index));
                 colorTransitionPagerTitleView.setNormalColor(Color.GRAY);
@@ -174,7 +174,7 @@ public class MainActivity extends Activity {
             }
 
             @Override
-            public IPagerTitleView getItemView(Context context, final int index) {
+            public IPagerTitleView getTitleView(Context context, final int index) {
                 final ColorTransitionPagerTitleView colorTransitionPagerTitleView = new ColorTransitionPagerTitleView(context);
                 colorTransitionPagerTitleView.setText(mDataList.get(index));
                 colorTransitionPagerTitleView.setNormalColor(Color.GRAY);
@@ -223,7 +223,7 @@ public class MainActivity extends Activity {
             }
 
             @Override
-            public IPagerTitleView getItemView(Context context, final int index) {
+            public IPagerTitleView getTitleView(Context context, final int index) {
                 final ColorTransitionPagerTitleView colorTransitionPagerTitleView = new ColorTransitionPagerTitleView(context);
                 colorTransitionPagerTitleView.setText(mDataList.get(index));
                 colorTransitionPagerTitleView.setNormalColor(Color.GRAY);
@@ -261,6 +261,15 @@ public class MainActivity extends Activity {
                 indicator.setColorList(colorList);
                 return indicator;
             }
+
+            @Override
+            public float getTitleWeight(Context context, int index) {
+                if (index == 2) {
+                    return 1.5f;
+                } else {
+                    return 1;
+                }
+            }
         });
         magic_indicator3.setNavigator(commonNavigator3);
 
@@ -275,7 +284,7 @@ public class MainActivity extends Activity {
             }
 
             @Override
-            public IPagerTitleView getItemView(Context context, final int index) {
+            public IPagerTitleView getTitleView(Context context, final int index) {
                 ColorTransitionPagerTitleView colorTransitionPagerTitleView = new ColorTransitionPagerTitleView(context);
                 colorTransitionPagerTitleView.setText(mDataList.get(index));
                 colorTransitionPagerTitleView.setNormalColor(Color.GRAY);
@@ -315,7 +324,7 @@ public class MainActivity extends Activity {
             }
 
             @Override
-            public IPagerTitleView getItemView(Context context, final int index) {
+            public IPagerTitleView getTitleView(Context context, final int index) {
                 ScaleTransitionPagerTitleView colorTransitionPagerTitleView = new ScaleTransitionPagerTitleView(context);
                 colorTransitionPagerTitleView.setText(mDataList.get(index));
                 colorTransitionPagerTitleView.setTextSize(18);
@@ -356,7 +365,7 @@ public class MainActivity extends Activity {
             }
 
             @Override
-            public IPagerTitleView getItemView(Context context, final int index) {
+            public IPagerTitleView getTitleView(Context context, final int index) {
                 return new DummyPagerTitleView(context);
             }
 
@@ -383,7 +392,7 @@ public class MainActivity extends Activity {
             }
 
             @Override
-            public IPagerTitleView getItemView(Context context, final int index) {
+            public IPagerTitleView getTitleView(Context context, final int index) {
                 SimplePagerTitleView simplePagerTitleView = new SimplePagerTitleView(context);
                 simplePagerTitleView.setText(mDataList.get(index));
                 simplePagerTitleView.setNormalColor(Color.GRAY);
@@ -429,7 +438,7 @@ public class MainActivity extends Activity {
             }
 
             @Override
-            public IPagerTitleView getItemView(Context context, final int index) {
+            public IPagerTitleView getTitleView(Context context, final int index) {
                 ScaleTransitionPagerTitleView colorTransitionPagerTitleView = new ScaleTransitionPagerTitleView(context);
                 colorTransitionPagerTitleView.setText(mDataList.get(index));
                 colorTransitionPagerTitleView.setTextSize(18);
@@ -470,7 +479,7 @@ public class MainActivity extends Activity {
             }
 
             @Override
-            public IPagerTitleView getItemView(Context context, final int index) {
+            public IPagerTitleView getTitleView(Context context, final int index) {
                 SimplePagerTitleView simplePagerTitleView = new SimplePagerTitleView(context);
                 simplePagerTitleView.setText(mDataList.get(index));
                 simplePagerTitleView.setNormalColor(Color.parseColor("#333333"));
@@ -504,7 +513,7 @@ public class MainActivity extends Activity {
             }
 
             @Override
-            public IPagerTitleView getItemView(Context context, final int index) {
+            public IPagerTitleView getTitleView(Context context, final int index) {
                 SimplePagerTitleView simplePagerTitleView = new SimplePagerTitleView(context);
                 simplePagerTitleView.setText(mDataList.get(index));
                 simplePagerTitleView.setNormalColor(Color.parseColor("#333333"));
@@ -551,7 +560,7 @@ public class MainActivity extends Activity {
             }
 
             @Override
-            public IPagerTitleView getItemView(Context context, final int index) {
+            public IPagerTitleView getTitleView(Context context, final int index) {
                 CommonPagerTitleView commonPagerTitleView = new CommonPagerTitleView(MainActivity.this);
                 commonPagerTitleView.setContentView(R.layout.simple_pager_title_layout);
 
