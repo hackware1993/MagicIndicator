@@ -96,7 +96,7 @@ Simple steps, you can integrate **MagicIndicator**:
   });
   ```
 
-Now, emjoy yourself!
+Now, enjoy yourself!
 
 More effects adding...
 
