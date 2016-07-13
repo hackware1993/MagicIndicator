@@ -47,6 +47,7 @@ public class CommonNavigator extends FrameLayout implements IPagerNavigator, Nav
     private boolean mFollowTouch = true;    // 是否手指跟随滚动
     private int mRightPadding;
     private int mLeftPadding;
+    private boolean mIndicatorOnTop;    // 指示器在title上方，默认为下方
     /****************************************************/
 
     // 保存每个title的位置信息，为扩展indicator提供保障
@@ -126,6 +127,9 @@ public class CommonNavigator extends FrameLayout implements IPagerNavigator, Nav
 
         mIndicatorContainer = (LinearLayout) root.findViewById(R.id.indicator_container);
         mTitleContainer = (LinearLayout) root.findViewById(R.id.title_container);
+        if (mIndicatorOnTop) {
+            mIndicatorContainer.getParent().bringChildToFront(mIndicatorContainer);
+        }
 
         initTitlesAndIndicator();
     }
@@ -400,5 +404,13 @@ public class CommonNavigator extends FrameLayout implements IPagerNavigator, Nav
 
     public void setLeftPadding(int leftPadding) {
         mLeftPadding = leftPadding;
+    }
+
+    public boolean isIndicatorOnTop() {
+        return mIndicatorOnTop;
+    }
+
+    public void setIndicatorOnTop(boolean indicatorOnTop) {
+        mIndicatorOnTop = indicatorOnTop;
     }
 }
