@@ -34,7 +34,7 @@ public class NavigatorHelper {
     public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
         if (mNavigatorScrollListener != null) {
             float currentPositionOffsetSum = position + positionOffset;
-            boolean leftToRight = currentPositionOffsetSum > mLastPositionOffsetSum;
+            boolean leftToRight = currentPositionOffsetSum >= mLastPositionOffsetSum;
             int safePosition = getSafeIndex(position);
             if (mScrollState != ViewPager.SCROLL_STATE_IDLE) {
                 int enterIndex;
@@ -63,6 +63,10 @@ public class NavigatorHelper {
                     }
                 }
                 if (enterIndex == leaveIndex) {
+                    if (enterIndex == mTotalCount - 1 && mLeavedPercents.get(enterIndex) != 0.0f && enterPercent == 0.0f && leftToRight) {
+                        mNavigatorScrollListener.onEnter(enterIndex, mTotalCount, 1.0f, true);
+                        mLeavedPercents.put(enterIndex, 0.0f);
+                    }
                     return;
                 }
                 if (1.0f - mLeavedPercents.get(enterIndex, 0.0f) != enterPercent) {
@@ -70,7 +74,11 @@ public class NavigatorHelper {
                     mLeavedPercents.put(enterIndex, 1.0f - enterPercent);
                 }
                 if (mLeavedPercents.get(leaveIndex, 0.0f) != leavePercent) {
-                    mNavigatorScrollListener.onLeave(leaveIndex, mTotalCount, leavePercent, leftToRight);
+                    if (leftToRight && leaveIndex == getCurrentIndex() && leavePercent == 0.0f) {
+                        mNavigatorScrollListener.onEnter(leaveIndex, mTotalCount, 1.0f, true);
+                    } else {
+                        mNavigatorScrollListener.onLeave(leaveIndex, mTotalCount, leavePercent, leftToRight);
+                    }
                     mLeavedPercents.put(leaveIndex, leavePercent);
                 }
             } else {    // 在IDLE状态下收到了onPageScrolled回调，表示完全滚动到了某一页
