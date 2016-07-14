@@ -1,6 +1,7 @@
 package net.lucode.hackware.magicindicator;
 
 import android.support.v4.view.ViewPager;
+import android.util.SparseArray;
 import android.util.SparseBooleanArray;
 
 /**
@@ -19,7 +20,7 @@ public class NavigatorHelper {
 
     // 记录有哪些item处于未选中、未完全leave状态
     private SparseBooleanArray mDeselectedItems = new SparseBooleanArray();
-    private SparseBooleanArray mTotalLeavedItems = new SparseBooleanArray();
+    private SparseArray<Float> mLeavedPercents = new SparseArray<Float>();
 
     private float mLastPositionOffsetSum;
 
@@ -33,7 +34,7 @@ public class NavigatorHelper {
     public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
         if (mNavigatorScrollListener != null) {
             float currentPositionOffsetSum = position + positionOffset;
-            boolean leftToRight = currentPositionOffsetSum >= mLastPositionOffsetSum;
+            boolean leftToRight = currentPositionOffsetSum > mLastPositionOffsetSum;
             int safePosition = getSafeIndex(position);
             if (mScrollState != ViewPager.SCROLL_STATE_IDLE) {
                 int enterIndex;
@@ -55,20 +56,23 @@ public class NavigatorHelper {
                     if (i == enterIndex || i == leaveIndex) {
                         continue;
                     }
-                    boolean totalLeaved = mTotalLeavedItems.get(i);
-                    if (!totalLeaved) {
-                        mNavigatorScrollListener.onLeave(i, mTotalCount, 1.0f, false);
-                        mTotalLeavedItems.put(i, true);
+                    Float leavedPercent = mLeavedPercents.get(i, 0.0f);
+                    if (leavedPercent != 1.0f) {
+                        mNavigatorScrollListener.onLeave(i, mTotalCount, 1.0f, leftToRight);
+                        mLeavedPercents.put(i, 1.0f);
                     }
                 }
-                if (!mTotalLeavedItems.get(enterIndex) || enterPercent != 0.0f) {
+                if (enterIndex == leaveIndex) {
+                    return;
+                }
+                if (1.0f - mLeavedPercents.get(enterIndex, 0.0f) != enterPercent) {
                     mNavigatorScrollListener.onEnter(enterIndex, mTotalCount, enterPercent, leftToRight);
+                    mLeavedPercents.put(enterIndex, 1.0f - enterPercent);
                 }
-                mTotalLeavedItems.put(enterIndex, enterPercent == 0.0f);
-                if (!mTotalLeavedItems.get(leaveIndex) || leavePercent != 1.0f) {
+                if (mLeavedPercents.get(leaveIndex, 0.0f) != leavePercent) {
                     mNavigatorScrollListener.onLeave(leaveIndex, mTotalCount, leavePercent, leftToRight);
+                    mLeavedPercents.put(leaveIndex, leavePercent);
                 }
-                mTotalLeavedItems.put(leaveIndex, leavePercent == 1.0f);
             } else {    // 在IDLE状态下收到了onPageScrolled回调，表示完全滚动到了某一页
                 mCurrentIndex = safePosition;
                 for (int i = 0, j = mTotalCount; i < j; i++) {
@@ -80,18 +84,18 @@ public class NavigatorHelper {
                         mNavigatorScrollListener.onDeselected(i, mTotalCount);
                         mDeselectedItems.put(i, true);
                     }
-                    boolean totalLeaved = mTotalLeavedItems.get(i);
-                    if (!totalLeaved) {
-                        mNavigatorScrollListener.onLeave(i, mTotalCount, 1.0f, false);
-                        mTotalLeavedItems.put(i, true);
+                    Float leavedPercent = mLeavedPercents.get(i, 0.0f);
+                    if (leavedPercent != 1.0f) {
+                        mNavigatorScrollListener.onLeave(i, mTotalCount, 1.0f, leftToRight);
+                        mLeavedPercents.put(i, 1.0f);
                     }
                 }
                 mNavigatorScrollListener.onEnter(safePosition, mTotalCount, 1.0f, false);
-                mTotalLeavedItems.put(safePosition, false);
+                mLeavedPercents.put(safePosition, 0.0f);
                 mNavigatorScrollListener.onSelected(safePosition, mTotalCount);
                 mDeselectedItems.put(safePosition, false);
             }
-            mLastPositionOffsetSum = position + positionOffset;
+            mLastPositionOffsetSum = currentPositionOffsetSum;
         }
     }
 
@@ -133,7 +137,7 @@ public class NavigatorHelper {
     public void setTotalCount(int totalCount) {
         mTotalCount = totalCount;
         mDeselectedItems.clear();
-        mTotalLeavedItems.clear();
+        mLeavedPercents.clear();
     }
 
     public int getScrollState() {
@@ -157,7 +161,7 @@ public class NavigatorHelper {
         mCurrentIndex = 0;
         mScrollState = ViewPager.SCROLL_STATE_IDLE;
         mDeselectedItems.clear();
-        mTotalLeavedItems.clear();
+        mLeavedPercents.clear();
     }
 
     public interface OnNavigatorScrollListener {
