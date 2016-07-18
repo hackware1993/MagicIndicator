@@ -23,6 +23,8 @@ public class NavigatorHelper {
     private SparseArray<Float> mLeavedPercents = new SparseArray<Float>();
 
     private float mLastPositionOffsetSum;
+    private int mLastIndex;
+    private boolean mSkimOver;
 
     public NavigatorHelper() {
     }
@@ -62,18 +64,18 @@ public class NavigatorHelper {
                         mLeavedPercents.put(i, 1.0f);
                     }
                 }
-                if (enterIndex == leaveIndex) {
+                if (enterIndex == leaveIndex && (mSkimOver || mScrollState == ViewPager.SCROLL_STATE_DRAGGING || (enterIndex == mCurrentIndex || enterIndex == mLastIndex))) {
                     if (enterIndex == mTotalCount - 1 && mLeavedPercents.get(enterIndex) != 0.0f && enterPercent == 0.0f && leftToRight) {
                         mNavigatorScrollListener.onEnter(enterIndex, mTotalCount, 1.0f, true);
                         mLeavedPercents.put(enterIndex, 0.0f);
                     }
                     return;
                 }
-                if (1.0f - mLeavedPercents.get(enterIndex, 0.0f) != enterPercent) {
+                if ((1.0f - mLeavedPercents.get(enterIndex, 0.0f) != enterPercent) && (mSkimOver || mScrollState == ViewPager.SCROLL_STATE_DRAGGING || (enterIndex == mCurrentIndex || enterIndex == mLastIndex))) {
                     mNavigatorScrollListener.onEnter(enterIndex, mTotalCount, enterPercent, leftToRight);
                     mLeavedPercents.put(enterIndex, 1.0f - enterPercent);
                 }
-                if (mLeavedPercents.get(leaveIndex, 0.0f) != leavePercent) {
+                if (mLeavedPercents.get(leaveIndex, 0.0f) != leavePercent && (mSkimOver || mScrollState == ViewPager.SCROLL_STATE_DRAGGING || (leaveIndex == mCurrentIndex || leaveIndex == mLastIndex))) {
                     if (leftToRight && leaveIndex == getCurrentIndex() && leavePercent == 0.0f) {
                         mNavigatorScrollListener.onEnter(leaveIndex, mTotalCount, 1.0f, true);
                     } else {
@@ -82,6 +84,7 @@ public class NavigatorHelper {
                     mLeavedPercents.put(leaveIndex, leavePercent);
                 }
             } else {    // 在IDLE状态下收到了onPageScrolled回调，表示完全滚动到了某一页
+                mLastIndex = mCurrentIndex;
                 mCurrentIndex = safePosition;
                 for (int i = 0, j = mTotalCount; i < j; i++) {
                     if (i == safePosition) {
@@ -133,7 +136,8 @@ public class NavigatorHelper {
         return getSafeIndex(mCurrentIndex);
     }
 
-    public int setCurrentIndex(int currentIndex) {
+    private int setCurrentIndex(int currentIndex) {
+        mLastIndex = mCurrentIndex;
         mCurrentIndex = getSafeIndex(currentIndex);
         return mCurrentIndex;
     }
@@ -143,17 +147,20 @@ public class NavigatorHelper {
     }
 
     public void setTotalCount(int totalCount) {
+        clear();
         mTotalCount = totalCount;
-        mDeselectedItems.clear();
-        mLeavedPercents.clear();
     }
 
     public int getScrollState() {
         return mScrollState;
     }
 
-    public void setScrollState(int scrollState) {
-        mScrollState = scrollState;
+    public boolean isSkimOver() {
+        return mSkimOver;
+    }
+
+    public void setSkimOver(boolean skimOver) {
+        mSkimOver = skimOver;
     }
 
     public OnNavigatorScrollListener getNavigatorScrollListener() {
@@ -164,9 +171,11 @@ public class NavigatorHelper {
         mNavigatorScrollListener = navigatorScrollListener;
     }
 
-    public void clear() {
+    private void clear() {
         mTotalCount = 0;
         mCurrentIndex = 0;
+        mLastIndex = 0;
+        mLastPositionOffsetSum = 0.0f;
         mScrollState = ViewPager.SCROLL_STATE_IDLE;
         mDeselectedItems.clear();
         mLeavedPercents.clear();

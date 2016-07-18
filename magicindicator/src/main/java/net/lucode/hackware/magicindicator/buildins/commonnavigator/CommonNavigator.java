@@ -105,7 +105,7 @@ public class CommonNavigator extends FrameLayout implements IPagerNavigator, Nav
             mAdapter.registerDataSetObserver(mObserver);
             adapter.notifyDataSetChanged();
         } else {
-            mNavigatorHelper.clear();   // 重要
+            mNavigatorHelper.setTotalCount(0);
             init();
         }
     }
@@ -319,6 +319,14 @@ public class CommonNavigator extends FrameLayout implements IPagerNavigator, Nav
 
     public void setFollowTouch(boolean followTouch) {
         mFollowTouch = followTouch;
+    }
+
+    public boolean isSkimOver() {
+        return mNavigatorHelper.isSkimOver();
+    }
+
+    public void setSkimOver(boolean skimOver) {
+        mNavigatorHelper.setSkimOver(skimOver);
     }
 
     @Override
