@@ -76,7 +76,6 @@ public class CommonNavigator extends FrameLayout implements IPagerNavigator, Nav
     @Override
     public void notifyDataSetChanged() {
         if (mAdapter != null) {
-            mNavigatorHelper.setTotalCount(mAdapter.getCount());
             mAdapter.notifyDataSetChanged();
         }
     }

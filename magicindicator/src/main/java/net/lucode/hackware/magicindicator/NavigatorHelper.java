@@ -158,8 +158,9 @@ public class NavigatorHelper {
     }
 
     public void setTotalCount(int totalCount) {
-        clear();
         mTotalCount = totalCount;
+        mDeselectedItems.clear();
+        mLeavedPercents.clear();
     }
 
     public int getScrollState() {
@@ -182,7 +183,7 @@ public class NavigatorHelper {
         mNavigatorScrollListener = navigatorScrollListener;
     }
 
-    private void clear() {
+    public void clear() {
         mTotalCount = 0;
         mCurrentIndex = 0;
         mLastIndex = 0;
