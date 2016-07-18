@@ -291,11 +291,6 @@ public class CommonNavigator extends FrameLayout implements IPagerNavigator, Nav
         View v = mTitleContainer.getChildAt(index);
         if (v instanceof IPagerTitleView) {
             ((IPagerTitleView) v).onEnter(index, totalCount, enterPercent, leftToRight);
-        } else if (v instanceof ViewGroup) {    // 尝试兼容第三方的角标框架如BadgeView，后面自己写一个BadgePagerTitleView
-            View child = ((ViewGroup) v).getChildAt(0);
-            if (child instanceof IPagerTitleView) {
-                ((IPagerTitleView) child).onEnter(index, totalCount, enterPercent, leftToRight);
-            }
         }
     }
 
@@ -307,11 +302,6 @@ public class CommonNavigator extends FrameLayout implements IPagerNavigator, Nav
         View v = mTitleContainer.getChildAt(index);
         if (v instanceof IPagerTitleView) {
             ((IPagerTitleView) v).onLeave(index, totalCount, leavePercent, leftToRight);
-        } else if (v instanceof ViewGroup) {    // 尝试兼容第三方的角标框架如BadgeView，后面自己写一个BadgePagerTitleView
-            View child = ((ViewGroup) v).getChildAt(0);
-            if (child instanceof IPagerTitleView) {
-                ((IPagerTitleView) child).onLeave(index, totalCount, leavePercent, leftToRight);
-            }
         }
     }
 
@@ -339,11 +329,6 @@ public class CommonNavigator extends FrameLayout implements IPagerNavigator, Nav
         View v = mTitleContainer.getChildAt(index);
         if (v instanceof IPagerTitleView) {
             ((IPagerTitleView) v).onSelected(index, totalCount);
-        } else if (v instanceof ViewGroup) {    // 尝试兼容第三方的角标框架如BadgeView，后面自己写一个BadgePagerTitleView
-            View child = ((ViewGroup) v).getChildAt(0);
-            if (child instanceof IPagerTitleView) {
-                ((IPagerTitleView) child).onSelected(index, totalCount);
-            }
         }
         if (!mAdjustMode && !mFollowTouch && mScrollView != null && mPositionList.size() > 0) {
             int currentIndex = Math.min(mPositionList.size() - 1, index);
@@ -382,11 +367,6 @@ public class CommonNavigator extends FrameLayout implements IPagerNavigator, Nav
         View v = mTitleContainer.getChildAt(index);
         if (v instanceof IPagerTitleView) {
             ((IPagerTitleView) v).onDeselected(index, totalCount);
-        } else if (v instanceof ViewGroup) {    // 尝试兼容第三方的角标框架如BadgeView，后面自己写一个BadgePagerTitleView
-            View child = ((ViewGroup) v).getChildAt(0);
-            if (child instanceof IPagerTitleView) {
-                ((IPagerTitleView) child).onDeselected(index, totalCount);
-            }
         }
     }
 

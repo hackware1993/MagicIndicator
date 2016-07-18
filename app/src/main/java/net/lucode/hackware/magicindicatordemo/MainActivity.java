@@ -7,9 +7,9 @@ import android.os.Bundle;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.ViewTreeObserver;
 import android.view.animation.AccelerateInterpolator;
 import android.view.animation.DecelerateInterpolator;
 import android.widget.ImageView;
@@ -26,6 +26,7 @@ import net.lucode.hackware.magicindicator.buildins.commonnavigator.indicators.Be
 import net.lucode.hackware.magicindicator.buildins.commonnavigator.indicators.LinePagerIndicator;
 import net.lucode.hackware.magicindicator.buildins.commonnavigator.indicators.TriangularPagerIndicator;
 import net.lucode.hackware.magicindicator.buildins.commonnavigator.indicators.WrapPagerIndicator;
+import net.lucode.hackware.magicindicator.buildins.commonnavigator.titles.BadgePagerTitleView;
 import net.lucode.hackware.magicindicator.buildins.commonnavigator.titles.ClipPagerTitleView;
 import net.lucode.hackware.magicindicator.buildins.commonnavigator.titles.ColorTransitionPagerTitleView;
 import net.lucode.hackware.magicindicator.buildins.commonnavigator.titles.CommonPagerTitleView;
@@ -175,7 +176,16 @@ public class MainActivity extends Activity {
 
             @Override
             public IPagerTitleView getTitleView(Context context, final int index) {
-                final ColorTransitionPagerTitleView colorTransitionPagerTitleView = new ColorTransitionPagerTitleView(context);
+                BadgePagerTitleView badgePagerTitleView = new BadgePagerTitleView(context);
+
+                if (index == 3) {
+                    View badgeView = LayoutInflater.from(context).inflate(R.layout.simple_count_badge_layout, null);
+                    TextView textView = (TextView) badgeView.findViewById(R.id.badge_count);
+                    textView.setText("3");
+                    badgePagerTitleView.setBadgeView(badgeView);
+                }
+
+                ColorTransitionPagerTitleView colorTransitionPagerTitleView = new ColorTransitionPagerTitleView(context);
                 colorTransitionPagerTitleView.setText(mDataList.get(index));
                 colorTransitionPagerTitleView.setNormalColor(Color.GRAY);
                 colorTransitionPagerTitleView.setSelectedColor(Color.BLACK);
@@ -185,20 +195,9 @@ public class MainActivity extends Activity {
                         mPager.setCurrentItem(index);
                     }
                 });
-                if (index == 3) {
-                    colorTransitionPagerTitleView.getViewTreeObserver().addOnPreDrawListener(new ViewTreeObserver.OnPreDrawListener() {
-                        @Override
-                        public boolean onPreDraw() {
-                            colorTransitionPagerTitleView.getViewTreeObserver().removeOnPreDrawListener(this);
-                            BadgeView badgeView = new BadgeView(MainActivity.this);
-                            badgeView.setTargetView(colorTransitionPagerTitleView);
-                            badgeView.setBadgeGravity(Gravity.TOP | Gravity.CENTER_HORIZONTAL);
-                            badgeView.setBadgeCount(1);
-                            return false;
-                        }
-                    });
-                }
-                return colorTransitionPagerTitleView;
+                badgePagerTitleView.setInnerPagerTitleView(colorTransitionPagerTitleView);
+
+                return badgePagerTitleView;
             }
 
             @Override
@@ -234,20 +233,6 @@ public class MainActivity extends Activity {
                         mPager.setCurrentItem(index);
                     }
                 });
-                if (index == 0) {   // 演示使用小红点，更好的方式是实现带小红点的IPagerTitleView
-                    colorTransitionPagerTitleView.getViewTreeObserver().addOnPreDrawListener(new ViewTreeObserver.OnPreDrawListener() {
-                        @Override
-                        public boolean onPreDraw() {
-                            colorTransitionPagerTitleView.getViewTreeObserver().removeOnPreDrawListener(this);
-                            BadgeView badgeView = new BadgeView(MainActivity.this);
-                            badgeView.setTargetView(colorTransitionPagerTitleView);
-                            badgeView.setBadgeGravity(Gravity.CENTER_VERTICAL | Gravity.RIGHT);
-                            badgeView.setBadgeCount(3);
-                            badgeView.setBadgeMargin(1);
-                            return false;
-                        }
-                    });
-                }
                 return colorTransitionPagerTitleView;
             }
 
