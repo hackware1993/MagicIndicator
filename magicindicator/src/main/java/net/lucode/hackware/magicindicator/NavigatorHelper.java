@@ -54,7 +54,7 @@ public class NavigatorHelper {
                     leaveIndex = getSafeIndex(safePosition + 1);
                     leavePercent = 1.0f - positionOffset;
                 }
-                for (int i = 0, j = mTotalCount; i < j; i++) {
+                for (int i = 0; i < mTotalCount; i++) {
                     if (i == enterIndex || i == leaveIndex) {
                         continue;
                     }
@@ -64,30 +64,41 @@ public class NavigatorHelper {
                         mLeavedPercents.put(i, 1.0f);
                     }
                 }
-                if (enterIndex == leaveIndex && (mSkimOver || mScrollState == ViewPager.SCROLL_STATE_DRAGGING || (enterIndex == mCurrentIndex || enterIndex == mLastIndex))) {
+                if (enterIndex == leaveIndex) {
                     if (enterIndex == mTotalCount - 1 && mLeavedPercents.get(enterIndex) != 0.0f && enterPercent == 0.0f && leftToRight) {
-                        mNavigatorScrollListener.onEnter(enterIndex, mTotalCount, 1.0f, true);
-                        mLeavedPercents.put(enterIndex, 0.0f);
+                        boolean dispatchEnterEvent = mSkimOver || mScrollState == ViewPager.SCROLL_STATE_DRAGGING || enterIndex == mCurrentIndex;
+                        if (dispatchEnterEvent) {
+                            mNavigatorScrollListener.onEnter(enterIndex, mTotalCount, 1.0f, true);
+                            mLeavedPercents.put(enterIndex, 0.0f);
+                        }
                     }
                     return;
                 }
-                if ((1.0f - mLeavedPercents.get(enterIndex, 0.0f) != enterPercent) && (mSkimOver || mScrollState == ViewPager.SCROLL_STATE_DRAGGING || (enterIndex == mCurrentIndex || enterIndex == mLastIndex))) {
-                    mNavigatorScrollListener.onEnter(enterIndex, mTotalCount, enterPercent, leftToRight);
-                    mLeavedPercents.put(enterIndex, 1.0f - enterPercent);
-                }
-                if (mLeavedPercents.get(leaveIndex, 0.0f) != leavePercent && (mSkimOver || mScrollState == ViewPager.SCROLL_STATE_DRAGGING || (leaveIndex == mCurrentIndex || leaveIndex == mLastIndex))) {
-                    if (leftToRight && leaveIndex == getCurrentIndex() && leavePercent == 0.0f) {
-                        mNavigatorScrollListener.onEnter(leaveIndex, mTotalCount, 1.0f, true);
-                    } else {
-                        mNavigatorScrollListener.onLeave(leaveIndex, mTotalCount, leavePercent, leftToRight);
+                if (1.0f - mLeavedPercents.get(enterIndex, 0.0f) != enterPercent) {
+                    boolean dispatchEnterEvent = mSkimOver || mScrollState == ViewPager.SCROLL_STATE_DRAGGING || enterIndex == mCurrentIndex;
+                    if (dispatchEnterEvent) {
+                        mNavigatorScrollListener.onEnter(enterIndex, mTotalCount, enterPercent, leftToRight);
+                        mLeavedPercents.put(enterIndex, 1.0f - enterPercent);
                     }
-                    mLeavedPercents.put(leaveIndex, leavePercent);
                 }
-            } else {    // 在IDLE状态下收到了onPageScrolled回调，表示完全滚动到了某一页
-                mLastIndex = mCurrentIndex;
-                mCurrentIndex = safePosition;
-                for (int i = 0, j = mTotalCount; i < j; i++) {
-                    if (i == safePosition) {
+                if (mLeavedPercents.get(leaveIndex, 0.0f) != leavePercent) {
+                    if (leftToRight && leaveIndex == getCurrentIndex() && leavePercent == 0.0f) {
+                        boolean dispatchEnterEvent = mSkimOver || mScrollState == ViewPager.SCROLL_STATE_DRAGGING || leaveIndex == mCurrentIndex;
+                        if (dispatchEnterEvent) {
+                            mNavigatorScrollListener.onEnter(leaveIndex, mTotalCount, 1.0f, true);
+                            mLeavedPercents.put(leaveIndex, 0.0f);
+                        }
+                    } else {
+                        boolean dispatchLeaveEvent = mSkimOver || mScrollState == ViewPager.SCROLL_STATE_DRAGGING || leaveIndex == mLastIndex;
+                        if (dispatchLeaveEvent) {
+                            mNavigatorScrollListener.onLeave(leaveIndex, mTotalCount, leavePercent, leftToRight);
+                            mLeavedPercents.put(leaveIndex, leavePercent);
+                        }
+                    }
+                }
+            } else {
+                for (int i = 0; i < mTotalCount; i++) {
+                    if (i == mCurrentIndex) {
                         continue;
                     }
                     boolean deselected = mDeselectedItems.get(i);
@@ -101,10 +112,10 @@ public class NavigatorHelper {
                         mLeavedPercents.put(i, 1.0f);
                     }
                 }
-                mNavigatorScrollListener.onEnter(safePosition, mTotalCount, 1.0f, false);
-                mLeavedPercents.put(safePosition, 0.0f);
-                mNavigatorScrollListener.onSelected(safePosition, mTotalCount);
-                mDeselectedItems.put(safePosition, false);
+                mNavigatorScrollListener.onEnter(mCurrentIndex, mTotalCount, 1.0f, false);
+                mLeavedPercents.put(mCurrentIndex, 0.0f);
+                mNavigatorScrollListener.onSelected(mCurrentIndex, mTotalCount);
+                mDeselectedItems.put(mCurrentIndex, false);
             }
             mLastPositionOffsetSum = currentPositionOffsetSum;
         }
