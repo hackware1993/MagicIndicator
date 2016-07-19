@@ -67,7 +67,7 @@ public class TestPagerIndicator extends View implements IPagerIndicator {
         mInnerRect.left = current.mContentLeft + (next.mContentLeft - current.mContentLeft) * positionOffset;
         mInnerRect.top = current.mContentTop;
         mInnerRect.right = current.mContentRight + (next.mContentRight - current.mContentRight) * positionOffset;
-        mInnerRect.bottom = current.mBottom;
+        mInnerRect.bottom = current.mContentBottom;
 
         invalidate();
     }
