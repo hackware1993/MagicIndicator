@@ -26,12 +26,14 @@ import net.lucode.hackware.magicindicator.buildins.commonnavigator.indicators.Be
 import net.lucode.hackware.magicindicator.buildins.commonnavigator.indicators.LinePagerIndicator;
 import net.lucode.hackware.magicindicator.buildins.commonnavigator.indicators.TriangularPagerIndicator;
 import net.lucode.hackware.magicindicator.buildins.commonnavigator.indicators.WrapPagerIndicator;
-import net.lucode.hackware.magicindicator.buildins.commonnavigator.titles.BadgePagerTitleView;
 import net.lucode.hackware.magicindicator.buildins.commonnavigator.titles.ClipPagerTitleView;
 import net.lucode.hackware.magicindicator.buildins.commonnavigator.titles.ColorTransitionPagerTitleView;
 import net.lucode.hackware.magicindicator.buildins.commonnavigator.titles.CommonPagerTitleView;
 import net.lucode.hackware.magicindicator.buildins.commonnavigator.titles.DummyPagerTitleView;
 import net.lucode.hackware.magicindicator.buildins.commonnavigator.titles.SimplePagerTitleView;
+import net.lucode.hackware.magicindicator.buildins.commonnavigator.titles.badge.BadgeAnchor;
+import net.lucode.hackware.magicindicator.buildins.commonnavigator.titles.badge.BadgePagerTitleView;
+import net.lucode.hackware.magicindicator.buildins.commonnavigator.titles.badge.BadgeRule;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -180,10 +182,11 @@ public class MainActivity extends Activity {
                 BadgePagerTitleView badgePagerTitleView = new BadgePagerTitleView(context);
 
                 if (index == 3) {
-                    View badgeView = LayoutInflater.from(context).inflate(R.layout.simple_count_badge_layout, null);
-                    TextView textView = (TextView) badgeView.findViewById(R.id.badge_count);
+                    TextView textView = (TextView) LayoutInflater.from(context).inflate(R.layout.simple_count_badge_layout, null);
                     textView.setText("3");
-                    badgePagerTitleView.setBadgeView(badgeView);
+                    badgePagerTitleView.setBadgeView(textView);
+                    badgePagerTitleView.setXBadgeRule(new BadgeRule(BadgeAnchor.CONTENT_RIGHT, -UIUtil.dip2px(context, 6)));
+                    badgePagerTitleView.setYBadgeRule(new BadgeRule(BadgeAnchor.CONTENT_TOP, 0));
                 }
 
                 ColorTransitionPagerTitleView colorTransitionPagerTitleView = new ColorTransitionPagerTitleView(context);

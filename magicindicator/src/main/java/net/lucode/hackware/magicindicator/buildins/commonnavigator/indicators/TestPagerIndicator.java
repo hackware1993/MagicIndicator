@@ -60,14 +60,14 @@ public class TestPagerIndicator extends View implements IPagerIndicator {
         PositionData next = mPositionDataList.get(nextPosition);
 
         mOutRect.left = current.mLeft + (next.mLeft - current.mLeft) * positionOffset;
-        mOutRect.top = current.mTop;
+        mOutRect.top = current.mTop + (next.mTop - current.mTop) * positionOffset;
         mOutRect.right = current.mRight + (next.mRight - current.mRight) * positionOffset;
-        mOutRect.bottom = current.mBottom;
+        mOutRect.bottom = current.mBottom + (next.mBottom - current.mBottom) * positionOffset;
 
         mInnerRect.left = current.mContentLeft + (next.mContentLeft - current.mContentLeft) * positionOffset;
-        mInnerRect.top = current.mContentTop;
+        mInnerRect.top = current.mContentTop + (next.mContentTop - current.mContentTop) * positionOffset;
         mInnerRect.right = current.mContentRight + (next.mContentRight - current.mContentRight) * positionOffset;
-        mInnerRect.bottom = current.mContentBottom;
+        mInnerRect.bottom = current.mContentBottom + (next.mContentBottom - current.mContentBottom) * positionOffset;
 
         invalidate();
     }
