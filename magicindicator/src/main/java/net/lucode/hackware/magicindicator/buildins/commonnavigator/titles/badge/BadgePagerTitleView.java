@@ -153,7 +153,6 @@ public class BadgePagerTitleView extends FrameLayout implements IMeasurablePager
             }
         }
         mXBadgeRule = badgeRule;
-
     }
 
     public void setYBadgeRule(BadgeRule badgeRule) {

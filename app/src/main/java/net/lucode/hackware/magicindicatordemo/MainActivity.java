@@ -215,6 +215,23 @@ public class MainActivity extends Activity {
         });
         magic_indicator2.setNavigator(commonNavigator2);
 
+        // 动态增加、删除小红点
+        commonNavigator2.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                BadgePagerTitleView badgePagerTitleView = (BadgePagerTitleView) commonNavigator2.getPagerTitleView(3);
+                badgePagerTitleView.setBadgeView(null);
+
+                BadgePagerTitleView badgePagerTitleView1 = (BadgePagerTitleView) commonNavigator2.getPagerTitleView(2);
+                TextView textView = (TextView) LayoutInflater.from(badgePagerTitleView1.getContext()).inflate(R.layout.simple_count_badge_layout, null);
+                textView.setText("1");
+                badgePagerTitleView1.setBadgeView(textView);
+                badgePagerTitleView1.setXBadgeRule(new BadgeRule(BadgeAnchor.CONTENT_RIGHT, -UIUtil.dip2px(badgePagerTitleView1.getContext(), 6)));
+                badgePagerTitleView1.setYBadgeRule(new BadgeRule(BadgeAnchor.CONTENT_TOP, 0));
+
+            }
+        }, 5000);
+
         // 自适应模式
         final MagicIndicator magic_indicator3 = (MagicIndicator) findViewById(R.id.magic_indicator3);
         final CommonNavigator commonNavigator3 = new CommonNavigator(this);
