@@ -89,7 +89,11 @@ public class NavigatorHelper {
                             mLeavedPercents.put(leaveIndex, 0.0f);
                         }
                     } else {
-                        boolean dispatchLeaveEvent = mSkimOver || mScrollState == ViewPager.SCROLL_STATE_DRAGGING || leaveIndex == mLastIndex;
+                        boolean dispatchLeaveEvent = mSkimOver
+                                || mScrollState == ViewPager.SCROLL_STATE_DRAGGING
+                                || leaveIndex == mLastIndex
+                                || (leaveIndex == mCurrentIndex - 1 && mLeavedPercents.get(leaveIndex) != 1.0f)
+                                || (leaveIndex == mCurrentIndex + 1 && mLeavedPercents.get(leaveIndex) != 1.0f);
                         if (dispatchLeaveEvent) {
                             mNavigatorScrollListener.onLeave(leaveIndex, mTotalCount, leavePercent, leftToRight);
                             mLeavedPercents.put(leaveIndex, leavePercent);
