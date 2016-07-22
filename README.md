@@ -1,5 +1,5 @@
 # MagicIndicator
-A powerful and extensible ViewPager indicator framework.
+A powerful, customizable and extensible ViewPager indicator framework.
 
 ![magicindicaotor.gif](https://github.com/hackware1993/MagicIndicator/blob/master/magicindicator.gif)
 
