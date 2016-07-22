@@ -120,12 +120,11 @@ public class CommonNavigator extends FrameLayout implements IPagerNavigator, Nav
         }
 
         mScrollView = (HorizontalScrollView) root.findViewById(R.id.scroll_view);   // mAdjustMode为true时，mScrollView为null
-        if (!mAdjustMode) {
-            mScrollView.getChildAt(0).setPadding(mLeftPadding, 0, mRightPadding, 0);    // TODO padding的效果尚未达到预期
-        }
+
+        mTitleContainer = (LinearLayout) root.findViewById(R.id.title_container);
+        mTitleContainer.setPadding(mLeftPadding, 0, mRightPadding, 0);
 
         mIndicatorContainer = (LinearLayout) root.findViewById(R.id.indicator_container);
-        mTitleContainer = (LinearLayout) root.findViewById(R.id.title_container);
         if (mIndicatorOnTop) {
             mIndicatorContainer.getParent().bringChildToFront(mIndicatorContainer);
         }

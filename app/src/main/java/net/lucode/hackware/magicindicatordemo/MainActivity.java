@@ -91,10 +91,9 @@ public class MainActivity extends Activity {
         // 今日头条式
         final MagicIndicator magicIndicator = (MagicIndicator) findViewById(R.id.magic_indicator);
         final CommonNavigator commonNavigator = new CommonNavigator(this);
-        commonNavigator.setFollowTouch(false);
         commonNavigator.setSkimOver(true);  // 跨多个item切换时中间的item呈现 "掠过" 效果
-        commonNavigator.setRightPadding(UIUtil.dip2px(MainActivity.this, 50));
-//        commonNavigator.setLeftPadding(UIUtil.dip2px(MainActivity.this, 80));
+        commonNavigator.setRightPadding(UIUtil.dip2px(MainActivity.this, 150));
+        commonNavigator.setLeftPadding(UIUtil.dip2px(MainActivity.this, 150));
         commonNavigator.setAdapter(new CommonNavigatorAdapter() {
 
             @Override
