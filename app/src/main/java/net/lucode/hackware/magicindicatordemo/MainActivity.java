@@ -218,6 +218,8 @@ public class MainActivity extends Activity {
         commonNavigator2.postDelayed(new Runnable() {
             @Override
             public void run() {
+                commonNavigator2.setReselectWhenLayout(false);
+
                 BadgePagerTitleView badgePagerTitleView = (BadgePagerTitleView) commonNavigator2.getPagerTitleView(3);
                 badgePagerTitleView.setBadgeView(null);
 
@@ -228,6 +230,12 @@ public class MainActivity extends Activity {
                 badgePagerTitleView1.setXBadgeRule(new BadgeRule(BadgeAnchor.CONTENT_RIGHT, -UIUtil.dip2px(badgePagerTitleView1.getContext(), 6)));
                 badgePagerTitleView1.setYBadgeRule(new BadgeRule(BadgeAnchor.CONTENT_TOP, 0));
 
+                badgePagerTitleView1.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        commonNavigator2.setReselectWhenLayout(true);
+                    }
+                });
             }
         }, 5000);
 

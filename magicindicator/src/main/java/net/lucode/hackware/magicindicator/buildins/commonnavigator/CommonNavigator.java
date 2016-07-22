@@ -47,11 +47,13 @@ public class CommonNavigator extends FrameLayout implements IPagerNavigator, Nav
     private boolean mFollowTouch = true;    // 是否手指跟随滚动
     private int mRightPadding;
     private int mLeftPadding;
-    private boolean mIndicatorOnTop;    // 指示器在title上方，默认为下方
+    private boolean mIndicatorOnTop;    // 指示器是否在title上方，默认为下方
+    private boolean mSkimOver;
+    private boolean mReselectWhenLayout = true;
     /****************************************************/
 
     // 保存每个title的位置信息，为扩展indicator提供保障
-    private List<PositionData> mPositionList = new ArrayList<PositionData>();
+    private List<PositionData> mPositionDataList = new ArrayList<PositionData>();
 
     private DataSetObserver mObserver = new DataSetObserver() {
 
@@ -164,12 +166,21 @@ public class CommonNavigator extends FrameLayout implements IPagerNavigator, Nav
         super.onLayout(changed, left, top, right, bottom);
         if (mAdapter != null) {
             preparePositionData();
+            if (mIndicator != null) {
+                mIndicator.onPositionDataProvide(mPositionDataList);
+            }
+            if (mReselectWhenLayout && mNavigatorHelper.getScrollState() == ViewPager.SCROLL_STATE_IDLE) {
+                onPageSelected(mNavigatorHelper.getCurrentIndex());
+                onPageScrolled(mNavigatorHelper.getCurrentIndex(), 0.0f, 0);
+            }
         }
     }
 
+    /**
+     * 获取title的位置信息，为打造不同的指示器、各种效果提供可能
+     */
     private void preparePositionData() {
-        // 获取title的位置信息，为打造不同的指示器、各种效果提供可能
-        List<PositionData> dataList = new ArrayList<PositionData>();
+        mPositionDataList.clear();
         for (int i = 0, j = mNavigatorHelper.getTotalCount(); i < j; i++) {
             View v = mTitleContainer.getChildAt(i);
             PositionData data = new PositionData();
@@ -189,20 +200,7 @@ public class CommonNavigator extends FrameLayout implements IPagerNavigator, Nav
                 data.mContentRight = data.mRight;
                 data.mContentBottom = data.mBottom;
             }
-            dataList.add(data);
-        }
-
-        mPositionList = new ArrayList<PositionData>(dataList);
-
-        // 将title的位置信息设置到指示器
-        if (mIndicator != null) {
-            mIndicator.onPositionDataProvide(dataList);
-        }
-
-        // 初始化title的位置
-        if (mNavigatorHelper.getScrollState() == ViewPager.SCROLL_STATE_IDLE) {
-            onPageSelected(mNavigatorHelper.getCurrentIndex());
-            onPageScrolled(mNavigatorHelper.getCurrentIndex(), 0.0f, 0);
+            mPositionDataList.add(data);
         }
     }
 
@@ -216,12 +214,12 @@ public class CommonNavigator extends FrameLayout implements IPagerNavigator, Nav
             }
 
             // 手指跟随滚动
-            if (mScrollView != null && mPositionList.size() > 0) {
+            if (mScrollView != null && mPositionDataList.size() > 0) {
                 if (mFollowTouch) {
-                    int currentPosition = Math.min(mPositionList.size() - 1, position);
-                    int nextPosition = Math.min(mPositionList.size() - 1, position + 1);
-                    PositionData current = mPositionList.get(currentPosition);
-                    PositionData next = mPositionList.get(nextPosition);
+                    int currentPosition = Math.min(mPositionDataList.size() - 1, position);
+                    int nextPosition = Math.min(mPositionDataList.size() - 1, position + 1);
+                    PositionData current = mPositionDataList.get(currentPosition);
+                    PositionData next = mPositionDataList.get(nextPosition);
                     float scrollTo = current.horizontalCenter() - mScrollView.getWidth() * mScrollPivotX;
                     float nextScrollTo = next.horizontalCenter() - mScrollView.getWidth() * mScrollPivotX;
                     mScrollView.scrollTo((int) (scrollTo + (nextScrollTo - scrollTo) * positionOffset), 0);
@@ -320,10 +318,11 @@ public class CommonNavigator extends FrameLayout implements IPagerNavigator, Nav
     }
 
     public boolean isSkimOver() {
-        return mNavigatorHelper.isSkimOver();
+        return mSkimOver;
     }
 
     public void setSkimOver(boolean skimOver) {
+        mSkimOver = skimOver;
         mNavigatorHelper.setSkimOver(skimOver);
     }
 
@@ -336,9 +335,9 @@ public class CommonNavigator extends FrameLayout implements IPagerNavigator, Nav
         if (v instanceof IPagerTitleView) {
             ((IPagerTitleView) v).onSelected(index, totalCount);
         }
-        if (!mAdjustMode && !mFollowTouch && mScrollView != null && mPositionList.size() > 0) {
-            int currentIndex = Math.min(mPositionList.size() - 1, index);
-            PositionData current = mPositionList.get(currentIndex);
+        if (!mAdjustMode && !mFollowTouch && mScrollView != null && mPositionDataList.size() > 0) {
+            int currentIndex = Math.min(mPositionDataList.size() - 1, index);
+            PositionData current = mPositionDataList.get(currentIndex);
             if (mEnablePivotScroll) {
                 float scrollTo = current.horizontalCenter() - mScrollView.getWidth() * mScrollPivotX;
                 if (mSmoothScroll) {
@@ -405,5 +404,13 @@ public class CommonNavigator extends FrameLayout implements IPagerNavigator, Nav
 
     public void setIndicatorOnTop(boolean indicatorOnTop) {
         mIndicatorOnTop = indicatorOnTop;
+    }
+
+    public boolean isReselectWhenLayout() {
+        return mReselectWhenLayout;
+    }
+
+    public void setReselectWhenLayout(boolean reselectWhenLayout) {
+        mReselectWhenLayout = reselectWhenLayout;
     }
 }
