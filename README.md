@@ -21,21 +21,19 @@ Simple steps, you can integrate **MagicIndicator**:
   xmlns:tools="http://schemas.android.com/tools"
   android:layout_width="match_parent"
   android:layout_height="match_parent"
-  android:background="@color/activity_bg"
   android:orientation="vertical"
   tools:context="net.lucode.hackware.magicindicatordemo.MainActivity">
   
   <net.lucode.hackware.magicindicator.MagicIndicator
       android:id="@+id/magic_indicator"
       android:layout_width="match_parent"
-      android:layout_height="@dimen/navigator_common_height"
-      android:background="#d43d3d" />
+      android:layout_height="40dp" />
   
   <android.support.v4.view.ViewPager
       android:id="@+id/view_pager"
       android:layout_width="match_parent"
-      android:layout_height="100dp"
-      android:background="@android:color/white" />
+      android:layout_height="0dp"
+      android:layout_weight="1" />
   
   </LinearLayout>
   ```
@@ -44,18 +42,18 @@ Simple steps, you can integrate **MagicIndicator**:
 
   ```
   final MagicIndicator magicIndicator = (MagicIndicator) findViewById(R.id.magic_indicator);
-  final CommonNavigator commonNavigator = new CommonNavigator(this);
+  CommonNavigator commonNavigator = new CommonNavigator(this);
   commonNavigator.setAdapter(new CommonNavigatorAdapter() {
   
   @Override
   public int getCount() {
-      return mDataList == null ? 0 : mDataList.size();
+      return mTitleDataList == null ? 0 : mTitleDataList.size();
   }
   
   @Override
   public IPagerTitleView getItemView(Context context, final int index) {
       ClipPagerTitleView clipPagerTitleView = new ClipPagerTitleView(context);
-      clipPagerTitleView.setText(mDataList.get(index));
+      clipPagerTitleView.setText(mTitleDataList.get(index));
       clipPagerTitleView.setTextColor(Color.parseColor("#f2c4c4"));
       clipPagerTitleView.setClipColor(Color.WHITE);
       clipPagerTitleView.setOnClickListener(new View.OnClickListener() {
