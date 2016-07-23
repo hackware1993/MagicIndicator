@@ -29,21 +29,21 @@
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/navigator_common_height"
                 android:layout_marginTop="@dimen/navigator_margin"
-                android:background="@android:color/white" />
+                android:background="#00c853" />
 
             <net.lucode.hackware.magicindicator.MagicIndicator
                 android:id="@+id/magic_indicator2"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/navigator_common_height"
+                android:layout_height="48dp"
                 android:layout_marginTop="@dimen/navigator_margin"
-                android:background="@android:color/white" />
+                android:background="#455a64" />
 
             <net.lucode.hackware.magicindicator.MagicIndicator
                 android:id="@+id/magic_indicator3"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/navigator_common_height"
                 android:layout_marginTop="@dimen/navigator_margin"
-                android:background="@android:color/white" />
+                android:background="#455a64" />
 
             <net.lucode.hackware.magicindicator.MagicIndicator
                 android:id="@+id/magic_indicator4"
@@ -71,7 +71,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/navigator_common_height"
                 android:layout_marginTop="@dimen/navigator_margin"
-                android:background="@android:color/white" />
+                android:background="#FAFAFA" />
 
             <net.lucode.hackware.magicindicator.MagicIndicator
                 android:id="@+id/magic_indicator8"
@@ -95,13 +95,6 @@
                 android:background="@android:color/white" />
 
             <net.lucode.hackware.magicindicator.MagicIndicator
-                android:id="@+id/magic_indicator11"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/navigator_common_height"
-                android:layout_marginTop="@dimen/navigator_margin"
-                android:background="@android:color/white" />
-
-            <net.lucode.hackware.magicindicator.MagicIndicator
                 android:id="@+id/magic_indicator12"
                 android:layout_width="match_parent"
                 android:layout_height="60dp"
@@ -110,11 +103,23 @@
         </LinearLayout>
     </ScrollView>
 
-    <android.support.v4.view.ViewPager
-        android:id="@+id/view_pager"
+    <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="100dp"
-        android:layout_marginTop="@dimen/navigator_margin"
-        android:background="@android:color/white" />
+        android:layout_height="85dp">
+
+        <android.support.v4.view.ViewPager
+            android:id="@+id/view_pager"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="@dimen/navigator_margin"
+            android:background="@android:color/white" />
+
+        <net.lucode.hackware.magicindicator.MagicIndicator
+            android:id="@+id/magic_indicator11"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/navigator_common_height"
+            android:layout_gravity="bottom" />
+
+    </FrameLayout>
 
 </LinearLayout>

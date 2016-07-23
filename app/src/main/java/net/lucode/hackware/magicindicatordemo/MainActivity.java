@@ -39,7 +39,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class MainActivity extends Activity {
-    String[] channels = new String[]{"科技", "汽车", "互联网", "hackware.lucode.net", "奇闻异事", "搞笑", "段子", "趣图", "健康", "时尚", "教育", "星座", "育儿", "游戏", "家居", "美食", "旅游", "历史", "情感"};
+    String[] channels = new String[]{"CUPCAKE", "DONUT", "ECLAIR", "GINGERBREAD", "HONEYCOMB", "ICE_CREAM_SANDWICH", "JELLY_BEAN", "KITKAT", "LOLLIPOP", "M", "NOUGAT"};
     private ViewPager mPager;
     private List<String> mDataList = new ArrayList<String>();
     private PagerAdapter mAdapter = new PagerAdapter() {
@@ -92,8 +92,9 @@ public class MainActivity extends Activity {
         final MagicIndicator magicIndicator = (MagicIndicator) findViewById(R.id.magic_indicator);
         final CommonNavigator commonNavigator = new CommonNavigator(this);
         commonNavigator.setSkimOver(true);  // 跨多个item切换时中间的item呈现 "掠过" 效果
-        commonNavigator.setRightPadding(UIUtil.dip2px(MainActivity.this, 150));
-        commonNavigator.setLeftPadding(UIUtil.dip2px(MainActivity.this, 150));
+        int padding = UIUtil.getScreenWidth(this) / 2;
+        commonNavigator.setRightPadding(padding);
+        commonNavigator.setLeftPadding(padding);
         commonNavigator.setAdapter(new CommonNavigatorAdapter() {
 
             @Override
@@ -126,7 +127,7 @@ public class MainActivity extends Activity {
         // 当前页不定位到中间
         final MagicIndicator magic_indicator1 = (MagicIndicator) findViewById(R.id.magic_indicator1);
         final CommonNavigator commonNavigator1 = new CommonNavigator(this);
-        commonNavigator1.setFollowTouch(false);
+        commonNavigator1.setScrollPivotX(0.25f);
         commonNavigator1.setAdapter(new CommonNavigatorAdapter() {
             @Override
             public int getCount() {
@@ -135,29 +136,27 @@ public class MainActivity extends Activity {
 
             @Override
             public IPagerTitleView getTitleView(Context context, final int index) {
-                ColorTransitionPagerTitleView colorTransitionPagerTitleView = new ColorTransitionPagerTitleView(context);
-                colorTransitionPagerTitleView.setText(mDataList.get(index));
-                colorTransitionPagerTitleView.setNormalColor(Color.GRAY);
-                colorTransitionPagerTitleView.setSelectedColor(Color.BLACK);
-                colorTransitionPagerTitleView.setOnClickListener(new View.OnClickListener() {
+                SimplePagerTitleView simplePagerTitleView = new SimplePagerTitleView(context);
+                simplePagerTitleView.setText(mDataList.get(index));
+                simplePagerTitleView.setNormalColor(Color.parseColor("#c8e6c9"));
+                simplePagerTitleView.setSelectedColor(Color.WHITE);
+                simplePagerTitleView.setTextSize(12);
+                simplePagerTitleView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         mPager.setCurrentItem(index);
                     }
                 });
-                return colorTransitionPagerTitleView;
+                return simplePagerTitleView;
             }
 
             @Override
             public IPagerIndicator getIndicator(Context context) {
                 LinePagerIndicator indicator = new LinePagerIndicator(context);
-                indicator.setMode(LinePagerIndicator.MODE_WRAP_CONTENT);
+                indicator.setMode(LinePagerIndicator.MODE_EXACTLY);
+                indicator.setYOffset(UIUtil.dip2px(context, 3));
                 List<String> colorList = new ArrayList<String>();
-                colorList.add("#ff4a42");
-                colorList.add("#fcde64");
-                colorList.add("#73e8f4");
-                colorList.add("#76b0ff");
-                colorList.add("#c683fe");
+                colorList.add("#ffffff");
                 indicator.setColorList(colorList);
                 return indicator;
             }
@@ -167,9 +166,6 @@ public class MainActivity extends Activity {
         // 当前页始终定位到中间
         final MagicIndicator magic_indicator2 = (MagicIndicator) findViewById(R.id.magic_indicator2);
         final CommonNavigator commonNavigator2 = new CommonNavigator(this);
-        commonNavigator2.setFollowTouch(false);
-        commonNavigator2.setEnablePivotScroll(true);
-        commonNavigator2.setScrollPivotX(0.15f);
         commonNavigator2.setAdapter(new CommonNavigatorAdapter() {
             @Override
             public int getCount() {
@@ -190,8 +186,8 @@ public class MainActivity extends Activity {
 
                 ColorTransitionPagerTitleView colorTransitionPagerTitleView = new ColorTransitionPagerTitleView(context);
                 colorTransitionPagerTitleView.setText(mDataList.get(index));
-                colorTransitionPagerTitleView.setNormalColor(Color.GRAY);
-                colorTransitionPagerTitleView.setSelectedColor(Color.BLACK);
+                colorTransitionPagerTitleView.setNormalColor(Color.parseColor("#88ffffff"));
+                colorTransitionPagerTitleView.setSelectedColor(Color.WHITE);
                 colorTransitionPagerTitleView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -206,8 +202,9 @@ public class MainActivity extends Activity {
             @Override
             public IPagerIndicator getIndicator(Context context) {
                 LinePagerIndicator indicator = new LinePagerIndicator(context);
+                indicator.setMode(LinePagerIndicator.MODE_WRAP_CONTENT);
                 List<String> colorList = new ArrayList<String>();
-                colorList.add("#ff4a42");
+                colorList.add("#40c4ff");
                 indicator.setColorList(colorList);
                 return indicator;
             }
@@ -243,6 +240,7 @@ public class MainActivity extends Activity {
         final MagicIndicator magic_indicator3 = (MagicIndicator) findViewById(R.id.magic_indicator3);
         final CommonNavigator commonNavigator3 = new CommonNavigator(this);
         commonNavigator3.setAdjustMode(true);  // 自适应模式
+        commonNavigator3.setSkimOver(true);
         commonNavigator3.setAdapter(new CommonNavigatorAdapter() {
             @Override
             public int getCount() {
@@ -251,26 +249,40 @@ public class MainActivity extends Activity {
 
             @Override
             public IPagerTitleView getTitleView(Context context, final int index) {
-                final ColorTransitionPagerTitleView colorTransitionPagerTitleView = new ColorTransitionPagerTitleView(context);
+                final BadgePagerTitleView badgePagerTitleView = new BadgePagerTitleView(context);
+                badgePagerTitleView.setAutoCancelBadge(false);
+
+                if (index == 0 || index == 2) {
+                    TextView textView = (TextView) LayoutInflater.from(context).inflate(R.layout.simple_count_badge_layout, null);
+                    textView.setText("3");
+                    badgePagerTitleView.setBadgeView(textView);
+                    badgePagerTitleView.setXBadgeRule(new BadgeRule(BadgeAnchor.CENTER_X, -UIUtil.dip2px(context, 6)));
+                    badgePagerTitleView.setYBadgeRule(new BadgeRule(BadgeAnchor.TOP, UIUtil.dip2px(context, 2)));
+                }
+
+                ColorTransitionPagerTitleView colorTransitionPagerTitleView = new ColorTransitionPagerTitleView(context);
                 colorTransitionPagerTitleView.setText(mDataList.get(index));
-                colorTransitionPagerTitleView.setNormalColor(Color.GRAY);
-                colorTransitionPagerTitleView.setSelectedColor(Color.BLACK);
+                colorTransitionPagerTitleView.setNormalColor(Color.parseColor("#88ffffff"));
+                colorTransitionPagerTitleView.setSelectedColor(Color.WHITE);
                 colorTransitionPagerTitleView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         mPager.setCurrentItem(index);
+                        badgePagerTitleView.setBadgeView(null);
                     }
                 });
-                return colorTransitionPagerTitleView;
+                badgePagerTitleView.setInnerPagerTitleView(colorTransitionPagerTitleView);
+
+                return badgePagerTitleView;
             }
 
             @Override
             public IPagerIndicator getIndicator(Context context) {
                 LinePagerIndicator indicator = new LinePagerIndicator(context);
-                indicator.setLineHeight(UIUtil.dip2px(context, 6));
-                indicator.setRoundRadius(UIUtil.dip2px(context, 3));
+                indicator.setLineHeight(UIUtil.dip2px(context, 4));
+                indicator.setRoundRadius(UIUtil.dip2px(context, 2));
                 List<String> colorList = new ArrayList<String>();
-                colorList.add("#fcde64");
+                colorList.add("#40c4ff");
                 indicator.setColorList(colorList);
                 return indicator;
             }
@@ -341,8 +353,8 @@ public class MainActivity extends Activity {
                 ScaleTransitionPagerTitleView colorTransitionPagerTitleView = new ScaleTransitionPagerTitleView(context);
                 colorTransitionPagerTitleView.setText(mDataList.get(index));
                 colorTransitionPagerTitleView.setTextSize(18);
-                colorTransitionPagerTitleView.setNormalColor(Color.GRAY);
-                colorTransitionPagerTitleView.setSelectedColor(Color.BLACK);
+                colorTransitionPagerTitleView.setNormalColor(Color.parseColor("#616161"));
+                colorTransitionPagerTitleView.setSelectedColor(Color.parseColor("#f57c00"));
                 colorTransitionPagerTitleView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -360,7 +372,7 @@ public class MainActivity extends Activity {
                 indicator.setYOffset(UIUtil.dip2px(context, 39));
                 indicator.setLineHeight(UIUtil.dip2px(context, 1));
                 List<String> colorList = new ArrayList<String>();
-                colorList.add("#c683fe");
+                colorList.add("#f57c00");
                 indicator.setColorList(colorList);
                 return indicator;
             }
@@ -397,7 +409,7 @@ public class MainActivity extends Activity {
         // 带吸附效果
         final MagicIndicator magic_indicator7 = (MagicIndicator) findViewById(R.id.magic_indicator7);
         final CommonNavigator commonNavigator7 = new CommonNavigator(this);
-        commonNavigator7.setEnablePivotScroll(true);
+        commonNavigator7.setScrollPivotX(0.65f);
         commonNavigator7.setAdapter(new CommonNavigatorAdapter() {
             @Override
             public int getCount() {
@@ -408,8 +420,8 @@ public class MainActivity extends Activity {
             public IPagerTitleView getTitleView(Context context, final int index) {
                 SimplePagerTitleView simplePagerTitleView = new SimplePagerTitleView(context);
                 simplePagerTitleView.setText(mDataList.get(index));
-                simplePagerTitleView.setNormalColor(Color.GRAY);
-                simplePagerTitleView.setSelectedColor(Color.BLACK);
+                simplePagerTitleView.setNormalColor(Color.parseColor("#9e9e9e"));
+                simplePagerTitleView.setSelectedColor(Color.parseColor("#00c853"));
                 simplePagerTitleView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -429,11 +441,7 @@ public class MainActivity extends Activity {
                 indicator.setStartInterpolator(new AccelerateInterpolator());
                 indicator.setEndInterpolator(new DecelerateInterpolator(2.0f));
                 List<String> colorList = new ArrayList<String>();
-                colorList.add("#ff4a42");
-                colorList.add("#fcde64");
-                colorList.add("#73e8f4");
-                colorList.add("#76b0ff");
-                colorList.add("#c683fe");
+                colorList.add("#00c853");
                 indicator.setColorList(colorList);
                 return indicator;
             }
@@ -484,7 +492,7 @@ public class MainActivity extends Activity {
         // 天天快报式
         final MagicIndicator magic_indicator9 = (MagicIndicator) findViewById(R.id.magic_indicator9);
         final CommonNavigator commonNavigator9 = new CommonNavigator(this);
-        commonNavigator9.setEnablePivotScroll(true);
+        commonNavigator9.setScrollPivotX(0.35f);
         commonNavigator9.setAdapter(new CommonNavigatorAdapter() {
             @Override
             public int getCount() {
@@ -554,12 +562,6 @@ public class MainActivity extends Activity {
         final CircleNavigator circleNavigator = new CircleNavigator(this);
         circleNavigator.setCircleCount(mDataList.size());
         circleNavigator.setCircleColor(Color.RED);
-        circleNavigator.setCircleClickListener(new CircleNavigator.OnCircleClickListener() {
-            @Override
-            public void onClick(int index) {
-                mPager.setCurrentItem(index);
-            }
-        });
         magic_indicator11.setNavigator(circleNavigator);
 
         // 通用式
