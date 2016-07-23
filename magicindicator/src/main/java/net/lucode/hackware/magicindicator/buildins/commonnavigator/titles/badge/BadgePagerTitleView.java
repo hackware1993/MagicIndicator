@@ -66,7 +66,7 @@ public class BadgePagerTitleView extends FrameLayout implements IMeasurablePager
         mInnerPagerTitleView = innerPagerTitleView;
         removeAllViews();
         if (mInnerPagerTitleView instanceof View) {
-            FrameLayout.LayoutParams lp = new FrameLayout.LayoutParams(FrameLayout.LayoutParams.WRAP_CONTENT, FrameLayout.LayoutParams.MATCH_PARENT);
+            FrameLayout.LayoutParams lp = new FrameLayout.LayoutParams(LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.MATCH_PARENT);
             addView((View) mInnerPagerTitleView, lp);
         }
         if (mBadgeView != null) {
@@ -86,7 +86,7 @@ public class BadgePagerTitleView extends FrameLayout implements IMeasurablePager
         mBadgeView = badgeView;
         removeAllViews();
         if (mInnerPagerTitleView instanceof View) {
-            FrameLayout.LayoutParams lp = new FrameLayout.LayoutParams(FrameLayout.LayoutParams.WRAP_CONTENT, FrameLayout.LayoutParams.MATCH_PARENT);
+            FrameLayout.LayoutParams lp = new FrameLayout.LayoutParams(LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.MATCH_PARENT);
             addView((View) mInnerPagerTitleView, lp);
         }
         if (mBadgeView != null) {
