@@ -40,7 +40,7 @@ public class CommonNavigator extends FrameLayout implements IPagerNavigator, Nav
      * 提供给外部的参数配置
      */
     /****************************************************/
-    private boolean mAdjustMode;   // 自适应模式，为true表示title均分宽度，适用于数目固定的、少量的title
+    private boolean mAdjustMode;   // 自适应模式，适用于数目固定的、少量的title
     private boolean mEnablePivotScroll; // 启动中心点滚动
     private float mScrollPivotX = 0.5f; // 滚动中心点 0.0f - 1.0f
     private boolean mSmoothScroll = true;   // 是否平滑滚动，适用于 !mAdjustMode && !mFollowTouch
@@ -48,8 +48,8 @@ public class CommonNavigator extends FrameLayout implements IPagerNavigator, Nav
     private int mRightPadding;
     private int mLeftPadding;
     private boolean mIndicatorOnTop;    // 指示器是否在title上方，默认为下方
-    private boolean mSkimOver;
-    private boolean mReselectWhenLayout = true;
+    private boolean mSkimOver;  // 跨多页切换时，中间页是否显示 "掠过" 效果
+    private boolean mReselectWhenLayout = true; // PositionData准备好时，是否重新选中当前页，为true可保证在极端情况下指示器状态正确
     /****************************************************/
 
     // 保存每个title的位置信息，为扩展indicator提供保障

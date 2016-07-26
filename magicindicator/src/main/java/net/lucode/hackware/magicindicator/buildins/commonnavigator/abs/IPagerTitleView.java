@@ -20,6 +20,7 @@ public interface IPagerTitleView {
      * 离开
      *
      * @param leavePercent 离开的百分比, 0.0f - 1.0f
+     * @param leftToRight  从左至右离开
      */
     void onLeave(int index, int totalCount, float leavePercent, boolean leftToRight);
 
@@ -27,6 +28,7 @@ public interface IPagerTitleView {
      * 进入
      *
      * @param enterPercent 进入的百分比, 0.0f - 1.0f
+     * @param leftToRight  从左至右离开
      */
     void onEnter(int index, int totalCount, float enterPercent, boolean leftToRight);
 }
