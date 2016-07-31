@@ -98,12 +98,14 @@ Now, enjoy yourself!
 
 More effects adding...
 
+[![Codewake](https://www.codewake.com/badges/ask_question.svg)](https://www.codewake.com/p/magicindicator)
+
 # Who developed?
 
 hackware1993@gmail.com
 
 cfb1993@163.com
 
-An intermittent perfectionist
+An intermittent perfectionist.
 
 Visit [My Blog](http://hackware.lucode.net) for more articles about MagicIndicator.
