@@ -34,6 +34,7 @@ import net.lucode.hackware.magicindicator.buildins.commonnavigator.titles.Simple
 import net.lucode.hackware.magicindicator.buildins.commonnavigator.titles.badge.BadgeAnchor;
 import net.lucode.hackware.magicindicator.buildins.commonnavigator.titles.badge.BadgePagerTitleView;
 import net.lucode.hackware.magicindicator.buildins.commonnavigator.titles.badge.BadgeRule;
+import net.lucode.hackware.magicindicatordemo.ext.titles.ScaleTransitionPagerTitleView;
 
 import java.util.ArrayList;
 import java.util.List;
