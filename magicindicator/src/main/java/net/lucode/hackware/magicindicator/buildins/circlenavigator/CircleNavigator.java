@@ -10,9 +10,8 @@ import android.view.ViewConfiguration;
 import android.view.animation.Interpolator;
 import android.view.animation.LinearInterpolator;
 
-import net.lucode.hackware.magicindicator.NavigatorHelper;
-import net.lucode.hackware.magicindicator.UIUtil;
 import net.lucode.hackware.magicindicator.abs.IPagerNavigator;
+import net.lucode.hackware.magicindicator.buildins.UIUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,15 +21,16 @@ import java.util.List;
  * 博客: http://hackware.lucode.net
  * Created by hackware on 2016/6/26.
  */
-public class CircleNavigator extends View implements IPagerNavigator, NavigatorHelper.OnNavigatorScrollListener {
+public class CircleNavigator extends View implements IPagerNavigator {
     private int mRadius;
     private int mCircleColor;
     private int mStrokeWidth;
     private int mCircleSpacing;
+    private int mCurrentIndex;
+    private int mTotalCount;
     private Interpolator mStartInterpolator = new LinearInterpolator();
-    private Paint mPaint;
 
-    private NavigatorHelper mNavigatorHelper;
+    private Paint mPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
     private List<PointF> mCirclePoints = new ArrayList<PointF>();
     private float mIndicatorX;
 
@@ -47,9 +47,6 @@ public class CircleNavigator extends View implements IPagerNavigator, NavigatorH
     }
 
     private void init(Context context) {
-        mNavigatorHelper = new NavigatorHelper();
-        mNavigatorHelper.setNavigatorScrollListener(this);
-        mPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
         mTouchSlop = ViewConfiguration.get(context).getScaledTouchSlop();
         mRadius = UIUtil.dip2px(context, 3);
         mCircleSpacing = UIUtil.dip2px(context, 8);
@@ -81,25 +78,22 @@ public class CircleNavigator extends View implements IPagerNavigator, NavigatorH
 
     private void prepareCirclePoints() {
         mCirclePoints.clear();
-        int count = mNavigatorHelper.getTotalCount();
-        if (count > 0) {
+        if (mTotalCount > 0) {
             int y = getHeight() / 2;
-            int measureWidth = count * mRadius * 2 + (count - 1) * mCircleSpacing;
+            int measureWidth = mTotalCount * mRadius * 2 + (mTotalCount - 1) * mCircleSpacing;
             int centerSpacing = mRadius * 2 + mCircleSpacing;
             int startX = (getWidth() - measureWidth) / 2 + mRadius;
-            for (int i = 0; i < count; i++) {
+            for (int i = 0; i < mTotalCount; i++) {
                 PointF pointF = new PointF(startX, y);
                 mCirclePoints.add(pointF);
                 startX += centerSpacing;
             }
-            mIndicatorX = mCirclePoints.get(mNavigatorHelper.getCurrentIndex()).x;
+            mIndicatorX = mCirclePoints.get(mCurrentIndex).x;
         }
     }
 
     @Override
     public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-        mNavigatorHelper.onPageScrolled(position, positionOffset, positionOffsetPixels);
-
         if (mCirclePoints.isEmpty()) {
             return;
         }
@@ -151,12 +145,11 @@ public class CircleNavigator extends View implements IPagerNavigator, NavigatorH
 
     @Override
     public void onPageSelected(int position) {
-        mNavigatorHelper.onPageSelected(position);
+        mCurrentIndex = position;
     }
 
     @Override
     public void onPageScrollStateChanged(int state) {
-        mNavigatorHelper.onPageScrollStateChanged(state);
     }
 
     @Override
@@ -226,27 +219,11 @@ public class CircleNavigator extends View implements IPagerNavigator, NavigatorH
     }
 
     public int getCircleCount() {
-        return mNavigatorHelper.getTotalCount();
+        return mTotalCount;
     }
 
     public void setCircleCount(int count) {
-        mNavigatorHelper.setTotalCount(count);  // 此处不调用invalidate，让外部调用notifyDataSetChanged
-    }
-
-    @Override
-    public void onEnter(int index, int totalCount, float enterPercent, boolean leftToRight) {
-    }
-
-    @Override
-    public void onLeave(int index, int totalCount, float leavePercent, boolean leftToRight) {
-    }
-
-    @Override
-    public void onSelected(int index, int totalCount) {
-    }
-
-    @Override
-    public void onDeselected(int index, int totalCount) {
+        mTotalCount = count;  // 此处不调用invalidate，让外部调用notifyDataSetChanged
     }
 
     public boolean isTouchable() {

@@ -4,7 +4,7 @@ import android.content.Context;
 import android.view.animation.Interpolator;
 import android.view.animation.LinearInterpolator;
 
-import net.lucode.hackware.magicindicator.ArgbEvaluatorHolder;
+import net.lucode.hackware.magicindicator.buildins.ArgbEvaluatorHolder;
 
 
 /**

@@ -7,7 +7,7 @@ import android.text.TextUtils;
 import android.view.Gravity;
 import android.widget.TextView;
 
-import net.lucode.hackware.magicindicator.UIUtil;
+import net.lucode.hackware.magicindicator.buildins.UIUtil;
 import net.lucode.hackware.magicindicator.buildins.commonnavigator.abs.IMeasurablePagerTitleView;
 
 

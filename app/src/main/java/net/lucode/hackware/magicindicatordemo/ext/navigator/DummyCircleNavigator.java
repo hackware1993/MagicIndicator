@@ -6,8 +6,8 @@ import android.graphics.Paint;
 import android.graphics.PointF;
 import android.view.View;
 
-import net.lucode.hackware.magicindicator.UIUtil;
 import net.lucode.hackware.magicindicator.abs.IPagerNavigator;
+import net.lucode.hackware.magicindicator.buildins.UIUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -109,13 +109,26 @@ public class DummyCircleNavigator extends View implements IPagerNavigator {
         invalidate();
     }
 
-    /**
-     * notifyDataSetChanged应该紧随其后调用
-     *
-     * @param circleCount
-     */
-    public void setCircleCount(int circleCount) {
-        mCircleCount = circleCount;
+    public int getCircleColor() {
+        return mCircleColor;
+    }
+
+    public void setCircleColor(int circleColor) {
+        mCircleColor = circleColor;
+        invalidate();
+    }
+
+    public int getStrokeWidth() {
+        return mStrokeWidth;
+    }
+
+    public void setStrokeWidth(int strokeWidth) {
+        mStrokeWidth = strokeWidth;
+        invalidate();
+    }
+
+    public int getRadius() {
+        return mRadius;
     }
 
     public void setRadius(int radius) {
@@ -124,14 +137,8 @@ public class DummyCircleNavigator extends View implements IPagerNavigator {
         invalidate();
     }
 
-    public void setCircleColor(int circleColor) {
-        mCircleColor = circleColor;
-        invalidate();
-    }
-
-    public void setStrokeWidth(int strokeWidth) {
-        mStrokeWidth = strokeWidth;
-        invalidate();
+    public int getCircleSpacing() {
+        return mCircleSpacing;
     }
 
     public void setCircleSpacing(int circleSpacing) {
@@ -140,27 +147,20 @@ public class DummyCircleNavigator extends View implements IPagerNavigator {
         invalidate();
     }
 
-    public int getCircleColor() {
-        return mCircleColor;
-    }
-
-    public int getStrokeWidth() {
-        return mStrokeWidth;
-    }
-
-    public int getRadius() {
-        return mRadius;
-    }
-
-    public int getCircleSpacing() {
-        return mCircleSpacing;
-    }
-
     public int getCurrentIndex() {
         return mCurrentIndex;
     }
 
     public int getCircleCount() {
         return mCircleCount;
+    }
+
+    /**
+     * notifyDataSetChanged应该紧随其后调用
+     *
+     * @param circleCount
+     */
+    public void setCircleCount(int circleCount) {
+        mCircleCount = circleCount;
     }
 }

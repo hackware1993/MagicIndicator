@@ -65,7 +65,7 @@ public class NavigatorHelper {
                     }
                 }
                 if (enterIndex == leaveIndex) {
-                    if (enterIndex == mTotalCount - 1 && mLeavedPercents.get(enterIndex) != 0.0f && enterPercent == 0.0f && leftToRight) {
+                    if (enterIndex == mTotalCount - 1 && mLeavedPercents.get(enterIndex, 0.0f) != 0.0f && enterPercent == 0.0f && leftToRight) {
                         boolean dispatchEnterEvent = mSkimOver || mScrollState == ViewPager.SCROLL_STATE_DRAGGING || enterIndex == mCurrentIndex;
                         if (dispatchEnterEvent) {
                             mNavigatorScrollListener.onEnter(enterIndex, mTotalCount, 1.0f, true);
@@ -92,8 +92,8 @@ public class NavigatorHelper {
                         boolean dispatchLeaveEvent = mSkimOver
                                 || mScrollState == ViewPager.SCROLL_STATE_DRAGGING
                                 || leaveIndex == mLastIndex
-                                || (leaveIndex == mCurrentIndex - 1 && mLeavedPercents.get(leaveIndex) != 1.0f)
-                                || (leaveIndex == mCurrentIndex + 1 && mLeavedPercents.get(leaveIndex) != 1.0f);
+                                || (leaveIndex == mCurrentIndex - 1 && mLeavedPercents.get(leaveIndex, 0.0f) != 1.0f)
+                                || (leaveIndex == mCurrentIndex + 1 && mLeavedPercents.get(leaveIndex, 0.0f) != 1.0f);
                         if (dispatchLeaveEvent) {
                             mNavigatorScrollListener.onLeave(leaveIndex, mTotalCount, leavePercent, leftToRight);
                             mLeavedPercents.put(leaveIndex, leavePercent);

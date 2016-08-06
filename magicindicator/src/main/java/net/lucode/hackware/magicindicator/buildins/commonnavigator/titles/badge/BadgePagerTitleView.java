@@ -139,38 +139,6 @@ public class BadgePagerTitleView extends FrameLayout implements IMeasurablePager
         }
     }
 
-    public void setXBadgeRule(BadgeRule badgeRule) {
-        if (badgeRule != null) {
-            BadgeAnchor anchor = badgeRule.getAnchor();
-            if (anchor != BadgeAnchor.LEFT
-                    && anchor != BadgeAnchor.RIGHT
-                    && anchor != BadgeAnchor.CONTENT_LEFT
-                    && anchor != BadgeAnchor.CONTENT_RIGHT
-                    && anchor != BadgeAnchor.CENTER_X
-                    && anchor != BadgeAnchor.LEFT_EDGE_CENTER_X
-                    && anchor != BadgeAnchor.RIGHT_EDGE_CENTER_X) {
-                throw new IllegalArgumentException("x badge rule is wrong.");
-            }
-        }
-        mXBadgeRule = badgeRule;
-    }
-
-    public void setYBadgeRule(BadgeRule badgeRule) {
-        if (badgeRule != null) {
-            BadgeAnchor anchor = badgeRule.getAnchor();
-            if (anchor != BadgeAnchor.TOP
-                    && anchor != BadgeAnchor.BOTTOM
-                    && anchor != BadgeAnchor.CONTENT_TOP
-                    && anchor != BadgeAnchor.CONTENT_BOTTOM
-                    && anchor != BadgeAnchor.CENTER_Y
-                    && anchor != BadgeAnchor.TOP_EDGE_CENTER_Y
-                    && anchor != BadgeAnchor.BOTTOM_EDGE_CENTER_Y) {
-                throw new IllegalArgumentException("y badge rule is wrong.");
-            }
-        }
-        mYBadgeRule = badgeRule;
-    }
-
     @Override
     public int getContentLeft() {
         if (mInnerPagerTitleView instanceof IMeasurablePagerTitleView) {
@@ -207,8 +175,40 @@ public class BadgePagerTitleView extends FrameLayout implements IMeasurablePager
         return mXBadgeRule;
     }
 
+    public void setXBadgeRule(BadgeRule badgeRule) {
+        if (badgeRule != null) {
+            BadgeAnchor anchor = badgeRule.getAnchor();
+            if (anchor != BadgeAnchor.LEFT
+                    && anchor != BadgeAnchor.RIGHT
+                    && anchor != BadgeAnchor.CONTENT_LEFT
+                    && anchor != BadgeAnchor.CONTENT_RIGHT
+                    && anchor != BadgeAnchor.CENTER_X
+                    && anchor != BadgeAnchor.LEFT_EDGE_CENTER_X
+                    && anchor != BadgeAnchor.RIGHT_EDGE_CENTER_X) {
+                throw new IllegalArgumentException("x badge rule is wrong.");
+            }
+        }
+        mXBadgeRule = badgeRule;
+    }
+
     public BadgeRule getYBadgeRule() {
         return mYBadgeRule;
+    }
+
+    public void setYBadgeRule(BadgeRule badgeRule) {
+        if (badgeRule != null) {
+            BadgeAnchor anchor = badgeRule.getAnchor();
+            if (anchor != BadgeAnchor.TOP
+                    && anchor != BadgeAnchor.BOTTOM
+                    && anchor != BadgeAnchor.CONTENT_TOP
+                    && anchor != BadgeAnchor.CONTENT_BOTTOM
+                    && anchor != BadgeAnchor.CENTER_Y
+                    && anchor != BadgeAnchor.TOP_EDGE_CENTER_Y
+                    && anchor != BadgeAnchor.BOTTOM_EDGE_CENTER_Y) {
+                throw new IllegalArgumentException("y badge rule is wrong.");
+            }
+        }
+        mYBadgeRule = badgeRule;
     }
 
     public boolean isAutoCancelBadge() {

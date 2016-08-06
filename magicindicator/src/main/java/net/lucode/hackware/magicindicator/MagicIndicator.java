@@ -2,7 +2,6 @@ package net.lucode.hackware.magicindicator;
 
 import android.content.Context;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.View;
 import android.widget.FrameLayout;
 
@@ -14,7 +13,6 @@ import net.lucode.hackware.magicindicator.abs.IPagerNavigator;
  * Created by hackware on 2016/6/26.
  */
 public class MagicIndicator extends FrameLayout {
-    private static final String TAG = "MagicIndicator";
     private IPagerNavigator mNavigator;
 
     public MagicIndicator(Context context) {
@@ -26,21 +24,18 @@ public class MagicIndicator extends FrameLayout {
     }
 
     public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-        Log.d(TAG, "onPageScrolled() position = " + position + ", positionOffset = " + positionOffset + ", positionOffsetPixels = " + positionOffsetPixels);
         if (mNavigator != null) {
             mNavigator.onPageScrolled(position, positionOffset, positionOffsetPixels);
         }
     }
 
     public void onPageSelected(int position) {
-        Log.d(TAG, "onPageSelected() position = " + position);
         if (mNavigator != null) {
             mNavigator.onPageSelected(position);
         }
     }
 
     public void onPageScrollStateChanged(int state) {
-        Log.d(TAG, "onPageScrollStateChanged() state = " + state);
         if (mNavigator != null) {
             mNavigator.onPageScrollStateChanged(state);
         }
