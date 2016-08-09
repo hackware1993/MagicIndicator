@@ -116,9 +116,9 @@
 
         <net.lucode.hackware.magicindicator.MagicIndicator
             android:id="@+id/magic_indicator11"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="@dimen/navigator_common_height"
-            android:layout_gravity="bottom" />
+            android:layout_gravity="bottom|center_horizontal" />
 
     </FrameLayout>
 

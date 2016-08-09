@@ -54,7 +54,49 @@ public class CircleNavigator extends View implements IPagerNavigator {
     }
 
     @Override
+    protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
+        setMeasuredDimension(measureWidth(widthMeasureSpec), measureHeight(heightMeasureSpec));
+    }
+
+    private int measureWidth(int widthMeasureSpec) {
+        int mode = MeasureSpec.getMode(widthMeasureSpec);
+        int width = MeasureSpec.getSize(widthMeasureSpec);
+        int result = 0;
+        switch (mode) {
+            case MeasureSpec.EXACTLY:
+                result = width;
+                break;
+            case MeasureSpec.AT_MOST:
+            case MeasureSpec.UNSPECIFIED:
+                result = mTotalCount * mRadius * 2 + (mTotalCount - 1) * mCircleSpacing + getPaddingLeft() + getPaddingRight() + mStrokeWidth;
+                break;
+            default:
+                break;
+        }
+        return result;
+    }
+
+    private int measureHeight(int heightMeasureSpec) {
+        int mode = MeasureSpec.getMode(heightMeasureSpec);
+        int height = MeasureSpec.getSize(heightMeasureSpec);
+        int result = 0;
+        switch (mode) {
+            case MeasureSpec.EXACTLY:
+                result = height;
+                break;
+            case MeasureSpec.AT_MOST:
+            case MeasureSpec.UNSPECIFIED:
+                result = mRadius * 2 + mStrokeWidth + getPaddingTop() + getPaddingBottom();
+                break;
+            default:
+                break;
+        }
+        return result;
+    }
+
+    @Override
     protected void onDraw(Canvas canvas) {
+        mPaint.setColor(mCircleColor);
         drawCircles(canvas);
         drawIndicator(canvas);
     }
@@ -62,7 +104,6 @@ public class CircleNavigator extends View implements IPagerNavigator {
     private void drawCircles(Canvas canvas) {
         mPaint.setStyle(Paint.Style.STROKE);
         mPaint.setStrokeWidth(mStrokeWidth);
-        mPaint.setColor(mCircleColor);
         for (int i = 0, j = mCirclePoints.size(); i < j; i++) {
             PointF pointF = mCirclePoints.get(i);
             canvas.drawCircle(pointF.x, pointF.y, mRadius, mPaint);
@@ -72,17 +113,16 @@ public class CircleNavigator extends View implements IPagerNavigator {
     private void drawIndicator(Canvas canvas) {
         mPaint.setStyle(Paint.Style.FILL);
         if (mCirclePoints.size() > 0) {
-            canvas.drawCircle(mIndicatorX, getHeight() / 2, mRadius, mPaint);
+            canvas.drawCircle(mIndicatorX, (int) (getHeight() / 2.0f + 0.5f), mRadius, mPaint);
         }
     }
 
     private void prepareCirclePoints() {
         mCirclePoints.clear();
         if (mTotalCount > 0) {
-            int y = getHeight() / 2;
-            int measureWidth = mTotalCount * mRadius * 2 + (mTotalCount - 1) * mCircleSpacing;
+            int y = (int) (getHeight() / 2.0f + 0.5f);
             int centerSpacing = mRadius * 2 + mCircleSpacing;
-            int startX = (getWidth() - measureWidth) / 2 + mRadius;
+            int startX = mRadius + (int) (mStrokeWidth / 2.0f + 0.5f) + getPaddingLeft();
             for (int i = 0; i < mTotalCount; i++) {
                 PointF pointF = new PointF(startX, y);
                 mCirclePoints.add(pointF);
