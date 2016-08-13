@@ -94,7 +94,7 @@ public class CommonPagerTitleView extends FrameLayout implements IMeasurablePage
         removeAllViews();
         if (contentView != null) {
             if (lp == null) {
-                lp = new FrameLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.MATCH_PARENT);
+                lp = new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
             }
             addView(contentView, lp);
         }
