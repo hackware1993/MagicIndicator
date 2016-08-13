@@ -182,23 +182,25 @@ public class CommonNavigator extends FrameLayout implements IPagerNavigator, Nav
     private void preparePositionData() {
         mPositionDataList.clear();
         for (int i = 0, j = mNavigatorHelper.getTotalCount(); i < j; i++) {
-            View v = mTitleContainer.getChildAt(i);
             PositionData data = new PositionData();
-            data.mLeft = v.getLeft();
-            data.mTop = v.getTop();
-            data.mRight = v.getRight();
-            data.mBottom = v.getBottom();
-            if (v instanceof IMeasurablePagerTitleView) {
-                IMeasurablePagerTitleView view = (IMeasurablePagerTitleView) v;
-                data.mContentLeft = view.getContentLeft();
-                data.mContentTop = view.getContentTop();
-                data.mContentRight = view.getContentRight();
-                data.mContentBottom = view.getContentBottom();
-            } else {
-                data.mContentLeft = data.mLeft;
-                data.mContentTop = data.mTop;
-                data.mContentRight = data.mRight;
-                data.mContentBottom = data.mBottom;
+            View v = mTitleContainer.getChildAt(i);
+            if (v != null) {
+                data.mLeft = v.getLeft();
+                data.mTop = v.getTop();
+                data.mRight = v.getRight();
+                data.mBottom = v.getBottom();
+                if (v instanceof IMeasurablePagerTitleView) {
+                    IMeasurablePagerTitleView view = (IMeasurablePagerTitleView) v;
+                    data.mContentLeft = view.getContentLeft();
+                    data.mContentTop = view.getContentTop();
+                    data.mContentRight = view.getContentRight();
+                    data.mContentBottom = view.getContentBottom();
+                } else {
+                    data.mContentLeft = data.mLeft;
+                    data.mContentTop = data.mTop;
+                    data.mContentRight = data.mRight;
+                    data.mContentBottom = data.mBottom;
+                }
             }
             mPositionDataList.add(data);
         }
