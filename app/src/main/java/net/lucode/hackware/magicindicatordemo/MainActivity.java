@@ -156,9 +156,7 @@ public class MainActivity extends Activity {
                 LinePagerIndicator indicator = new LinePagerIndicator(context);
                 indicator.setMode(LinePagerIndicator.MODE_EXACTLY);
                 indicator.setYOffset(UIUtil.dip2px(context, 3));
-                List<String> colorList = new ArrayList<String>();
-                colorList.add("#ffffff");
-                indicator.setColorList(colorList);
+                indicator.setColors(Color.parseColor("#ffffff"));
                 return indicator;
             }
         });
@@ -204,9 +202,7 @@ public class MainActivity extends Activity {
             public IPagerIndicator getIndicator(Context context) {
                 LinePagerIndicator indicator = new LinePagerIndicator(context);
                 indicator.setMode(LinePagerIndicator.MODE_WRAP_CONTENT);
-                List<String> colorList = new ArrayList<String>();
-                colorList.add("#40c4ff");
-                indicator.setColorList(colorList);
+                indicator.setColors(Color.parseColor("#40c4ff"));
                 return indicator;
             }
         });
@@ -282,9 +278,7 @@ public class MainActivity extends Activity {
                 LinePagerIndicator indicator = new LinePagerIndicator(context);
                 indicator.setLineHeight(UIUtil.dip2px(context, 4));
                 indicator.setRoundRadius(UIUtil.dip2px(context, 2));
-                List<String> colorList = new ArrayList<String>();
-                colorList.add("#40c4ff");
-                indicator.setColorList(colorList);
+                indicator.setColors(Color.parseColor("#40c4ff"));
                 return indicator;
             }
 
@@ -330,9 +324,7 @@ public class MainActivity extends Activity {
                 indicator.setStartInterpolator(new AccelerateInterpolator());
                 indicator.setEndInterpolator(new DecelerateInterpolator(1.6f));
                 indicator.setLineHeight(UIUtil.dip2px(context, 1));
-                List<String> colorList = new ArrayList<String>();
-                colorList.add("#76b0ff");
-                indicator.setColorList(colorList);
+                indicator.setColors(Color.parseColor("#76b0ff"));
                 return indicator;
             }
         });
@@ -372,9 +364,7 @@ public class MainActivity extends Activity {
                 indicator.setEndInterpolator(new DecelerateInterpolator(1.6f));
                 indicator.setYOffset(UIUtil.dip2px(context, 39));
                 indicator.setLineHeight(UIUtil.dip2px(context, 1));
-                List<String> colorList = new ArrayList<String>();
-                colorList.add("#f57c00");
-                indicator.setColorList(colorList);
+                indicator.setColors(Color.parseColor("#f57c00"));
                 return indicator;
             }
         });
@@ -399,9 +389,7 @@ public class MainActivity extends Activity {
             public IPagerIndicator getIndicator(Context context) {
                 LinePagerIndicator indicator = new LinePagerIndicator(context);
                 indicator.setLineHeight(UIUtil.dip2px(context, 5));
-                List<String> colorList = new ArrayList<String>();
-                colorList.add("#76b0ff");
-                indicator.setColorList(colorList);
+                indicator.setColors(Color.parseColor("#76b0ff"));
                 return indicator;
             }
         });
@@ -441,9 +429,7 @@ public class MainActivity extends Activity {
                 indicator.setRoundRadius(UIUtil.dip2px(context, 3));
                 indicator.setStartInterpolator(new AccelerateInterpolator());
                 indicator.setEndInterpolator(new DecelerateInterpolator(2.0f));
-                List<String> colorList = new ArrayList<String>();
-                colorList.add("#00c853");
-                indicator.setColorList(colorList);
+                indicator.setColors(Color.parseColor("#00c853"));
                 return indicator;
             }
         });
@@ -478,13 +464,7 @@ public class MainActivity extends Activity {
             @Override
             public IPagerIndicator getIndicator(Context context) {
                 BezierPagerIndicator indicator = new BezierPagerIndicator(context);
-                List<String> colorList = new ArrayList<String>();
-                colorList.add("#ff4a42");
-                colorList.add("#fcde64");
-                colorList.add("#73e8f4");
-                colorList.add("#76b0ff");
-                colorList.add("#c683fe");
-                indicator.setColorList(colorList);
+                indicator.setColors(Color.parseColor("#ff4a42"), Color.parseColor("#fcde64"), Color.parseColor("#73e8f4"), Color.parseColor("#76b0ff"), Color.parseColor("#c683fe"));
                 return indicator;
             }
         });

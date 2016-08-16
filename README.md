@@ -51,7 +51,7 @@ Simple steps, you can integrate **MagicIndicator**:
   }
   
   @Override
-  public IPagerTitleView getItemView(Context context, final int index) {
+  public IPagerTitleView getTitleView(Context context, final int index) {
       ClipPagerTitleView clipPagerTitleView = new ClipPagerTitleView(context);
       clipPagerTitleView.setText(mTitleDataList.get(index));
       clipPagerTitleView.setTextColor(Color.parseColor("#f2c4c4"));

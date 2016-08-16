@@ -2,7 +2,6 @@ package net.lucode.hackware.magicindicator.buildins.commonnavigator.indicators;
 
 import android.content.Context;
 import android.graphics.Canvas;
-import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.RectF;
 import android.view.View;
@@ -14,6 +13,7 @@ import net.lucode.hackware.magicindicator.buildins.UIUtil;
 import net.lucode.hackware.magicindicator.buildins.commonnavigator.abs.IPagerIndicator;
 import net.lucode.hackware.magicindicator.buildins.commonnavigator.model.PositionData;
 
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -40,7 +40,7 @@ public class LinePagerIndicator extends View implements IPagerIndicator {
 
     private Paint mPaint;
     private List<PositionData> mPositionDataList;
-    private List<String> mColorList;
+    private List<Integer> mColors;
 
     private RectF mLineRect = new RectF();
 
@@ -68,9 +68,9 @@ public class LinePagerIndicator extends View implements IPagerIndicator {
         }
 
         // 计算颜色
-        if (mColorList != null && mColorList.size() > 0) {
-            int currentColor = Color.parseColor(mColorList.get(position % mColorList.size()));
-            int nextColor = Color.parseColor(mColorList.get((position + 1) % mColorList.size()));
+        if (mColors != null && mColors.size() > 0) {
+            int currentColor = mColors.get(position % mColors.size());
+            int nextColor = mColors.get((position + 1) % mColors.size());
             int color = (Integer) ArgbEvaluatorHolder.eval(positionOffset, currentColor, nextColor);
             mPaint.setColor(color);
         }
@@ -179,12 +179,12 @@ public class LinePagerIndicator extends View implements IPagerIndicator {
         return mPaint;
     }
 
-    public List<String> getColorList() {
-        return mColorList;
+    public List<Integer> getColors() {
+        return mColors;
     }
 
-    public void setColorList(List<String> colorList) {
-        mColorList = colorList;
+    public void setColors(Integer... colors) {
+        mColors = Arrays.asList(colors);
     }
 
     public Interpolator getStartInterpolator() {
