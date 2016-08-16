@@ -106,6 +106,8 @@ hackware1993@gmail.com
 
 cfb1993@163.com
 
+QQ Group：373360748
+
 An intermittent perfectionist.
 
 Visit [My Blog](http://hackware.lucode.net) for more articles about MagicIndicator.
