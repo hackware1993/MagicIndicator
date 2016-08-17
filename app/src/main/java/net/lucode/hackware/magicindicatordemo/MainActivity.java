@@ -16,6 +16,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import net.lucode.hackware.magicindicator.MagicIndicator;
+import net.lucode.hackware.magicindicator.SimpleViewPagerDelegate;
 import net.lucode.hackware.magicindicator.buildins.UIUtil;
 import net.lucode.hackware.magicindicator.buildins.circlenavigator.CircleNavigator;
 import net.lucode.hackware.magicindicator.buildins.commonnavigator.CommonNavigator;
@@ -36,13 +37,14 @@ import net.lucode.hackware.magicindicator.buildins.commonnavigator.titles.badge.
 import net.lucode.hackware.magicindicator.buildins.commonnavigator.titles.badge.BadgeRule;
 import net.lucode.hackware.magicindicatordemo.ext.titles.ScaleTransitionPagerTitleView;
 
-import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class MainActivity extends Activity {
     String[] channels = new String[]{"CUPCAKE", "DONUT", "ECLAIR", "GINGERBREAD", "HONEYCOMB", "ICE_CREAM_SANDWICH", "JELLY_BEAN", "KITKAT", "LOLLIPOP", "M", "NOUGAT"};
+    private List<String> mDataList = Arrays.asList(channels);
+
     private ViewPager mPager;
-    private List<String> mDataList = new ArrayList<String>();
     private PagerAdapter mAdapter = new PagerAdapter() {
 
         @Override
@@ -71,15 +73,15 @@ public class MainActivity extends Activity {
 
         @Override
         public int getItemPosition(Object object) {
+            TextView textView = (TextView) object;
+            String text = textView.getText().toString();
+            int index = mDataList.indexOf(text);
+            if (index >= 0) {
+                return index;
+            }
             return POSITION_NONE;
         }
     };
-
-    {
-        for (int i = 0; i < channels.length; i++) {
-            mDataList.add(channels[i]);
-        }
-    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -124,9 +126,10 @@ public class MainActivity extends Activity {
             }
         });
         magicIndicator.setNavigator(commonNavigator);
+        magicIndicator.setDelegate(new SimpleViewPagerDelegate(mPager));
 
         // 当前页不定位到中间
-        final MagicIndicator magic_indicator1 = (MagicIndicator) findViewById(R.id.magic_indicator1);
+        final MagicIndicator magicIndicator1 = (MagicIndicator) findViewById(R.id.magic_indicator1);
         final CommonNavigator commonNavigator1 = new CommonNavigator(this);
         commonNavigator1.setScrollPivotX(0.25f);
         commonNavigator1.setAdapter(new CommonNavigatorAdapter() {
@@ -160,10 +163,11 @@ public class MainActivity extends Activity {
                 return indicator;
             }
         });
-        magic_indicator1.setNavigator(commonNavigator1);
+        magicIndicator1.setNavigator(commonNavigator1);
+        magicIndicator1.setDelegate(new SimpleViewPagerDelegate(mPager));
 
         // 当前页始终定位到中间
-        final MagicIndicator magic_indicator2 = (MagicIndicator) findViewById(R.id.magic_indicator2);
+        final MagicIndicator magicIndicator2 = (MagicIndicator) findViewById(R.id.magic_indicator2);
         final CommonNavigator commonNavigator2 = new CommonNavigator(this);
         commonNavigator2.setAdapter(new CommonNavigatorAdapter() {
             @Override
@@ -206,7 +210,8 @@ public class MainActivity extends Activity {
                 return indicator;
             }
         });
-        magic_indicator2.setNavigator(commonNavigator2);
+        magicIndicator2.setNavigator(commonNavigator2);
+        magicIndicator2.setDelegate(new SimpleViewPagerDelegate(mPager));
 
         // 动态增加、删除小红点
         commonNavigator2.postDelayed(new Runnable() {
@@ -234,7 +239,7 @@ public class MainActivity extends Activity {
         }, 5000);
 
         // 自适应模式
-        final MagicIndicator magic_indicator3 = (MagicIndicator) findViewById(R.id.magic_indicator3);
+        final MagicIndicator magicIndicator3 = (MagicIndicator) findViewById(R.id.magic_indicator3);
         final CommonNavigator commonNavigator3 = new CommonNavigator(this);
         commonNavigator3.setAdjustMode(true);  // 自适应模式
         commonNavigator3.setSkimOver(true);
@@ -291,10 +296,11 @@ public class MainActivity extends Activity {
                 }
             }
         });
-        magic_indicator3.setNavigator(commonNavigator3);
+        magicIndicator3.setNavigator(commonNavigator3);
+        magicIndicator3.setDelegate(new SimpleViewPagerDelegate(mPager));
 
         // 自适应模式，带插值器
-        final MagicIndicator magic_indicator4 = (MagicIndicator) findViewById(R.id.magic_indicator4);
+        final MagicIndicator magicIndicator4 = (MagicIndicator) findViewById(R.id.magic_indicator4);
         final CommonNavigator commonNavigator4 = new CommonNavigator(this);
         commonNavigator4.setAdjustMode(true);  // 自适应模式
         commonNavigator4.setAdapter(new CommonNavigatorAdapter() {
@@ -328,10 +334,11 @@ public class MainActivity extends Activity {
                 return indicator;
             }
         });
-        magic_indicator4.setNavigator(commonNavigator4);
+        magicIndicator4.setNavigator(commonNavigator4);
+        magicIndicator4.setDelegate(new SimpleViewPagerDelegate(mPager));
 
         // 缩放 + 颜色渐变
-        final MagicIndicator magic_indicator5 = (MagicIndicator) findViewById(R.id.magic_indicator5);
+        final MagicIndicator magicIndicator5 = (MagicIndicator) findViewById(R.id.magic_indicator5);
         final CommonNavigator commonNavigator5 = new CommonNavigator(this);
         commonNavigator5.setEnablePivotScroll(true);
         commonNavigator5.setScrollPivotX(0.8f);
@@ -368,10 +375,11 @@ public class MainActivity extends Activity {
                 return indicator;
             }
         });
-        magic_indicator5.setNavigator(commonNavigator5);
+        magicIndicator5.setNavigator(commonNavigator5);
+        magicIndicator5.setDelegate(new SimpleViewPagerDelegate(mPager));
 
         // 只有指示器，没有title
-        final MagicIndicator magic_indicator6 = (MagicIndicator) findViewById(R.id.magic_indicator6);
+        final MagicIndicator magicIndicator6 = (MagicIndicator) findViewById(R.id.magic_indicator6);
         final CommonNavigator commonNavigator6 = new CommonNavigator(this);
         commonNavigator6.setAdjustMode(true);
         commonNavigator6.setAdapter(new CommonNavigatorAdapter() {
@@ -393,10 +401,11 @@ public class MainActivity extends Activity {
                 return indicator;
             }
         });
-        magic_indicator6.setNavigator(commonNavigator6);
+        magicIndicator6.setNavigator(commonNavigator6);
+        magicIndicator6.setDelegate(new SimpleViewPagerDelegate(mPager));
 
         // 带吸附效果
-        final MagicIndicator magic_indicator7 = (MagicIndicator) findViewById(R.id.magic_indicator7);
+        final MagicIndicator magicIndicator7 = (MagicIndicator) findViewById(R.id.magic_indicator7);
         final CommonNavigator commonNavigator7 = new CommonNavigator(this);
         commonNavigator7.setScrollPivotX(0.65f);
         commonNavigator7.setAdapter(new CommonNavigatorAdapter() {
@@ -433,10 +442,11 @@ public class MainActivity extends Activity {
                 return indicator;
             }
         });
-        magic_indicator7.setNavigator(commonNavigator7);
+        magicIndicator7.setNavigator(commonNavigator7);
+        magicIndicator7.setDelegate(new SimpleViewPagerDelegate(mPager));
 
         // 贝塞尔曲线
-        final MagicIndicator magic_indicator8 = (MagicIndicator) findViewById(R.id.magic_indicator8);
+        final MagicIndicator magicIndicator8 = (MagicIndicator) findViewById(R.id.magic_indicator8);
         final CommonNavigator commonNavigator8 = new CommonNavigator(this);
         commonNavigator8.setEnablePivotScroll(true);
         commonNavigator8.setAdapter(new CommonNavigatorAdapter() {
@@ -468,10 +478,11 @@ public class MainActivity extends Activity {
                 return indicator;
             }
         });
-        magic_indicator8.setNavigator(commonNavigator8);
+        magicIndicator8.setNavigator(commonNavigator8);
+        magicIndicator8.setDelegate(new SimpleViewPagerDelegate(mPager));
 
         // 天天快报式
-        final MagicIndicator magic_indicator9 = (MagicIndicator) findViewById(R.id.magic_indicator9);
+        final MagicIndicator magicIndicator9 = (MagicIndicator) findViewById(R.id.magic_indicator9);
         final CommonNavigator commonNavigator9 = new CommonNavigator(this);
         commonNavigator9.setScrollPivotX(0.35f);
         commonNavigator9.setAdapter(new CommonNavigatorAdapter() {
@@ -502,10 +513,11 @@ public class MainActivity extends Activity {
                 return indicator;
             }
         });
-        magic_indicator9.setNavigator(commonNavigator9);
+        magicIndicator9.setNavigator(commonNavigator9);
+        magicIndicator9.setDelegate(new SimpleViewPagerDelegate(mPager));
 
         // 小尖角式
-        final MagicIndicator magic_indicator10 = (MagicIndicator) findViewById(R.id.magic_indicator10);
+        final MagicIndicator magicIndicator10 = (MagicIndicator) findViewById(R.id.magic_indicator10);
         final CommonNavigator commonNavigator10 = new CommonNavigator(this);
         commonNavigator10.setScrollPivotX(0.15f);
         commonNavigator10.setAdapter(new CommonNavigatorAdapter() {
@@ -536,17 +548,18 @@ public class MainActivity extends Activity {
                 return indicator;
             }
         });
-        magic_indicator10.setNavigator(commonNavigator10);
+        magicIndicator10.setNavigator(commonNavigator10);
+        magicIndicator10.setDelegate(new SimpleViewPagerDelegate(mPager));
 
         // 圆圈式
-        final MagicIndicator magic_indicator11 = (MagicIndicator) findViewById(R.id.magic_indicator11);
+        final MagicIndicator magicIndicator11 = (MagicIndicator) findViewById(R.id.magic_indicator11);
         final CircleNavigator circleNavigator = new CircleNavigator(this);
         circleNavigator.setCircleCount(mDataList.size());
         circleNavigator.setCircleColor(Color.RED);
-        magic_indicator11.setNavigator(circleNavigator);
+        magicIndicator11.setNavigator(circleNavigator);
 
         // 通用式
-        final MagicIndicator magic_indicator12 = (MagicIndicator) findViewById(R.id.magic_indicator12);
+        final MagicIndicator magicIndicator12 = (MagicIndicator) findViewById(R.id.magic_indicator12);
         CommonNavigator commonNavigator12 = new CommonNavigator(this);
         commonNavigator12.setAdapter(new CommonNavigatorAdapter() {
 
@@ -606,93 +619,7 @@ public class MainActivity extends Activity {
                 return null;
             }
         });
-        magic_indicator12.setNavigator(commonNavigator12);
-
-        mPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
-
-            @Override
-            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-                magicIndicator.onPageScrolled(position, positionOffset, positionOffsetPixels);
-                magic_indicator1.onPageScrolled(position, positionOffset, positionOffsetPixels);
-                magic_indicator2.onPageScrolled(position, positionOffset, positionOffsetPixels);
-                magic_indicator3.onPageScrolled(position, positionOffset, positionOffsetPixels);
-                magic_indicator4.onPageScrolled(position, positionOffset, positionOffsetPixels);
-                magic_indicator5.onPageScrolled(position, positionOffset, positionOffsetPixels);
-                magic_indicator6.onPageScrolled(position, positionOffset, positionOffsetPixels);
-                magic_indicator7.onPageScrolled(position, positionOffset, positionOffsetPixels);
-                magic_indicator8.onPageScrolled(position, positionOffset, positionOffsetPixels);
-                magic_indicator9.onPageScrolled(position, positionOffset, positionOffsetPixels);
-                magic_indicator10.onPageScrolled(position, positionOffset, positionOffsetPixels);
-                magic_indicator11.onPageScrolled(position, positionOffset, positionOffsetPixels);
-                magic_indicator12.onPageScrolled(position, positionOffset, positionOffsetPixels);
-            }
-
-            @Override
-            public void onPageSelected(int position) {
-                magicIndicator.onPageSelected(position);
-                magic_indicator1.onPageSelected(position);
-                magic_indicator2.onPageSelected(position);
-                magic_indicator3.onPageSelected(position);
-                magic_indicator4.onPageSelected(position);
-                magic_indicator5.onPageSelected(position);
-                magic_indicator6.onPageSelected(position);
-                magic_indicator7.onPageSelected(position);
-                magic_indicator8.onPageSelected(position);
-                magic_indicator9.onPageSelected(position);
-                magic_indicator10.onPageSelected(position);
-                magic_indicator11.onPageSelected(position);
-                magic_indicator12.onPageSelected(position);
-            }
-
-            @Override
-            public void onPageScrollStateChanged(int state) {
-                magicIndicator.onPageScrollStateChanged(state);
-                magic_indicator1.onPageScrollStateChanged(state);
-                magic_indicator2.onPageScrollStateChanged(state);
-                magic_indicator3.onPageScrollStateChanged(state);
-                magic_indicator4.onPageScrollStateChanged(state);
-                magic_indicator5.onPageScrollStateChanged(state);
-                magic_indicator6.onPageScrollStateChanged(state);
-                magic_indicator7.onPageScrollStateChanged(state);
-                magic_indicator8.onPageScrollStateChanged(state);
-                magic_indicator9.onPageScrollStateChanged(state);
-                magic_indicator10.onPageScrollStateChanged(state);
-                magic_indicator11.onPageScrollStateChanged(state);
-                magic_indicator12.onPageScrollStateChanged(state);
-            }
-        });
-
-//        mPager.setCurrentItem(1);
-
-/*        mPager.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                mDataList.clear();
-                mDataList.add("欢迎关注");
-                mDataList.add("我的博客");
-                mDataList.add("hackware.lucode.net");
-                commonNavigator.notifyDataSetChanged();
-                commonNavigator1.notifyDataSetChanged();
-                commonNavigator2.notifyDataSetChanged();
-                commonNavigator3.notifyDataSetChanged();
-                commonNavigator4.notifyDataSetChanged();
-                commonNavigator5.notifyDataSetChanged();
-                commonNavigator6.notifyDataSetChanged();
-                commonNavigator7.notifyDataSetChanged();
-                commonNavigator8.notifyDataSetChanged();
-                commonNavigator9.notifyDataSetChanged();
-                commonNavigator10.notifyDataSetChanged();
-                circleNavigator.setCircleCount(mDataList.size());
-                circleNavigator.notifyDataSetChanged();
-                mAdapter.notifyDataSetChanged();
-            }
-        }, 10000);*/
-
-/*        mPager.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                commonNavigator.setAdapter(null);
-            }
-        }, 5000);*/
+        magicIndicator12.setNavigator(commonNavigator12);
+        magicIndicator12.setDelegate(new SimpleViewPagerDelegate(mPager));
     }
 }

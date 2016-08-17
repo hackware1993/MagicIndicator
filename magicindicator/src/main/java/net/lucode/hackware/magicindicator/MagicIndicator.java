@@ -5,6 +5,7 @@ import android.util.AttributeSet;
 import android.view.View;
 import android.widget.FrameLayout;
 
+import net.lucode.hackware.magicindicator.abs.AbsDelegate;
 import net.lucode.hackware.magicindicator.abs.IPagerNavigator;
 
 /**
@@ -14,6 +15,7 @@ import net.lucode.hackware.magicindicator.abs.IPagerNavigator;
  */
 public class MagicIndicator extends FrameLayout {
     private IPagerNavigator mNavigator;
+    private AbsDelegate mDelegate;
 
     public MagicIndicator(Context context) {
         super(context);
@@ -46,6 +48,13 @@ public class MagicIndicator extends FrameLayout {
     }
 
     public void setNavigator(IPagerNavigator navigator) {
+        setNavigator(navigator, false);
+    }
+
+    private void setNavigator(IPagerNavigator navigator, boolean ignoreDelegate) {
+        if (!ignoreDelegate && mDelegate != null) {
+            navigator = mDelegate.delegateMagic(this, navigator);
+        }
         if (mNavigator == navigator) {
             return;
         }
@@ -58,6 +67,14 @@ public class MagicIndicator extends FrameLayout {
             LayoutParams lp = new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT);
             addView((View) mNavigator, lp);
             mNavigator.onAttachToMagicIndicator();
+        }
+    }
+
+    public void setDelegate(AbsDelegate delegate) {
+        mDelegate = delegate;
+        if (mDelegate != null) {
+            IPagerNavigator navigator = mDelegate.delegateMagic(this, mNavigator);
+            setNavigator(navigator, true);
         }
     }
 }
