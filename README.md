@@ -41,7 +41,7 @@ Simple steps, you can integrate **MagicIndicator**:
 4. find **magicindicator** through code, initialize it:
 
   ```
-  final MagicIndicator magicIndicator = (MagicIndicator) findViewById(R.id.magic_indicator);
+  MagicIndicator magicIndicator = (MagicIndicator) findViewById(R.id.magic_indicator);
   CommonNavigator commonNavigator = new CommonNavigator(this);
   commonNavigator.setAdapter(new CommonNavigatorAdapter() {
   
@@ -52,22 +52,24 @@ Simple steps, you can integrate **MagicIndicator**:
   
   @Override
   public IPagerTitleView getTitleView(Context context, final int index) {
-      ClipPagerTitleView clipPagerTitleView = new ClipPagerTitleView(context);
-      clipPagerTitleView.setText(mTitleDataList.get(index));
-      clipPagerTitleView.setTextColor(Color.parseColor("#f2c4c4"));
-      clipPagerTitleView.setClipColor(Color.WHITE);
-      clipPagerTitleView.setOnClickListener(new View.OnClickListener() {
+      ColorTransitionPagerTitleView colorTransitionPagerTitleView = new ColorTransitionPagerTitleView(context);
+      colorTransitionPagerTitleView.setNormalColor(Color.GRAY);
+      colorTransitionPagerTitleView.setSelectedColor(Color.BLACK);
+      colorTransitionPagerTitleView.setText(mTitleDataList.get(index));
+      colorTransitionPagerTitleView.setOnClickListener(new View.OnClickListener() {
           @Override
-          public void onClick(View v) {
-              mPager.setCurrentItem(index);
+          public void onClick(View view) {
+              mViewPager.setCurrentItem(index);
           }
       });
-      return clipPagerTitleView;
+      return colorTransitionPagerTitleView;
   }
   
   @Override
   public IPagerIndicator getIndicator(Context context) {
-      return null;
+      LinePagerIndicator indicator = new LinePagerIndicator(context);
+      indicator.setMode(LinePagerIndicator.MODE_WRAP_CONTENT);
+      return indicator;
   }
   });
   magicIndicator.setNavigator(commonNavigator);
@@ -75,23 +77,7 @@ Simple steps, you can integrate **MagicIndicator**:
 5. bind **magicindicator** to ViewPager:
 
   ```
-  mPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
-  
-    @Override
-    public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-        magicIndicator.onPageScrolled(position, positionOffset, positionOffsetPixels);
-    }
-  
-    @Override
-    public void onPageSelected(int position) {
-        magicIndicator.onPageSelected(position);
-    }
-  
-    @Override
-    public void onPageScrollStateChanged(int state) {
-        magicIndicator.onPageScrollStateChanged(state);
-    }
-  });
+  magicIndicator.setDelegate(new SimpleViewPagerDelegate(mViewPager));
   ```
 
 Now, enjoy yourself!
