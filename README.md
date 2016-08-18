@@ -24,16 +24,16 @@ Simple steps, you can integrate **MagicIndicator**:
   android:orientation="vertical"
   tools:context="net.lucode.hackware.magicindicatordemo.MainActivity">
   
-  <net.lucode.hackware.magicindicator.MagicIndicator
-      android:id="@+id/magic_indicator"
-      android:layout_width="match_parent"
-      android:layout_height="40dp" />
-  
-  <android.support.v4.view.ViewPager
-      android:id="@+id/view_pager"
-      android:layout_width="match_parent"
-      android:layout_height="0dp"
-      android:layout_weight="1" />
+    <net.lucode.hackware.magicindicator.MagicIndicator
+        android:id="@+id/magic_indicator"
+        android:layout_width="match_parent"
+        android:layout_height="40dp" />
+    
+    <android.support.v4.view.ViewPager
+        android:id="@+id/view_pager"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1" />
   
   </LinearLayout>
   ```
@@ -45,32 +45,32 @@ Simple steps, you can integrate **MagicIndicator**:
   CommonNavigator commonNavigator = new CommonNavigator(this);
   commonNavigator.setAdapter(new CommonNavigatorAdapter() {
   
-  @Override
-  public int getCount() {
-      return mTitleDataList == null ? 0 : mTitleDataList.size();
-  }
+    @Override
+    public int getCount() {
+        return mTitleDataList == null ? 0 : mTitleDataList.size();
+    }
   
-  @Override
-  public IPagerTitleView getTitleView(Context context, final int index) {
-      ColorTransitionPagerTitleView colorTransitionPagerTitleView = new ColorTransitionPagerTitleView(context);
-      colorTransitionPagerTitleView.setNormalColor(Color.GRAY);
-      colorTransitionPagerTitleView.setSelectedColor(Color.BLACK);
-      colorTransitionPagerTitleView.setText(mTitleDataList.get(index));
-      colorTransitionPagerTitleView.setOnClickListener(new View.OnClickListener() {
-          @Override
-          public void onClick(View view) {
-              mViewPager.setCurrentItem(index);
-          }
-      });
-      return colorTransitionPagerTitleView;
-  }
+    @Override
+    public IPagerTitleView getTitleView(Context context, final int index) {
+        ColorTransitionPagerTitleView colorTransitionPagerTitleView = new ColorTransitionPagerTitleView(context);
+        colorTransitionPagerTitleView.setNormalColor(Color.GRAY);
+        colorTransitionPagerTitleView.setSelectedColor(Color.BLACK);
+        colorTransitionPagerTitleView.setText(mTitleDataList.get(index));
+        colorTransitionPagerTitleView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mViewPager.setCurrentItem(index);
+            }
+        });
+        return colorTransitionPagerTitleView;
+    }
   
-  @Override
-  public IPagerIndicator getIndicator(Context context) {
-      LinePagerIndicator indicator = new LinePagerIndicator(context);
-      indicator.setMode(LinePagerIndicator.MODE_WRAP_CONTENT);
-      return indicator;
-  }
+    @Override
+    public IPagerIndicator getIndicator(Context context) {
+        LinePagerIndicator indicator = new LinePagerIndicator(context);
+        indicator.setMode(LinePagerIndicator.MODE_WRAP_CONTENT);
+        return indicator;
+    }
   });
   magicIndicator.setNavigator(commonNavigator);
   ```
