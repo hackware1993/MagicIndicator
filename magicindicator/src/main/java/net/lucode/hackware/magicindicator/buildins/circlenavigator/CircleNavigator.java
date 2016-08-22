@@ -41,6 +41,8 @@ public class CircleNavigator extends View implements IPagerNavigator {
     private float mDownY;
     private int mTouchSlop;
 
+    private boolean mFollowTouch = true;    // 是否跟随手指滑动
+
     public CircleNavigator(Context context) {
         super(context);
         init(context);
@@ -68,7 +70,7 @@ public class CircleNavigator extends View implements IPagerNavigator {
                 break;
             case MeasureSpec.AT_MOST:
             case MeasureSpec.UNSPECIFIED:
-                result = mTotalCount * mRadius * 2 + (mTotalCount - 1) * mCircleSpacing + getPaddingLeft() + getPaddingRight() + mStrokeWidth;
+                result = mTotalCount * mRadius * 2 + (mTotalCount - 1) * mCircleSpacing + getPaddingLeft() + getPaddingRight() + mStrokeWidth * 2;
                 break;
             default:
                 break;
@@ -86,7 +88,7 @@ public class CircleNavigator extends View implements IPagerNavigator {
                 break;
             case MeasureSpec.AT_MOST:
             case MeasureSpec.UNSPECIFIED:
-                result = mRadius * 2 + mStrokeWidth + getPaddingTop() + getPaddingBottom();
+                result = mRadius * 2 + mStrokeWidth * 2 + getPaddingTop() + getPaddingBottom();
                 break;
             default:
                 break;
@@ -134,18 +136,20 @@ public class CircleNavigator extends View implements IPagerNavigator {
 
     @Override
     public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-        if (mCirclePoints.isEmpty()) {
-            return;
+        if (mFollowTouch) {
+            if (mCirclePoints.isEmpty()) {
+                return;
+            }
+
+            int currentPosition = Math.min(mCirclePoints.size() - 1, position);
+            int nextPosition = Math.min(mCirclePoints.size() - 1, position + 1);
+            PointF current = mCirclePoints.get(currentPosition);
+            PointF next = mCirclePoints.get(nextPosition);
+
+            mIndicatorX = current.x + (next.x - current.x) * mStartInterpolator.getInterpolation(positionOffset);
+
+            invalidate();
         }
-
-        int currentPosition = Math.min(mCirclePoints.size() - 1, position);
-        int nextPosition = Math.min(mCirclePoints.size() - 1, position + 1);
-        PointF current = mCirclePoints.get(currentPosition);
-        PointF next = mCirclePoints.get(nextPosition);
-
-        mIndicatorX = current.x + (next.x - current.x) * mStartInterpolator.getInterpolation(positionOffset);
-
-        invalidate();
     }
 
     @Override
@@ -186,6 +190,10 @@ public class CircleNavigator extends View implements IPagerNavigator {
     @Override
     public void onPageSelected(int position) {
         mCurrentIndex = position;
+        if (!mFollowTouch) {
+            mIndicatorX = mCirclePoints.get(mCurrentIndex).x;
+            invalidate();
+        }
     }
 
     @Override
@@ -217,6 +225,7 @@ public class CircleNavigator extends View implements IPagerNavigator {
 
     public void setRadius(int radius) {
         mRadius = radius;
+        prepareCirclePoints();
         invalidate();
     }
 
@@ -244,6 +253,7 @@ public class CircleNavigator extends View implements IPagerNavigator {
 
     public void setCircleSpacing(int circleSpacing) {
         mCircleSpacing = circleSpacing;
+        prepareCirclePoints();
         invalidate();
     }
 
@@ -272,6 +282,14 @@ public class CircleNavigator extends View implements IPagerNavigator {
 
     public void setTouchable(boolean touchable) {
         mTouchable = touchable;
+    }
+
+    public boolean isFollowTouch() {
+        return mFollowTouch;
+    }
+
+    public void setFollowTouch(boolean followTouch) {
+        mFollowTouch = followTouch;
     }
 
     public OnCircleClickListener getCircleClickListener() {
