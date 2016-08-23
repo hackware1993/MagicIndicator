@@ -77,7 +77,7 @@ Simple steps, you can integrate **MagicIndicator**:
 5. bind **magicindicator** to ViewPager:
 
   ```
-  magicIndicator.setDelegate(new SimpleViewPagerDelegate(mViewPager));
+  SimpleViewPagerDelegate.with(magicIndicator, mViewPager).delegate();
   ```
 
 Now, enjoy yourself!

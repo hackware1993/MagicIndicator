@@ -44,7 +44,7 @@ public class MainActivity extends Activity {
     String[] channels = new String[]{"CUPCAKE", "DONUT", "ECLAIR", "GINGERBREAD", "HONEYCOMB", "ICE_CREAM_SANDWICH", "JELLY_BEAN", "KITKAT", "LOLLIPOP", "M", "NOUGAT"};
     private List<String> mDataList = Arrays.asList(channels);
 
-    private ViewPager mPager;
+    private ViewPager mViewPager;
     private PagerAdapter mAdapter = new PagerAdapter() {
 
         @Override
@@ -81,6 +81,11 @@ public class MainActivity extends Activity {
             }
             return POSITION_NONE;
         }
+
+        @Override
+        public CharSequence getPageTitle(int position) {
+            return mDataList.get(position);
+        }
     };
 
     @Override
@@ -88,8 +93,8 @@ public class MainActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        mPager = (ViewPager) findViewById(R.id.view_pager);
-        mPager.setAdapter(mAdapter);
+        mViewPager = (ViewPager) findViewById(R.id.view_pager);
+        mViewPager.setAdapter(mAdapter);
 
         // 今日头条式
         final MagicIndicator magicIndicator = (MagicIndicator) findViewById(R.id.magic_indicator);
@@ -114,7 +119,7 @@ public class MainActivity extends Activity {
                 clipPagerTitleView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        mPager.setCurrentItem(index);
+                        mViewPager.setCurrentItem(index);
                     }
                 });
                 return clipPagerTitleView;
@@ -126,7 +131,7 @@ public class MainActivity extends Activity {
             }
         });
         magicIndicator.setNavigator(commonNavigator);
-        magicIndicator.setDelegate(new SimpleViewPagerDelegate(mPager));
+        SimpleViewPagerDelegate.with(magicIndicator, mViewPager).delegate();
 
         // 当前页不定位到中间
         final MagicIndicator magicIndicator1 = (MagicIndicator) findViewById(R.id.magic_indicator1);
@@ -148,7 +153,7 @@ public class MainActivity extends Activity {
                 simplePagerTitleView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        mPager.setCurrentItem(index);
+                        mViewPager.setCurrentItem(index);
                     }
                 });
                 return simplePagerTitleView;
@@ -164,7 +169,7 @@ public class MainActivity extends Activity {
             }
         });
         magicIndicator1.setNavigator(commonNavigator1);
-        magicIndicator1.setDelegate(new SimpleViewPagerDelegate(mPager));
+        SimpleViewPagerDelegate.with(magicIndicator1, mViewPager).delegate();
 
         // 当前页始终定位到中间
         final MagicIndicator magicIndicator2 = (MagicIndicator) findViewById(R.id.magic_indicator2);
@@ -194,7 +199,7 @@ public class MainActivity extends Activity {
                 colorTransitionPagerTitleView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        mPager.setCurrentItem(index);
+                        mViewPager.setCurrentItem(index);
                     }
                 });
                 badgePagerTitleView.setInnerPagerTitleView(colorTransitionPagerTitleView);
@@ -211,7 +216,7 @@ public class MainActivity extends Activity {
             }
         });
         magicIndicator2.setNavigator(commonNavigator2);
-        magicIndicator2.setDelegate(new SimpleViewPagerDelegate(mPager));
+        SimpleViewPagerDelegate.with(magicIndicator2, mViewPager).delegate();
 
         // 动态增加、删除小红点
         commonNavigator2.postDelayed(new Runnable() {
@@ -269,7 +274,7 @@ public class MainActivity extends Activity {
                 colorTransitionPagerTitleView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        mPager.setCurrentItem(index);
+                        mViewPager.setCurrentItem(index);
                         badgePagerTitleView.setBadgeView(null);
                     }
                 });
@@ -297,7 +302,7 @@ public class MainActivity extends Activity {
             }
         });
         magicIndicator3.setNavigator(commonNavigator3);
-        magicIndicator3.setDelegate(new SimpleViewPagerDelegate(mPager));
+        SimpleViewPagerDelegate.with(magicIndicator3, mViewPager).delegate();
 
         // 自适应模式，带插值器
         final MagicIndicator magicIndicator4 = (MagicIndicator) findViewById(R.id.magic_indicator4);
@@ -318,7 +323,7 @@ public class MainActivity extends Activity {
                 colorTransitionPagerTitleView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        mPager.setCurrentItem(index);
+                        mViewPager.setCurrentItem(index);
                     }
                 });
                 return colorTransitionPagerTitleView;
@@ -335,7 +340,7 @@ public class MainActivity extends Activity {
             }
         });
         magicIndicator4.setNavigator(commonNavigator4);
-        magicIndicator4.setDelegate(new SimpleViewPagerDelegate(mPager));
+        SimpleViewPagerDelegate.with(magicIndicator4, mViewPager).delegate();
 
         // 缩放 + 颜色渐变
         final MagicIndicator magicIndicator5 = (MagicIndicator) findViewById(R.id.magic_indicator5);
@@ -358,7 +363,7 @@ public class MainActivity extends Activity {
                 colorTransitionPagerTitleView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        mPager.setCurrentItem(index);
+                        mViewPager.setCurrentItem(index);
                     }
                 });
                 return colorTransitionPagerTitleView;
@@ -376,7 +381,7 @@ public class MainActivity extends Activity {
             }
         });
         magicIndicator5.setNavigator(commonNavigator5);
-        magicIndicator5.setDelegate(new SimpleViewPagerDelegate(mPager));
+        SimpleViewPagerDelegate.with(magicIndicator5, mViewPager).delegate();
 
         // 只有指示器，没有title
         final MagicIndicator magicIndicator6 = (MagicIndicator) findViewById(R.id.magic_indicator6);
@@ -402,7 +407,7 @@ public class MainActivity extends Activity {
             }
         });
         magicIndicator6.setNavigator(commonNavigator6);
-        magicIndicator6.setDelegate(new SimpleViewPagerDelegate(mPager));
+        SimpleViewPagerDelegate.with(magicIndicator6, mViewPager).delegate();
 
         // 带吸附效果
         final MagicIndicator magicIndicator7 = (MagicIndicator) findViewById(R.id.magic_indicator7);
@@ -423,7 +428,7 @@ public class MainActivity extends Activity {
                 simplePagerTitleView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        mPager.setCurrentItem(index);
+                        mViewPager.setCurrentItem(index);
                     }
                 });
                 return simplePagerTitleView;
@@ -443,7 +448,7 @@ public class MainActivity extends Activity {
             }
         });
         magicIndicator7.setNavigator(commonNavigator7);
-        magicIndicator7.setDelegate(new SimpleViewPagerDelegate(mPager));
+        SimpleViewPagerDelegate.with(magicIndicator7, mViewPager).delegate();
 
         // 贝塞尔曲线
         final MagicIndicator magicIndicator8 = (MagicIndicator) findViewById(R.id.magic_indicator8);
@@ -465,7 +470,7 @@ public class MainActivity extends Activity {
                 colorTransitionPagerTitleView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        mPager.setCurrentItem(index);
+                        mViewPager.setCurrentItem(index);
                     }
                 });
                 return colorTransitionPagerTitleView;
@@ -479,7 +484,7 @@ public class MainActivity extends Activity {
             }
         });
         magicIndicator8.setNavigator(commonNavigator8);
-        magicIndicator8.setDelegate(new SimpleViewPagerDelegate(mPager));
+        SimpleViewPagerDelegate.with(magicIndicator8, mViewPager).delegate();
 
         // 天天快报式
         final MagicIndicator magicIndicator9 = (MagicIndicator) findViewById(R.id.magic_indicator9);
@@ -500,7 +505,7 @@ public class MainActivity extends Activity {
                 simplePagerTitleView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        mPager.setCurrentItem(index);
+                        mViewPager.setCurrentItem(index);
                     }
                 });
                 return simplePagerTitleView;
@@ -514,7 +519,7 @@ public class MainActivity extends Activity {
             }
         });
         magicIndicator9.setNavigator(commonNavigator9);
-        magicIndicator9.setDelegate(new SimpleViewPagerDelegate(mPager));
+        SimpleViewPagerDelegate.with(magicIndicator9, mViewPager).delegate();
 
         // 小尖角式
         final MagicIndicator magicIndicator10 = (MagicIndicator) findViewById(R.id.magic_indicator10);
@@ -535,7 +540,7 @@ public class MainActivity extends Activity {
                 simplePagerTitleView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        mPager.setCurrentItem(index);
+                        mViewPager.setCurrentItem(index);
                     }
                 });
                 return simplePagerTitleView;
@@ -549,7 +554,7 @@ public class MainActivity extends Activity {
             }
         });
         magicIndicator10.setNavigator(commonNavigator10);
-        magicIndicator10.setDelegate(new SimpleViewPagerDelegate(mPager));
+        SimpleViewPagerDelegate.with(magicIndicator10, mViewPager).delegate();
 
         // 圆圈式
         final MagicIndicator magicIndicator11 = (MagicIndicator) findViewById(R.id.magic_indicator11);
@@ -557,6 +562,7 @@ public class MainActivity extends Activity {
         circleNavigator.setCircleCount(mDataList.size());
         circleNavigator.setCircleColor(Color.RED);
         magicIndicator11.setNavigator(circleNavigator);
+        SimpleViewPagerDelegate.with(magicIndicator11, mViewPager).delegate();
 
         // 通用式
         final MagicIndicator magicIndicator12 = (MagicIndicator) findViewById(R.id.magic_indicator12);
@@ -607,7 +613,7 @@ public class MainActivity extends Activity {
                 commonPagerTitleView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        mPager.setCurrentItem(index);
+                        mViewPager.setCurrentItem(index);
                     }
                 });
 
@@ -620,6 +626,6 @@ public class MainActivity extends Activity {
             }
         });
         magicIndicator12.setNavigator(commonNavigator12);
-        magicIndicator12.setDelegate(new SimpleViewPagerDelegate(mPager));
+        SimpleViewPagerDelegate.with(magicIndicator12, mViewPager).delegate();
     }
 }
