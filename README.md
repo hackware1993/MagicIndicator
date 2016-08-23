@@ -137,7 +137,9 @@ Simple steps, you can integrate **MagicIndicator**:
       }
   }
   ```
-  
+
+3. use **CommonPagerTitleView** to load custom layout xml.
+
 Now, enjoy yourself!
 
 More effects adding...
