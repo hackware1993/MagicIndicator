@@ -70,5 +70,6 @@ public class EasyViewPagerDelegate extends AbsDelegate {
 
     @Override
     public void delegate() {
+        // TODO 此类暂未完成
     }
 }
