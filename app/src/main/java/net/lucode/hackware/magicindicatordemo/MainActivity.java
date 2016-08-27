@@ -13,6 +13,7 @@ import android.view.ViewGroup;
 import android.view.animation.AccelerateInterpolator;
 import android.view.animation.DecelerateInterpolator;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import net.lucode.hackware.magicindicator.MagicIndicator;
@@ -302,6 +303,13 @@ public class MainActivity extends Activity {
             }
         });
         magicIndicator3.setNavigator(commonNavigator3);
+
+        // 显示分割线
+        LinearLayout titleContainer = commonNavigator3.getTitleContainer(); // 务必在magicIndicator.setNavigator之后调用
+        titleContainer.setShowDividers(LinearLayout.SHOW_DIVIDER_MIDDLE);
+        titleContainer.setDividerPadding(UIUtil.dip2px(this, 15));
+        titleContainer.setDividerDrawable(getResources().getDrawable(R.drawable.simple_splitter));
+
         SimpleViewPagerDelegate.with(magicIndicator3, mViewPager).delegate();
 
         // 自适应模式，带插值器

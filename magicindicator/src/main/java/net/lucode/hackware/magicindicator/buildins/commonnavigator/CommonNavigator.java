@@ -384,6 +384,10 @@ public class CommonNavigator extends FrameLayout implements IPagerNavigator, Nav
         return (IPagerTitleView) mTitleContainer.getChildAt(index);
     }
 
+    public LinearLayout getTitleContainer() {
+        return mTitleContainer;
+    }
+
     public int getRightPadding() {
         return mRightPadding;
     }
