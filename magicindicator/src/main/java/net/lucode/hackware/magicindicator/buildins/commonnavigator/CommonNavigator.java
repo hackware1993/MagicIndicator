@@ -2,7 +2,6 @@ package net.lucode.hackware.magicindicator.buildins.commonnavigator;
 
 import android.content.Context;
 import android.database.DataSetObserver;
-import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,6 +11,7 @@ import android.widget.LinearLayout;
 
 import net.lucode.hackware.magicindicator.NavigatorHelper;
 import net.lucode.hackware.magicindicator.R;
+import net.lucode.hackware.magicindicator.ScrollState;
 import net.lucode.hackware.magicindicator.abs.IPagerNavigator;
 import net.lucode.hackware.magicindicator.buildins.commonnavigator.abs.CommonNavigatorAdapter;
 import net.lucode.hackware.magicindicator.buildins.commonnavigator.abs.IMeasurablePagerTitleView;
@@ -169,7 +169,7 @@ public class CommonNavigator extends FrameLayout implements IPagerNavigator, Nav
             if (mIndicator != null) {
                 mIndicator.onPositionDataProvide(mPositionDataList);
             }
-            if (mReselectWhenLayout && mNavigatorHelper.getScrollState() == ViewPager.SCROLL_STATE_IDLE) {
+            if (mReselectWhenLayout && mNavigatorHelper.getScrollState() == ScrollState.SCROLL_STATE_IDLE) {
                 onPageSelected(mNavigatorHelper.getCurrentIndex());
                 onPageScrolled(mNavigatorHelper.getCurrentIndex(), 0.0f, 0);
             }

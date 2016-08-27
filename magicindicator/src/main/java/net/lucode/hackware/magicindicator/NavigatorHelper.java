@@ -1,6 +1,5 @@
 package net.lucode.hackware.magicindicator;
 
-import android.support.v4.view.ViewPager;
 import android.util.SparseArray;
 import android.util.SparseBooleanArray;
 
@@ -13,7 +12,7 @@ import android.util.SparseBooleanArray;
 public class NavigatorHelper {
     private int mCurrentIndex;
     private int mTotalCount;
-    private int mScrollState = ViewPager.SCROLL_STATE_IDLE;
+    private int mScrollState = ScrollState.SCROLL_STATE_IDLE;
 
     // 转换后的回调
     private OnNavigatorScrollListener mNavigatorScrollListener;
@@ -38,7 +37,7 @@ public class NavigatorHelper {
             float currentPositionOffsetSum = position + positionOffset;
             boolean leftToRight = currentPositionOffsetSum >= mLastPositionOffsetSum;
             int safePosition = getSafeIndex(position);
-            if (mScrollState != ViewPager.SCROLL_STATE_IDLE) {
+            if (mScrollState != ScrollState.SCROLL_STATE_IDLE) {
                 int enterIndex;
                 int leaveIndex;
                 float enterPercent;
@@ -66,7 +65,7 @@ public class NavigatorHelper {
                 }
                 if (enterIndex == leaveIndex) {
                     if (enterIndex == mTotalCount - 1 && mLeavedPercents.get(enterIndex, 0.0f) != 0.0f && enterPercent == 0.0f && leftToRight) {
-                        boolean dispatchEnterEvent = mSkimOver || mScrollState == ViewPager.SCROLL_STATE_DRAGGING || enterIndex == mCurrentIndex;
+                        boolean dispatchEnterEvent = mSkimOver || mScrollState == ScrollState.SCROLL_STATE_DRAGGING || enterIndex == mCurrentIndex;
                         if (dispatchEnterEvent) {
                             mNavigatorScrollListener.onEnter(enterIndex, mTotalCount, 1.0f, true);
                             mLeavedPercents.put(enterIndex, 0.0f);
@@ -75,7 +74,7 @@ public class NavigatorHelper {
                     return;
                 }
                 if (1.0f - mLeavedPercents.get(enterIndex, 0.0f) != enterPercent) {
-                    boolean dispatchEnterEvent = mSkimOver || mScrollState == ViewPager.SCROLL_STATE_DRAGGING || enterIndex == mCurrentIndex;
+                    boolean dispatchEnterEvent = mSkimOver || mScrollState == ScrollState.SCROLL_STATE_DRAGGING || enterIndex == mCurrentIndex;
                     if (dispatchEnterEvent) {
                         mNavigatorScrollListener.onEnter(enterIndex, mTotalCount, enterPercent, leftToRight);
                         mLeavedPercents.put(enterIndex, 1.0f - enterPercent);
@@ -83,14 +82,14 @@ public class NavigatorHelper {
                 }
                 if (mLeavedPercents.get(leaveIndex, 0.0f) != leavePercent) {
                     if (leftToRight && leaveIndex == getCurrentIndex() && leavePercent == 0.0f) {
-                        boolean dispatchEnterEvent = mSkimOver || mScrollState == ViewPager.SCROLL_STATE_DRAGGING || leaveIndex == mCurrentIndex;
+                        boolean dispatchEnterEvent = mSkimOver || mScrollState == ScrollState.SCROLL_STATE_DRAGGING || leaveIndex == mCurrentIndex;
                         if (dispatchEnterEvent) {
                             mNavigatorScrollListener.onEnter(leaveIndex, mTotalCount, 1.0f, true);
                             mLeavedPercents.put(leaveIndex, 0.0f);
                         }
                     } else {
                         boolean dispatchLeaveEvent = mSkimOver
-                                || mScrollState == ViewPager.SCROLL_STATE_DRAGGING
+                                || mScrollState == ScrollState.SCROLL_STATE_DRAGGING
                                 || leaveIndex == mLastIndex
                                 || (leaveIndex == mCurrentIndex - 1 && mLeavedPercents.get(leaveIndex, 0.0f) != 1.0f)
                                 || (leaveIndex == mCurrentIndex + 1 && mLeavedPercents.get(leaveIndex, 0.0f) != 1.0f);
@@ -192,7 +191,7 @@ public class NavigatorHelper {
         mCurrentIndex = 0;
         mLastIndex = 0;
         mLastPositionOffsetSum = 0.0f;
-        mScrollState = ViewPager.SCROLL_STATE_IDLE;
+        mScrollState = ScrollState.SCROLL_STATE_IDLE;
         mDeselectedItems.clear();
         mLeavedPercents.clear();
     }
