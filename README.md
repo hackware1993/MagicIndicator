@@ -15,6 +15,22 @@ Simple steps, you can integrate **MagicIndicator**:
   compile project(':magicindicator')
   ```
   
+  **or**
+  
+  ```
+  repositories {
+      ...
+      maven {
+          url "https://jitpack.io"
+      }
+  }
+  
+  dependencies {
+      ...
+      compile 'com.github.hackware1993:MagicIndicator:1.2.1'
+  }
+  ```
+  
 3. add **magicindicator** to your layout xml:
 
   ```
@@ -167,7 +183,7 @@ Visit [My Blog](http://hackware.lucode.net) for more articles about MagicIndicat
   ```
   MIT License
   
-  Copyright (c) [2016] [hackware1993]
+  Copyright (c) 2016 hackware1993
   
   Permission is hereby granted, free of charge, to any person obtaining a copy
   of this software and associated documentation files (the "Software"), to deal
