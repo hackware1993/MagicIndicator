@@ -1,9 +1,11 @@
 # MagicIndicator
+
 A powerful, customizable and extensible ViewPager indicator framework.
 
 ![magicindicaotor.gif](https://github.com/hackware1993/MagicIndicator/blob/master/magicindicator.gif)
 
 # Usage
+
 Simple steps, you can integrate **MagicIndicator**:
 
 1. checkout out **MagicIndicator**, which contains source code and demo
@@ -82,6 +84,7 @@ Simple steps, you can integrate **MagicIndicator**:
   ```
 
 # Extend
+
 **MagicIndicator** is easy to extend:
 
 1. extend **IPagerTitleView** to custom tab:
@@ -158,3 +161,29 @@ QQ Group：373360748
 An intermittent perfectionist.
 
 Visit [My Blog](http://hackware.lucode.net) for more articles about MagicIndicator.
+
+# License
+
+  ```
+  MIT License
+  
+  Copyright (c) [year] [fullname]
+  
+  Permission is hereby granted, free of charge, to any person obtaining a copy
+  of this software and associated documentation files (the "Software"), to deal
+  in the Software without restriction, including without limitation the rights
+  to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+  copies of the Software, and to permit persons to whom the Software is
+  furnished to do so, subject to the following conditions:
+  
+  The above copyright notice and this permission notice shall be included in all
+  copies or substantial portions of the Software.
+  
+  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+  SOFTWARE.
+  ```
