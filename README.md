@@ -144,6 +144,7 @@ Now, enjoy yourself!
 
 More effects adding...
 
+[![Android Arsenal](https://img.shields.io/badge/Android%20Arsenal-MagicIndicator-green.svg?style=true)](https://android-arsenal.com/details/1/4252)
 [![Codewake](https://www.codewake.com/badges/ask_question.svg)](https://www.codewake.com/p/magicindicator)
 
 # Who developed?
