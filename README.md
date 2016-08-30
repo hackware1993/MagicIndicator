@@ -167,7 +167,7 @@ Visit [My Blog](http://hackware.lucode.net) for more articles about MagicIndicat
   ```
   MIT License
   
-  Copyright (c) [year] [fullname]
+  Copyright (c) [2016] [hackware1993]
   
   Permission is hereby granted, free of charge, to any person obtaining a copy
   of this software and associated documentation files (the "Software"), to deal
