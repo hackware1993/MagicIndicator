@@ -107,7 +107,7 @@ Simple steps, you can integrate **MagicIndicator**:
 
 **MagicIndicator** is easy to extend:
 
-1. extend **IPagerTitleView** to custom tab:
+1. extend **IPagerTitleView** to customize tab:
 
   ```
   public class MyPagerTitleView extends View implements IPagerTitleView {
@@ -134,7 +134,7 @@ Simple steps, you can integrate **MagicIndicator**:
   }
   ```
 
-2. extend **IPagerIndicator** to custom indicator:
+2. extend **IPagerIndicator** to customize indicator:
 
   ```
   public class MyPagerIndicator extends View implements IPagerIndicator {
