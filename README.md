@@ -204,3 +204,8 @@ Visit [My Blog](http://hackware.lucode.net) for more articles about MagicIndicat
   OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
   SOFTWARE.
   ```
+
+# More
+
+Have seen here, why not give me a star?
+（都看到这儿了，何不给个...，哎，别走啊，star还没...）

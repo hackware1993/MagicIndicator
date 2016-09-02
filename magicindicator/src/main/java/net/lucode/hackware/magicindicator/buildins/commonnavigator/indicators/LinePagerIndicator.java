@@ -71,7 +71,7 @@ public class LinePagerIndicator extends View implements IPagerIndicator {
         if (mColors != null && mColors.size() > 0) {
             int currentColor = mColors.get(position % mColors.size());
             int nextColor = mColors.get((position + 1) % mColors.size());
-            int color = (Integer) ArgbEvaluatorHolder.eval(positionOffset, currentColor, nextColor);
+            int color = ArgbEvaluatorHolder.eval(positionOffset, currentColor, nextColor);
             mPaint.setColor(color);
         }
 
