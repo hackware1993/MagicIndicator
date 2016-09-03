@@ -36,6 +36,7 @@ import net.lucode.hackware.magicindicator.buildins.commonnavigator.titles.Simple
 import net.lucode.hackware.magicindicator.buildins.commonnavigator.titles.badge.BadgeAnchor;
 import net.lucode.hackware.magicindicator.buildins.commonnavigator.titles.badge.BadgePagerTitleView;
 import net.lucode.hackware.magicindicator.buildins.commonnavigator.titles.badge.BadgeRule;
+import net.lucode.hackware.magicindicatordemo.ext.navigator.ScaleCircleNavigator;
 import net.lucode.hackware.magicindicatordemo.ext.titles.ScaleTransitionPagerTitleView;
 
 import java.util.Arrays;
@@ -571,6 +572,12 @@ public class MainActivity extends Activity {
         circleNavigator.setCircleColor(Color.RED);
         magicIndicator11.setNavigator(circleNavigator);
         SimpleViewPagerDelegate.with(magicIndicator11, mViewPager).delegate();
+
+        MagicIndicator magicIndicator13 = (MagicIndicator) findViewById(R.id.magic_indicator13);
+        ScaleCircleNavigator scaleCircleNavigator = new ScaleCircleNavigator(this);
+        scaleCircleNavigator.setCircleCount(mDataList.size());
+        magicIndicator13.setNavigator(scaleCircleNavigator);
+        SimpleViewPagerDelegate.with(magicIndicator13, mViewPager).delegate();
 
         // 通用式
         final MagicIndicator magicIndicator12 = (MagicIndicator) findViewById(R.id.magic_indicator12);

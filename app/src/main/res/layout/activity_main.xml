@@ -120,6 +120,13 @@
             android:layout_height="@dimen/navigator_common_height"
             android:layout_gravity="bottom|center_horizontal" />
 
+        <net.lucode.hackware.magicindicator.MagicIndicator
+            android:id="@+id/magic_indicator13"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="20dp" />
+
     </FrameLayout>
 
 </LinearLayout>

@@ -105,9 +105,9 @@ Simple steps, you can integrate **MagicIndicator**:
 
 # Extend
 
-**MagicIndicator** is easy to extend:
+**MagicIndicator** can be easily extended:
 
-1. extend **IPagerTitleView** to customize tab:
+1. implement **IPagerTitleView** to customize tab:
 
   ```
   public class MyPagerTitleView extends View implements IPagerTitleView {
@@ -134,7 +134,7 @@ Simple steps, you can integrate **MagicIndicator**:
   }
   ```
 
-2. extend **IPagerIndicator** to customize indicator:
+2. implement **IPagerIndicator** to customize indicator:
 
   ```
   public class MyPagerIndicator extends View implements IPagerIndicator {
@@ -165,7 +165,7 @@ Simple steps, you can integrate **MagicIndicator**:
 
 Now, enjoy yourself!
 
-More effects adding...
+See extensions in [*app/src/main/java/net/lucode/hackware/magicindicatordemo/ext*](https://github.com/hackware1993/MagicIndicator/tree/master/app/src/main/java/net/lucode/hackware/magicindicatordemo/ext)，more extensions adding...
 
 # Who developed?
 
@@ -173,7 +173,7 @@ hackware1993@gmail.com
 
 cfb1993@163.com
 
-QQ Group：373360748
+<a target="_blank" href="http://shang.qq.com/wpa/qunwpa?idkey=7ac5bef0321c7afa7e9fc4e94175fa36f413e3330c82e828b1743274af8a64d7"><img border="0" src="http://pub.idqqimg.com/wpa/images/group.png" alt="MagicIndicator交流群" title="MagicIndicator交流群"></a>
 
 An intermittent perfectionist.
 
@@ -207,5 +207,4 @@ Visit [My Blog](http://hackware.lucode.net) for more articles about MagicIndicat
 
 # More
 
-Have seen here, why not give me a star?
-（都看到这儿了，何不给个...，哎，别走啊，star还没...）
+Have seen here, why not give me a star?（都看到这儿了，何不给个...，哎，别走啊，star还没...）
