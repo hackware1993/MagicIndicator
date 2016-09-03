@@ -195,17 +195,17 @@ public class MainActivity extends Activity {
                     badgePagerTitleView.setYBadgeRule(new BadgeRule(BadgeAnchor.CONTENT_TOP, 0));
                 }
 
-                ColorTransitionPagerTitleView colorTransitionPagerTitleView = new ColorTransitionPagerTitleView(context);
-                colorTransitionPagerTitleView.setText(mDataList.get(index));
-                colorTransitionPagerTitleView.setNormalColor(Color.parseColor("#88ffffff"));
-                colorTransitionPagerTitleView.setSelectedColor(Color.WHITE);
-                colorTransitionPagerTitleView.setOnClickListener(new View.OnClickListener() {
+                SimplePagerTitleView simplePagerTitleView = new ColorTransitionPagerTitleView(context);
+                simplePagerTitleView.setText(mDataList.get(index));
+                simplePagerTitleView.setNormalColor(Color.parseColor("#88ffffff"));
+                simplePagerTitleView.setSelectedColor(Color.WHITE);
+                simplePagerTitleView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         mViewPager.setCurrentItem(index);
                     }
                 });
-                badgePagerTitleView.setInnerPagerTitleView(colorTransitionPagerTitleView);
+                badgePagerTitleView.setInnerPagerTitleView(simplePagerTitleView);
 
                 return badgePagerTitleView;
             }
@@ -270,18 +270,18 @@ public class MainActivity extends Activity {
                     badgePagerTitleView.setYBadgeRule(new BadgeRule(BadgeAnchor.TOP, UIUtil.dip2px(context, 2)));
                 }
 
-                ColorTransitionPagerTitleView colorTransitionPagerTitleView = new ColorTransitionPagerTitleView(context);
-                colorTransitionPagerTitleView.setText(mDataList.get(index));
-                colorTransitionPagerTitleView.setNormalColor(Color.parseColor("#88ffffff"));
-                colorTransitionPagerTitleView.setSelectedColor(Color.WHITE);
-                colorTransitionPagerTitleView.setOnClickListener(new View.OnClickListener() {
+                SimplePagerTitleView simplePagerTitleView = new ColorTransitionPagerTitleView(context);
+                simplePagerTitleView.setText(mDataList.get(index));
+                simplePagerTitleView.setNormalColor(Color.parseColor("#88ffffff"));
+                simplePagerTitleView.setSelectedColor(Color.WHITE);
+                simplePagerTitleView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         mViewPager.setCurrentItem(index);
                         badgePagerTitleView.setBadgeView(null);
                     }
                 });
-                badgePagerTitleView.setInnerPagerTitleView(colorTransitionPagerTitleView);
+                badgePagerTitleView.setInnerPagerTitleView(simplePagerTitleView);
 
                 return badgePagerTitleView;
             }
@@ -326,17 +326,17 @@ public class MainActivity extends Activity {
 
             @Override
             public IPagerTitleView getTitleView(Context context, final int index) {
-                ColorTransitionPagerTitleView colorTransitionPagerTitleView = new ColorTransitionPagerTitleView(context);
-                colorTransitionPagerTitleView.setText(mDataList.get(index));
-                colorTransitionPagerTitleView.setNormalColor(Color.GRAY);
-                colorTransitionPagerTitleView.setSelectedColor(Color.BLACK);
-                colorTransitionPagerTitleView.setOnClickListener(new View.OnClickListener() {
+                SimplePagerTitleView simplePagerTitleView = new ColorTransitionPagerTitleView(context);
+                simplePagerTitleView.setText(mDataList.get(index));
+                simplePagerTitleView.setNormalColor(Color.GRAY);
+                simplePagerTitleView.setSelectedColor(Color.BLACK);
+                simplePagerTitleView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         mViewPager.setCurrentItem(index);
                     }
                 });
-                return colorTransitionPagerTitleView;
+                return simplePagerTitleView;
             }
 
             @Override
@@ -365,18 +365,18 @@ public class MainActivity extends Activity {
 
             @Override
             public IPagerTitleView getTitleView(Context context, final int index) {
-                ScaleTransitionPagerTitleView colorTransitionPagerTitleView = new ScaleTransitionPagerTitleView(context);
-                colorTransitionPagerTitleView.setText(mDataList.get(index));
-                colorTransitionPagerTitleView.setTextSize(18);
-                colorTransitionPagerTitleView.setNormalColor(Color.parseColor("#616161"));
-                colorTransitionPagerTitleView.setSelectedColor(Color.parseColor("#f57c00"));
-                colorTransitionPagerTitleView.setOnClickListener(new View.OnClickListener() {
+                SimplePagerTitleView simplePagerTitleView = new ScaleTransitionPagerTitleView(context);
+                simplePagerTitleView.setText(mDataList.get(index));
+                simplePagerTitleView.setTextSize(18);
+                simplePagerTitleView.setNormalColor(Color.parseColor("#616161"));
+                simplePagerTitleView.setSelectedColor(Color.parseColor("#f57c00"));
+                simplePagerTitleView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         mViewPager.setCurrentItem(index);
                     }
                 });
-                return colorTransitionPagerTitleView;
+                return simplePagerTitleView;
             }
 
             @Override
@@ -431,17 +431,17 @@ public class MainActivity extends Activity {
 
             @Override
             public IPagerTitleView getTitleView(Context context, final int index) {
-                ColorFlipPagerTitleView colorFlipPagerTitleView = new ColorFlipPagerTitleView(context);
-                colorFlipPagerTitleView.setText(mDataList.get(index));
-                colorFlipPagerTitleView.setNormalColor(Color.parseColor("#9e9e9e"));
-                colorFlipPagerTitleView.setSelectedColor(Color.parseColor("#00c853"));
-                colorFlipPagerTitleView.setOnClickListener(new View.OnClickListener() {
+                SimplePagerTitleView simplePagerTitleView = new ColorFlipPagerTitleView(context);
+                simplePagerTitleView.setText(mDataList.get(index));
+                simplePagerTitleView.setNormalColor(Color.parseColor("#9e9e9e"));
+                simplePagerTitleView.setSelectedColor(Color.parseColor("#00c853"));
+                simplePagerTitleView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         mViewPager.setCurrentItem(index);
                     }
                 });
-                return colorFlipPagerTitleView;
+                return simplePagerTitleView;
             }
 
             @Override
@@ -472,18 +472,18 @@ public class MainActivity extends Activity {
 
             @Override
             public IPagerTitleView getTitleView(Context context, final int index) {
-                ScaleTransitionPagerTitleView colorTransitionPagerTitleView = new ScaleTransitionPagerTitleView(context);
-                colorTransitionPagerTitleView.setText(mDataList.get(index));
-                colorTransitionPagerTitleView.setTextSize(18);
-                colorTransitionPagerTitleView.setNormalColor(Color.GRAY);
-                colorTransitionPagerTitleView.setSelectedColor(Color.BLACK);
-                colorTransitionPagerTitleView.setOnClickListener(new View.OnClickListener() {
+                SimplePagerTitleView simplePagerTitleView = new ScaleTransitionPagerTitleView(context);
+                simplePagerTitleView.setText(mDataList.get(index));
+                simplePagerTitleView.setTextSize(18);
+                simplePagerTitleView.setNormalColor(Color.GRAY);
+                simplePagerTitleView.setSelectedColor(Color.BLACK);
+                simplePagerTitleView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         mViewPager.setCurrentItem(index);
                     }
                 });
-                return colorTransitionPagerTitleView;
+                return simplePagerTitleView;
             }
 
             @Override
