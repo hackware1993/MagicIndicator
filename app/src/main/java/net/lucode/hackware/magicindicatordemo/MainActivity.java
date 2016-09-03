@@ -296,10 +296,10 @@ public class MainActivity extends Activity {
 
             @Override
             public float getTitleWeight(Context context, int index) {
-                if (index == 2) {
-                    return 1.5f;
+                if (index == 0) {
+                    return 2.0f;
                 } else {
-                    return 1;
+                    return 1.0f;
                 }
             }
         });

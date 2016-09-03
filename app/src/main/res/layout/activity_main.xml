@@ -47,10 +47,10 @@
 
             <net.lucode.hackware.magicindicator.MagicIndicator
                 android:id="@+id/magic_indicator4"
-                android:layout_width="match_parent"
+                android:layout_width="200dp"
                 android:layout_height="@dimen/navigator_common_height"
-                android:layout_marginTop="@dimen/navigator_margin"
-                android:background="@android:color/white" />
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="@dimen/navigator_margin" />
 
             <net.lucode.hackware.magicindicator.MagicIndicator
                 android:id="@+id/magic_indicator5"
