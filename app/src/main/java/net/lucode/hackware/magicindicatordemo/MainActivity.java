@@ -37,6 +37,7 @@ import net.lucode.hackware.magicindicator.buildins.commonnavigator.titles.badge.
 import net.lucode.hackware.magicindicator.buildins.commonnavigator.titles.badge.BadgePagerTitleView;
 import net.lucode.hackware.magicindicator.buildins.commonnavigator.titles.badge.BadgeRule;
 import net.lucode.hackware.magicindicatordemo.ext.navigator.ScaleCircleNavigator;
+import net.lucode.hackware.magicindicatordemo.ext.titles.ColorFlipPagerTitleView;
 import net.lucode.hackware.magicindicatordemo.ext.titles.ScaleTransitionPagerTitleView;
 
 import java.util.Arrays;
@@ -430,17 +431,17 @@ public class MainActivity extends Activity {
 
             @Override
             public IPagerTitleView getTitleView(Context context, final int index) {
-                SimplePagerTitleView simplePagerTitleView = new SimplePagerTitleView(context);
-                simplePagerTitleView.setText(mDataList.get(index));
-                simplePagerTitleView.setNormalColor(Color.parseColor("#9e9e9e"));
-                simplePagerTitleView.setSelectedColor(Color.parseColor("#00c853"));
-                simplePagerTitleView.setOnClickListener(new View.OnClickListener() {
+                ColorFlipPagerTitleView colorFlipPagerTitleView = new ColorFlipPagerTitleView(context);
+                colorFlipPagerTitleView.setText(mDataList.get(index));
+                colorFlipPagerTitleView.setNormalColor(Color.parseColor("#9e9e9e"));
+                colorFlipPagerTitleView.setSelectedColor(Color.parseColor("#00c853"));
+                colorFlipPagerTitleView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         mViewPager.setCurrentItem(index);
                     }
                 });
-                return simplePagerTitleView;
+                return colorFlipPagerTitleView;
             }
 
             @Override
