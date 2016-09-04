@@ -103,6 +103,13 @@ Simple steps, you can integrate **MagicIndicator**:
   SimpleViewPagerDelegate.with(magicIndicator, mViewPager).delegate();
   ```
 
+6. work with Fragment Container(no ViewPager, switch Pages by hand):
+  ```
+  mFramentContainerHelper = new FragmentContainerHelper(magicIndicator);
+  ...
+  mFragmentContainerHelper.handlePageSelected(pageIndex);   // invoke when switch Fragment by hand
+  ```
+  
 # Extend
 
 **MagicIndicator** can be easily extended:
