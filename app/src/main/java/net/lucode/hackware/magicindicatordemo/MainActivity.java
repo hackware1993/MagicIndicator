@@ -16,6 +16,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import net.lucode.hackware.magicindicator.FragmentContainerHelper;
 import net.lucode.hackware.magicindicator.MagicIndicator;
 import net.lucode.hackware.magicindicator.SimpleViewPagerDelegate;
 import net.lucode.hackware.magicindicator.buildins.UIUtil;
@@ -90,6 +91,8 @@ public class MainActivity extends Activity {
             return mDataList.get(position);
         }
     };
+
+    private FragmentContainerHelper mFragmentContainerHelper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -312,7 +315,23 @@ public class MainActivity extends Activity {
         titleContainer.setDividerPadding(UIUtil.dip2px(this, 15));
         titleContainer.setDividerDrawable(getResources().getDrawable(R.drawable.simple_splitter));
 
-        SimpleViewPagerDelegate.with(magicIndicator3, mViewPager).delegate();
+//        SimpleViewPagerDelegate.with(magicIndicator3, mViewPager).delegate();
+        mFragmentContainerHelper = new FragmentContainerHelper(magicIndicator3, 3);
+
+        mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+                mFragmentContainerHelper.onPageSelected(position);  // 模拟在FragmentContainer中使用
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+            }
+        });
 
         // 自适应模式，带插值器
         final MagicIndicator magicIndicator4 = (MagicIndicator) findViewById(R.id.magic_indicator4);
