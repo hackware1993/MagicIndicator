@@ -18,7 +18,7 @@ import android.widget.TextView;
 
 import net.lucode.hackware.magicindicator.FragmentContainerHelper;
 import net.lucode.hackware.magicindicator.MagicIndicator;
-import net.lucode.hackware.magicindicator.SimpleViewPagerDelegate;
+import net.lucode.hackware.magicindicator.ViewPagerHelper;
 import net.lucode.hackware.magicindicator.buildins.UIUtil;
 import net.lucode.hackware.magicindicator.buildins.circlenavigator.CircleNavigator;
 import net.lucode.hackware.magicindicator.buildins.commonnavigator.CommonNavigator;
@@ -137,7 +137,7 @@ public class MainActivity extends Activity {
             }
         });
         magicIndicator.setNavigator(commonNavigator);
-        SimpleViewPagerDelegate.with(magicIndicator, mViewPager).delegate();
+        ViewPagerHelper.bind(magicIndicator, mViewPager);
 
         // 当前页不定位到中间
         final MagicIndicator magicIndicator1 = (MagicIndicator) findViewById(R.id.magic_indicator1);
@@ -175,7 +175,7 @@ public class MainActivity extends Activity {
             }
         });
         magicIndicator1.setNavigator(commonNavigator1);
-        SimpleViewPagerDelegate.with(magicIndicator1, mViewPager).delegate();
+        ViewPagerHelper.bind(magicIndicator1, mViewPager);
 
         // 当前页始终定位到中间
         final MagicIndicator magicIndicator2 = (MagicIndicator) findViewById(R.id.magic_indicator2);
@@ -222,7 +222,7 @@ public class MainActivity extends Activity {
             }
         });
         magicIndicator2.setNavigator(commonNavigator2);
-        SimpleViewPagerDelegate.with(magicIndicator2, mViewPager).delegate();
+        ViewPagerHelper.bind(magicIndicator2, mViewPager);
 
         // 动态增加、删除小红点
         commonNavigator2.postDelayed(new Runnable() {
@@ -315,7 +315,7 @@ public class MainActivity extends Activity {
         titleContainer.setDividerPadding(UIUtil.dip2px(this, 15));
         titleContainer.setDividerDrawable(getResources().getDrawable(R.drawable.simple_splitter));
 
-//        SimpleViewPagerDelegate.with(magicIndicator3, mViewPager).delegate();
+//        ViewPagerHelper.bind(magicIndicator3, mViewPager);
         mFragmentContainerHelper = new FragmentContainerHelper(magicIndicator3);
 
         mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
@@ -369,7 +369,7 @@ public class MainActivity extends Activity {
             }
         });
         magicIndicator4.setNavigator(commonNavigator4);
-        SimpleViewPagerDelegate.with(magicIndicator4, mViewPager).delegate();
+        ViewPagerHelper.bind(magicIndicator4, mViewPager);
 
         // 缩放 + 颜色渐变
         final MagicIndicator magicIndicator5 = (MagicIndicator) findViewById(R.id.magic_indicator5);
@@ -410,7 +410,7 @@ public class MainActivity extends Activity {
             }
         });
         magicIndicator5.setNavigator(commonNavigator5);
-        SimpleViewPagerDelegate.with(magicIndicator5, mViewPager).delegate();
+        ViewPagerHelper.bind(magicIndicator5, mViewPager);
 
         // 只有指示器，没有title
         final MagicIndicator magicIndicator6 = (MagicIndicator) findViewById(R.id.magic_indicator6);
@@ -436,7 +436,7 @@ public class MainActivity extends Activity {
             }
         });
         magicIndicator6.setNavigator(commonNavigator6);
-        SimpleViewPagerDelegate.with(magicIndicator6, mViewPager).delegate();
+        ViewPagerHelper.bind(magicIndicator6, mViewPager);
 
         // 带吸附效果
         final MagicIndicator magicIndicator7 = (MagicIndicator) findViewById(R.id.magic_indicator7);
@@ -477,7 +477,7 @@ public class MainActivity extends Activity {
             }
         });
         magicIndicator7.setNavigator(commonNavigator7);
-        SimpleViewPagerDelegate.with(magicIndicator7, mViewPager).delegate();
+        ViewPagerHelper.bind(magicIndicator7, mViewPager);
 
         // 贝塞尔曲线
         final MagicIndicator magicIndicator8 = (MagicIndicator) findViewById(R.id.magic_indicator8);
@@ -513,7 +513,7 @@ public class MainActivity extends Activity {
             }
         });
         magicIndicator8.setNavigator(commonNavigator8);
-        SimpleViewPagerDelegate.with(magicIndicator8, mViewPager).delegate();
+        ViewPagerHelper.bind(magicIndicator8, mViewPager);
 
         // 天天快报式
         final MagicIndicator magicIndicator9 = (MagicIndicator) findViewById(R.id.magic_indicator9);
@@ -548,7 +548,7 @@ public class MainActivity extends Activity {
             }
         });
         magicIndicator9.setNavigator(commonNavigator9);
-        SimpleViewPagerDelegate.with(magicIndicator9, mViewPager).delegate();
+        ViewPagerHelper.bind(magicIndicator9, mViewPager);
 
         // 小尖角式
         final MagicIndicator magicIndicator10 = (MagicIndicator) findViewById(R.id.magic_indicator10);
@@ -583,7 +583,7 @@ public class MainActivity extends Activity {
             }
         });
         magicIndicator10.setNavigator(commonNavigator10);
-        SimpleViewPagerDelegate.with(magicIndicator10, mViewPager).delegate();
+        ViewPagerHelper.bind(magicIndicator10, mViewPager);
 
         // 圆圈式
         final MagicIndicator magicIndicator11 = (MagicIndicator) findViewById(R.id.magic_indicator11);
@@ -591,13 +591,13 @@ public class MainActivity extends Activity {
         circleNavigator.setCircleCount(mDataList.size());
         circleNavigator.setCircleColor(Color.RED);
         magicIndicator11.setNavigator(circleNavigator);
-        SimpleViewPagerDelegate.with(magicIndicator11, mViewPager).delegate();
+        ViewPagerHelper.bind(magicIndicator11, mViewPager);
 
         MagicIndicator magicIndicator13 = (MagicIndicator) findViewById(R.id.magic_indicator13);
         ScaleCircleNavigator scaleCircleNavigator = new ScaleCircleNavigator(this);
         scaleCircleNavigator.setCircleCount(mDataList.size());
         magicIndicator13.setNavigator(scaleCircleNavigator);
-        SimpleViewPagerDelegate.with(magicIndicator13, mViewPager).delegate();
+        ViewPagerHelper.bind(magicIndicator13, mViewPager);
 
         // 通用式
         final MagicIndicator magicIndicator12 = (MagicIndicator) findViewById(R.id.magic_indicator12);
@@ -661,6 +661,6 @@ public class MainActivity extends Activity {
             }
         });
         magicIndicator12.setNavigator(commonNavigator12);
-        SimpleViewPagerDelegate.with(magicIndicator12, mViewPager).delegate();
+        ViewPagerHelper.bind(magicIndicator12, mViewPager);
     }
 }

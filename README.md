@@ -97,17 +97,19 @@ Simple steps, you can integrate **MagicIndicator**:
   magicIndicator.setNavigator(commonNavigator);
   ```
   
-5. bind **magicindicator** to ViewPager:
+5. work with ViewPager:
 
   ```
-  SimpleViewPagerDelegate.with(magicIndicator, mViewPager).delegate();
+  ViewPagerHelper.bind(magicIndicator, mViewPager);
   ```
 
-6. work with Fragment Container(no ViewPager, switch Pages by hand):
+  **or**
+  
+  work with Fragment Container(switch Fragment by hide()、show()):
   ```
   mFramentContainerHelper = new FragmentContainerHelper(magicIndicator);
   ...
-  mFragmentContainerHelper.handlePageSelected(pageIndex);   // invoke when switch Fragment by hand
+  mFragmentContainerHelper.handlePageSelected(pageIndex);   // invoke when switch Fragment
   ```
   
 # Extend
