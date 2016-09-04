@@ -12,15 +12,13 @@ import android.animation.ValueAnimator;
 
 public class FragmentContainerHelper implements ValueAnimator.AnimatorUpdateListener, Animator.AnimatorListener {
     private MagicIndicator mMagicIndicator;
-    private int mPageCount;
     private ValueAnimator mScrollAnimator;
 
-    public FragmentContainerHelper(MagicIndicator magicIndicator, int pageCount) {
+    public FragmentContainerHelper(MagicIndicator magicIndicator) {
         mMagicIndicator = magicIndicator;
-        mPageCount = pageCount;
     }
 
-    public void onPageSelected(int selectedIndex) {
+    public void handlePageSelected(int selectedIndex) {
         if (mScrollAnimator == null || !mScrollAnimator.isRunning()) {
             mMagicIndicator.onPageScrollStateChanged(ScrollState.SCROLL_STATE_SETTLING);
         }
@@ -44,14 +42,6 @@ public class FragmentContainerHelper implements ValueAnimator.AnimatorUpdateList
 
     public void setMagicIndicator(MagicIndicator magicIndicator) {
         mMagicIndicator = magicIndicator;
-    }
-
-    public int getPageCount() {
-        return mPageCount;
-    }
-
-    public void setPageCount(int pageCount) {
-        mPageCount = pageCount;
     }
 
     @Override

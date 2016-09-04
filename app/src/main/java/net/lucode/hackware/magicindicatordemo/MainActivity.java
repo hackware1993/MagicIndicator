@@ -316,7 +316,7 @@ public class MainActivity extends Activity {
         titleContainer.setDividerDrawable(getResources().getDrawable(R.drawable.simple_splitter));
 
 //        SimpleViewPagerDelegate.with(magicIndicator3, mViewPager).delegate();
-        mFragmentContainerHelper = new FragmentContainerHelper(magicIndicator3, 3);
+        mFragmentContainerHelper = new FragmentContainerHelper(magicIndicator3);
 
         mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
@@ -325,7 +325,7 @@ public class MainActivity extends Activity {
 
             @Override
             public void onPageSelected(int position) {
-                mFragmentContainerHelper.onPageSelected(position);  // 模拟在FragmentContainer中使用
+                mFragmentContainerHelper.handlePageSelected(position);  // 模拟在FragmentContainer中使用
             }
 
             @Override
