@@ -31,7 +31,7 @@ Simple steps, you can integrate **MagicIndicator**:
   
   dependencies {
       ...
-      compile 'com.github.hackware1993:MagicIndicator:1.2.1'
+      compile 'com.github.hackware1993:MagicIndicator:1.3.0'
   }
   ```
   
@@ -216,4 +216,4 @@ Visit [My Blog](http://hackware.lucode.net) for more articles about MagicIndicat
 
 # More
 
-Have seen here, why not give me a star?（都看到这儿了，何不给个...，哎，别走啊，star还没...）
+Have seen here, give a star?（都看到这儿了，何不给个...，哎，别走啊，star还没...）
