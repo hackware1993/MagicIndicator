@@ -35,7 +35,7 @@ Simple steps, you can integrate **MagicIndicator**:
   }
   ```
   
-3. add **magicindicator** to your layout xml:
+3. add **MagicIndicator** to your layout xml:
 
   ```
   <?xml version="1.0" encoding="utf-8"?>
@@ -60,7 +60,7 @@ Simple steps, you can integrate **MagicIndicator**:
   </LinearLayout>
   ```
 
-4. find **magicindicator** through code, initialize it:
+4. find **MagicIndicator** through code, initialize it:
 
   ```
   MagicIndicator magicIndicator = (MagicIndicator) findViewById(R.id.magic_indicator);

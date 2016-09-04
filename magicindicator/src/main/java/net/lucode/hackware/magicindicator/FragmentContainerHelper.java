@@ -1,7 +1,9 @@
 package net.lucode.hackware.magicindicator;
 
 import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
 import android.animation.ValueAnimator;
+import android.view.animation.Interpolator;
 
 
 /**
@@ -10,9 +12,11 @@ import android.animation.ValueAnimator;
  * Created by hackware on 2016/9/4.
  */
 
-public class FragmentContainerHelper implements ValueAnimator.AnimatorUpdateListener, Animator.AnimatorListener {
+public class FragmentContainerHelper extends AnimatorListenerAdapter implements ValueAnimator.AnimatorUpdateListener {
     private MagicIndicator mMagicIndicator;
     private ValueAnimator mScrollAnimator;
+    private int mDuration = 200;
+    private Interpolator mInterpolator;
 
     public FragmentContainerHelper(MagicIndicator magicIndicator) {
         mMagicIndicator = magicIndicator;
@@ -20,9 +24,9 @@ public class FragmentContainerHelper implements ValueAnimator.AnimatorUpdateList
 
     public void handlePageSelected(int selectedIndex) {
         if (mScrollAnimator == null || !mScrollAnimator.isRunning()) {
-            mMagicIndicator.onPageScrollStateChanged(ScrollState.SCROLL_STATE_SETTLING);
+            dispatchPageScrollStateChanged(ScrollState.SCROLL_STATE_SETTLING);
         }
-        mMagicIndicator.onPageSelected(selectedIndex);
+        dispatchPageSelected(selectedIndex);
         float currentPositionOffsetSum = 0.0f; // position = 0, positionOffset = 0.0f
         if (mScrollAnimator != null) {
             currentPositionOffsetSum = (Float) mScrollAnimator.getAnimatedValue();
@@ -33,15 +37,29 @@ public class FragmentContainerHelper implements ValueAnimator.AnimatorUpdateList
         mScrollAnimator.setFloatValues(currentPositionOffsetSum, selectedIndex);    // position = selectedIndex, positionOffset = 0.0f
         mScrollAnimator.addUpdateListener(this);
         mScrollAnimator.addListener(this);
+        mScrollAnimator.setInterpolator(mInterpolator);
+        mScrollAnimator.setDuration(mDuration);
         mScrollAnimator.start();
     }
 
-    public MagicIndicator getMagicIndicator() {
-        return mMagicIndicator;
+    public void setDuration(int duration) {
+        mDuration = duration;
     }
 
-    public void setMagicIndicator(MagicIndicator magicIndicator) {
-        mMagicIndicator = magicIndicator;
+    public void setInterpolator(Interpolator interpolator) {
+        mInterpolator = interpolator;
+    }
+
+    private void dispatchPageSelected(int pageIndex) {
+        mMagicIndicator.onPageSelected(pageIndex);
+    }
+
+    private void dispatchPageScrollStateChanged(int state) {
+        mMagicIndicator.onPageScrollStateChanged(state);
+    }
+
+    private void dispatchPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+        mMagicIndicator.onPageScrolled(position, positionOffset, positionOffsetPixels);
     }
 
     @Override
@@ -49,23 +67,11 @@ public class FragmentContainerHelper implements ValueAnimator.AnimatorUpdateList
         float positionOffsetSum = (Float) animation.getAnimatedValue();
         int position = (int) positionOffsetSum;
         float positionOffset = positionOffsetSum - position;
-        mMagicIndicator.onPageScrolled(position, positionOffset, 0);
-    }
-
-    @Override
-    public void onAnimationStart(Animator animation) {
+        dispatchPageScrolled(position, positionOffset, 0);
     }
 
     @Override
     public void onAnimationEnd(Animator animation) {
         mMagicIndicator.onPageScrollStateChanged(ScrollState.SCROLL_STATE_IDLE);
-    }
-
-    @Override
-    public void onAnimationCancel(Animator animation) {
-    }
-
-    @Override
-    public void onAnimationRepeat(Animator animation) {
     }
 }
