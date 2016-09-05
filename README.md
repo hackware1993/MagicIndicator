@@ -31,7 +31,7 @@ Simple steps, you can integrate **MagicIndicator**:
   
   dependencies {
       ...
-      compile 'com.github.hackware1993:MagicIndicator:1.3.0'
+      compile 'com.github.hackware1993:MagicIndicator:1.3.1'
   }
   ```
   
