@@ -104,7 +104,10 @@ public class CommonNavigator extends FrameLayout implements IPagerNavigator, Nav
         mAdapter = adapter;
         if (mAdapter != null) {
             mAdapter.registerDataSetObserver(mObserver);
-            mAdapter.notifyDataSetChanged();    // adapter改变时，应该重新init
+            mNavigatorHelper.setTotalCount(mAdapter.getCount());
+            if (mTitleContainer != null) {  // adapter改变时，应该重新init，但是第一次设置adapter不用，onAttachToMagicIndicator中有init
+                mAdapter.notifyDataSetChanged();
+            }
         } else {
             mNavigatorHelper.setTotalCount(0);
             init();
