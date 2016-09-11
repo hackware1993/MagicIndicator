@@ -67,6 +67,10 @@ public class FragmentContainerHelper extends AnimatorListenerAdapter implements 
         float positionOffsetSum = (Float) animation.getAnimatedValue();
         int position = (int) positionOffsetSum;
         float positionOffset = positionOffsetSum - position;
+        if (positionOffsetSum < 0) {
+            position = -1;
+            positionOffset = 1.0f + positionOffset;
+        }
         dispatchPageScrolled(position, positionOffset, 0);
     }
 
