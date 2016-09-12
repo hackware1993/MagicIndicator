@@ -26,6 +26,8 @@ public class TriangularPagerIndicator extends View implements IPagerIndicator {
     private int mLineColor;
     private int mTriangleHeight;
     private int mTriangleWidth;
+    private boolean mReverse;
+    private float mYOffset;
 
     private Path mPath = new Path();
     private Interpolator mStartInterpolator = new LinearInterpolator();
@@ -47,11 +49,21 @@ public class TriangularPagerIndicator extends View implements IPagerIndicator {
     @Override
     protected void onDraw(Canvas canvas) {
         mPaint.setColor(mLineColor);
-        canvas.drawRect(0, getHeight() - mLineHeight, getWidth(), getHeight(), mPaint);
+        if (mReverse) {
+            canvas.drawRect(0, getHeight() - mYOffset - mTriangleHeight, getWidth(), getHeight() - mYOffset - mTriangleHeight + mLineHeight, mPaint);
+        } else {
+            canvas.drawRect(0, getHeight() - mLineHeight - mYOffset, getWidth(), getHeight() - mYOffset, mPaint);
+        }
         mPath.reset();
-        mPath.moveTo(mAnchorX - mTriangleWidth / 2, getHeight());
-        mPath.lineTo(mAnchorX, getHeight() - mTriangleHeight);
-        mPath.lineTo(mAnchorX + mTriangleWidth / 2, getHeight());
+        if (mReverse) {
+            mPath.moveTo(mAnchorX - mTriangleWidth / 2, getHeight() - mYOffset - mTriangleHeight);
+            mPath.lineTo(mAnchorX, getHeight() - mYOffset);
+            mPath.lineTo(mAnchorX + mTriangleWidth / 2, getHeight() - mYOffset - mTriangleHeight);
+        } else {
+            mPath.moveTo(mAnchorX - mTriangleWidth / 2, getHeight() - mYOffset);
+            mPath.lineTo(mAnchorX, getHeight() - mTriangleHeight - mYOffset);
+            mPath.lineTo(mAnchorX + mTriangleWidth / 2, getHeight() - mYOffset);
+        }
         mPath.close();
         canvas.drawPath(mPath, mPaint);
     }
@@ -130,5 +142,21 @@ public class TriangularPagerIndicator extends View implements IPagerIndicator {
         if (mStartInterpolator == null) {
             mStartInterpolator = new LinearInterpolator();
         }
+    }
+
+    public boolean isReverse() {
+        return mReverse;
+    }
+
+    public void setReverse(boolean reverse) {
+        mReverse = reverse;
+    }
+
+    public float getYOffset() {
+        return mYOffset;
+    }
+
+    public void setYOffset(float yOffset) {
+        mYOffset = yOffset;
     }
 }
