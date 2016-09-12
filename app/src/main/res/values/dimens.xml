@@ -1,8 +1,8 @@
 <resources>
-    <dimen name="navigator_margin">5dp</dimen>
-    <dimen name="navigator_common_height">40dp</dimen>
     <dimen name="activity_horizontal_margin">16dp</dimen>
     <dimen name="activity_vertical_margin">16dp</dimen>
     <dimen name="common_navigator_height">45dp</dimen>
     <dimen name="navigator_margin_top">5dp</dimen>
+    <dimen name="small_navigator_height">5dp</dimen>
+    <dimen name="navigator_margin_top_large">45dp</dimen>
 </resources>

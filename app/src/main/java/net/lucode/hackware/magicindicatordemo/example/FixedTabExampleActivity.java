@@ -169,11 +169,11 @@ public class FixedTabExampleActivity extends AppCompatActivity {
             public IPagerIndicator getIndicator(Context context) {
                 LinePagerIndicator indicator = new LinePagerIndicator(context);
                 float navigatorHeight = context.getResources().getDimension(R.dimen.common_navigator_height);
-                float borderHeight = UIUtil.dip2px(context, 1);
-                float lineHeight = navigatorHeight - 2 * borderHeight;
+                float borderWidth = UIUtil.dip2px(context, 1);
+                float lineHeight = navigatorHeight - 2 * borderWidth;
                 indicator.setLineHeight(lineHeight);
                 indicator.setRoundRadius(lineHeight / 2);
-                indicator.setYOffset(borderHeight);
+                indicator.setYOffset(borderWidth);
                 indicator.setColors(Color.parseColor("#bc2a2a"));
                 return indicator;
             }
