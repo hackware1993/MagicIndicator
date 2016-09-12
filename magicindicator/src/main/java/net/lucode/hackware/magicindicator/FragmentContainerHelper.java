@@ -8,7 +8,6 @@ import android.view.animation.Interpolator;
 
 /**
  * 使得MagicIndicator在FragmentContainer中使用
- * <p>
  * Created by hackware on 2016/9/4.
  */
 
