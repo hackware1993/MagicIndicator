@@ -15,13 +15,13 @@ Simple steps, you can integrate **MagicIndicator**:
 1. checkout out **MagicIndicator**, which contains source code and demo
 2. import module **magicindicator** and add dependency:
 
-  ```
+  ```groovy
   compile project(':magicindicator')
   ```
   
   **or**
   
-  ```
+  ```groovy
   repositories {
       ...
       maven {
@@ -31,13 +31,13 @@ Simple steps, you can integrate **MagicIndicator**:
   
   dependencies {
       ...
-      compile 'com.github.hackware1993:MagicIndicator:1.3.1'
+      compile 'com.github.hackware1993:MagicIndicator:1.4.0'
   }
   ```
   
 3. add **MagicIndicator** to your layout xml:
 
-  ```
+  ```xml
   <?xml version="1.0" encoding="utf-8"?>
   <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
       xmlns:tools="http://schemas.android.com/tools"
@@ -62,7 +62,7 @@ Simple steps, you can integrate **MagicIndicator**:
 
 4. find **MagicIndicator** through code, initialize it:
 
-  ```
+  ```java
   MagicIndicator magicIndicator = (MagicIndicator) findViewById(R.id.magic_indicator);
   CommonNavigator commonNavigator = new CommonNavigator(this);
   commonNavigator.setAdapter(new CommonNavigatorAdapter() {
@@ -99,16 +99,18 @@ Simple steps, you can integrate **MagicIndicator**:
   
 5. work with ViewPager:
 
-  ```
+  ```java
   ViewPagerHelper.bind(magicIndicator, mViewPager);
   ```
 
   **or**
   
   work with Fragment Container(switch Fragment by hide()、show()):
-  ```
+  ```java
   mFramentContainerHelper = new FragmentContainerHelper(magicIndicator);
-  ...
+  
+  // ...
+  
   mFragmentContainerHelper.handlePageSelected(pageIndex);   // invoke when switch Fragment
   ```
   
@@ -118,7 +120,7 @@ Simple steps, you can integrate **MagicIndicator**:
 
 1. implement **IPagerTitleView** to customize tab:
 
-  ```
+  ```java
   public class MyPagerTitleView extends View implements IPagerTitleView {
   
       public MyPagerTitleView(Context context) {
@@ -145,7 +147,7 @@ Simple steps, you can integrate **MagicIndicator**:
 
 2. implement **IPagerIndicator** to customize indicator:
 
-  ```
+  ```java
   public class MyPagerIndicator extends View implements IPagerIndicator {
   
       public MyPagerIndicator(Context context) {
