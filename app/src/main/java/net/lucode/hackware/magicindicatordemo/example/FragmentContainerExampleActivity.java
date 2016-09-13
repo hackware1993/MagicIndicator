@@ -74,6 +74,7 @@ public class FragmentContainerExampleActivity extends AppCompatActivity {
 
     private void initMagicIndicator1() {
         MagicIndicator magicIndicator = (MagicIndicator) findViewById(R.id.magic_indicator1);
+        magicIndicator.setBackgroundResource(R.drawable.round_indicator_bg);
         CommonNavigator commonNavigator = new CommonNavigator(this);
         commonNavigator.setAdapter(new CommonNavigatorAdapter() {
             @Override

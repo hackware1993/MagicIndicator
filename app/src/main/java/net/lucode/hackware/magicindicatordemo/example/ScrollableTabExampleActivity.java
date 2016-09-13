@@ -56,160 +56,6 @@ public class ScrollableTabExampleActivity extends AppCompatActivity {
         initMagicIndicator9();
     }
 
-    private void initMagicIndicator9() {
-        MagicIndicator magicIndicator = (MagicIndicator) findViewById(R.id.magic_indicator9);
-        magicIndicator.setBackgroundColor(Color.WHITE);
-        CommonNavigator commonNavigator = new CommonNavigator(this);
-        commonNavigator.setScrollPivotX(0.15f);
-        commonNavigator.setAdapter(new CommonNavigatorAdapter() {
-            @Override
-            public int getCount() {
-                return mDataList == null ? 0 : mDataList.size();
-            }
-
-            @Override
-            public IPagerTitleView getTitleView(Context context, final int index) {
-                SimplePagerTitleView simplePagerTitleView = new SimplePagerTitleView(context);
-                simplePagerTitleView.setText(mDataList.get(index));
-                simplePagerTitleView.setNormalColor(Color.parseColor("#333333"));
-                simplePagerTitleView.setSelectedColor(Color.parseColor("#e94220"));
-                simplePagerTitleView.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        mViewPager.setCurrentItem(index);
-                    }
-                });
-                return simplePagerTitleView;
-            }
-
-            @Override
-            public IPagerIndicator getIndicator(Context context) {
-                TriangularPagerIndicator indicator = new TriangularPagerIndicator(context);
-                indicator.setLineColor(Color.parseColor("#e94220"));
-                return indicator;
-            }
-        });
-        magicIndicator.setNavigator(commonNavigator);
-        ViewPagerHelper.bind(magicIndicator, mViewPager);
-    }
-
-    private void initMagicIndicator8() {
-        MagicIndicator magicIndicator = (MagicIndicator) findViewById(R.id.magic_indicator8);
-        magicIndicator.setBackgroundColor(Color.WHITE);
-        CommonNavigator commonNavigator = new CommonNavigator(this);
-        commonNavigator.setScrollPivotX(0.35f);
-        commonNavigator.setAdapter(new CommonNavigatorAdapter() {
-            @Override
-            public int getCount() {
-                return mDataList == null ? 0 : mDataList.size();
-            }
-
-            @Override
-            public IPagerTitleView getTitleView(Context context, final int index) {
-                SimplePagerTitleView simplePagerTitleView = new SimplePagerTitleView(context);
-                simplePagerTitleView.setText(mDataList.get(index));
-                simplePagerTitleView.setNormalColor(Color.parseColor("#333333"));
-                simplePagerTitleView.setSelectedColor(Color.parseColor("#e94220"));
-                simplePagerTitleView.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        mViewPager.setCurrentItem(index);
-                    }
-                });
-                return simplePagerTitleView;
-            }
-
-            @Override
-            public IPagerIndicator getIndicator(Context context) {
-                WrapPagerIndicator indicator = new WrapPagerIndicator(context);
-                indicator.setFillColor(Color.parseColor("#ebe4e3"));
-                return indicator;
-            }
-        });
-        magicIndicator.setNavigator(commonNavigator);
-        ViewPagerHelper.bind(magicIndicator, mViewPager);
-    }
-
-    private void initMagicIndicator7() {
-        MagicIndicator magicIndicator = (MagicIndicator) findViewById(R.id.magic_indicator7);
-        magicIndicator.setBackgroundColor(Color.parseColor("#fafafa"));
-        CommonNavigator commonNavigator7 = new CommonNavigator(this);
-        commonNavigator7.setScrollPivotX(0.65f);
-        commonNavigator7.setAdapter(new CommonNavigatorAdapter() {
-            @Override
-            public int getCount() {
-                return mDataList == null ? 0 : mDataList.size();
-            }
-
-            @Override
-            public IPagerTitleView getTitleView(Context context, final int index) {
-                SimplePagerTitleView simplePagerTitleView = new ColorFlipPagerTitleView(context);
-                simplePagerTitleView.setText(mDataList.get(index));
-                simplePagerTitleView.setNormalColor(Color.parseColor("#9e9e9e"));
-                simplePagerTitleView.setSelectedColor(Color.parseColor("#00c853"));
-                simplePagerTitleView.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        mViewPager.setCurrentItem(index);
-                    }
-                });
-                return simplePagerTitleView;
-            }
-
-            @Override
-            public IPagerIndicator getIndicator(Context context) {
-                LinePagerIndicator indicator = new LinePagerIndicator(context);
-                indicator.setMode(LinePagerIndicator.MODE_EXACTLY);
-                indicator.setLineHeight(UIUtil.dip2px(context, 6));
-                indicator.setLineWidth(UIUtil.dip2px(context, 10));
-                indicator.setRoundRadius(UIUtil.dip2px(context, 3));
-                indicator.setStartInterpolator(new AccelerateInterpolator());
-                indicator.setEndInterpolator(new DecelerateInterpolator(2.0f));
-                indicator.setColors(Color.parseColor("#00c853"));
-                return indicator;
-            }
-        });
-        magicIndicator.setNavigator(commonNavigator7);
-        ViewPagerHelper.bind(magicIndicator, mViewPager);
-    }
-
-    private void initMagicIndicator6() {
-        MagicIndicator magicIndicator = (MagicIndicator) findViewById(R.id.magic_indicator6);
-        magicIndicator.setBackgroundColor(Color.WHITE);
-        CommonNavigator commonNavigator = new CommonNavigator(this);
-        commonNavigator.setAdapter(new CommonNavigatorAdapter() {
-            @Override
-            public int getCount() {
-                return mDataList == null ? 0 : mDataList.size();
-            }
-
-            @Override
-            public IPagerTitleView getTitleView(Context context, final int index) {
-                SimplePagerTitleView simplePagerTitleView = new ScaleTransitionPagerTitleView(context);
-                simplePagerTitleView.setText(mDataList.get(index));
-                simplePagerTitleView.setTextSize(18);
-                simplePagerTitleView.setNormalColor(Color.GRAY);
-                simplePagerTitleView.setSelectedColor(Color.BLACK);
-                simplePagerTitleView.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        mViewPager.setCurrentItem(index);
-                    }
-                });
-                return simplePagerTitleView;
-            }
-
-            @Override
-            public IPagerIndicator getIndicator(Context context) {
-                BezierPagerIndicator indicator = new BezierPagerIndicator(context);
-                indicator.setColors(Color.parseColor("#ff4a42"), Color.parseColor("#fcde64"), Color.parseColor("#73e8f4"), Color.parseColor("#76b0ff"), Color.parseColor("#c683fe"));
-                return indicator;
-            }
-        });
-        magicIndicator.setNavigator(commonNavigator);
-        ViewPagerHelper.bind(magicIndicator, mViewPager);
-    }
-
     private void initMagicIndicator1() {
         MagicIndicator magicIndicator = (MagicIndicator) findViewById(R.id.magic_indicator1);
         magicIndicator.setBackgroundColor(Color.parseColor("#d43d3d"));
@@ -398,6 +244,160 @@ public class ScrollableTabExampleActivity extends AppCompatActivity {
                 indicator.setYOffset(UIUtil.dip2px(context, 39));
                 indicator.setLineHeight(UIUtil.dip2px(context, 1));
                 indicator.setColors(Color.parseColor("#f57c00"));
+                return indicator;
+            }
+        });
+        magicIndicator.setNavigator(commonNavigator);
+        ViewPagerHelper.bind(magicIndicator, mViewPager);
+    }
+
+    private void initMagicIndicator6() {
+        MagicIndicator magicIndicator = (MagicIndicator) findViewById(R.id.magic_indicator6);
+        magicIndicator.setBackgroundColor(Color.WHITE);
+        CommonNavigator commonNavigator = new CommonNavigator(this);
+        commonNavigator.setAdapter(new CommonNavigatorAdapter() {
+            @Override
+            public int getCount() {
+                return mDataList == null ? 0 : mDataList.size();
+            }
+
+            @Override
+            public IPagerTitleView getTitleView(Context context, final int index) {
+                SimplePagerTitleView simplePagerTitleView = new ScaleTransitionPagerTitleView(context);
+                simplePagerTitleView.setText(mDataList.get(index));
+                simplePagerTitleView.setTextSize(18);
+                simplePagerTitleView.setNormalColor(Color.GRAY);
+                simplePagerTitleView.setSelectedColor(Color.BLACK);
+                simplePagerTitleView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        mViewPager.setCurrentItem(index);
+                    }
+                });
+                return simplePagerTitleView;
+            }
+
+            @Override
+            public IPagerIndicator getIndicator(Context context) {
+                BezierPagerIndicator indicator = new BezierPagerIndicator(context);
+                indicator.setColors(Color.parseColor("#ff4a42"), Color.parseColor("#fcde64"), Color.parseColor("#73e8f4"), Color.parseColor("#76b0ff"), Color.parseColor("#c683fe"));
+                return indicator;
+            }
+        });
+        magicIndicator.setNavigator(commonNavigator);
+        ViewPagerHelper.bind(magicIndicator, mViewPager);
+    }
+
+    private void initMagicIndicator7() {
+        MagicIndicator magicIndicator = (MagicIndicator) findViewById(R.id.magic_indicator7);
+        magicIndicator.setBackgroundColor(Color.parseColor("#fafafa"));
+        CommonNavigator commonNavigator7 = new CommonNavigator(this);
+        commonNavigator7.setScrollPivotX(0.65f);
+        commonNavigator7.setAdapter(new CommonNavigatorAdapter() {
+            @Override
+            public int getCount() {
+                return mDataList == null ? 0 : mDataList.size();
+            }
+
+            @Override
+            public IPagerTitleView getTitleView(Context context, final int index) {
+                SimplePagerTitleView simplePagerTitleView = new ColorFlipPagerTitleView(context);
+                simplePagerTitleView.setText(mDataList.get(index));
+                simplePagerTitleView.setNormalColor(Color.parseColor("#9e9e9e"));
+                simplePagerTitleView.setSelectedColor(Color.parseColor("#00c853"));
+                simplePagerTitleView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        mViewPager.setCurrentItem(index);
+                    }
+                });
+                return simplePagerTitleView;
+            }
+
+            @Override
+            public IPagerIndicator getIndicator(Context context) {
+                LinePagerIndicator indicator = new LinePagerIndicator(context);
+                indicator.setMode(LinePagerIndicator.MODE_EXACTLY);
+                indicator.setLineHeight(UIUtil.dip2px(context, 6));
+                indicator.setLineWidth(UIUtil.dip2px(context, 10));
+                indicator.setRoundRadius(UIUtil.dip2px(context, 3));
+                indicator.setStartInterpolator(new AccelerateInterpolator());
+                indicator.setEndInterpolator(new DecelerateInterpolator(2.0f));
+                indicator.setColors(Color.parseColor("#00c853"));
+                return indicator;
+            }
+        });
+        magicIndicator.setNavigator(commonNavigator7);
+        ViewPagerHelper.bind(magicIndicator, mViewPager);
+    }
+
+    private void initMagicIndicator8() {
+        MagicIndicator magicIndicator = (MagicIndicator) findViewById(R.id.magic_indicator8);
+        magicIndicator.setBackgroundColor(Color.WHITE);
+        CommonNavigator commonNavigator = new CommonNavigator(this);
+        commonNavigator.setScrollPivotX(0.35f);
+        commonNavigator.setAdapter(new CommonNavigatorAdapter() {
+            @Override
+            public int getCount() {
+                return mDataList == null ? 0 : mDataList.size();
+            }
+
+            @Override
+            public IPagerTitleView getTitleView(Context context, final int index) {
+                SimplePagerTitleView simplePagerTitleView = new SimplePagerTitleView(context);
+                simplePagerTitleView.setText(mDataList.get(index));
+                simplePagerTitleView.setNormalColor(Color.parseColor("#333333"));
+                simplePagerTitleView.setSelectedColor(Color.parseColor("#e94220"));
+                simplePagerTitleView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        mViewPager.setCurrentItem(index);
+                    }
+                });
+                return simplePagerTitleView;
+            }
+
+            @Override
+            public IPagerIndicator getIndicator(Context context) {
+                WrapPagerIndicator indicator = new WrapPagerIndicator(context);
+                indicator.setFillColor(Color.parseColor("#ebe4e3"));
+                return indicator;
+            }
+        });
+        magicIndicator.setNavigator(commonNavigator);
+        ViewPagerHelper.bind(magicIndicator, mViewPager);
+    }
+
+    private void initMagicIndicator9() {
+        MagicIndicator magicIndicator = (MagicIndicator) findViewById(R.id.magic_indicator9);
+        magicIndicator.setBackgroundColor(Color.WHITE);
+        CommonNavigator commonNavigator = new CommonNavigator(this);
+        commonNavigator.setScrollPivotX(0.15f);
+        commonNavigator.setAdapter(new CommonNavigatorAdapter() {
+            @Override
+            public int getCount() {
+                return mDataList == null ? 0 : mDataList.size();
+            }
+
+            @Override
+            public IPagerTitleView getTitleView(Context context, final int index) {
+                SimplePagerTitleView simplePagerTitleView = new SimplePagerTitleView(context);
+                simplePagerTitleView.setText(mDataList.get(index));
+                simplePagerTitleView.setNormalColor(Color.parseColor("#333333"));
+                simplePagerTitleView.setSelectedColor(Color.parseColor("#e94220"));
+                simplePagerTitleView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        mViewPager.setCurrentItem(index);
+                    }
+                });
+                return simplePagerTitleView;
+            }
+
+            @Override
+            public IPagerIndicator getIndicator(Context context) {
+                TriangularPagerIndicator indicator = new TriangularPagerIndicator(context);
+                indicator.setLineColor(Color.parseColor("#e94220"));
                 return indicator;
             }
         });

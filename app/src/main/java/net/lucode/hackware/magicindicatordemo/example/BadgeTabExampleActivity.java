@@ -194,6 +194,7 @@ public class BadgeTabExampleActivity extends AppCompatActivity {
 
     private void initMagicIndicator3() {
         MagicIndicator magicIndicator = (MagicIndicator) findViewById(R.id.magic_indicator3);
+        magicIndicator.setBackgroundResource(R.drawable.round_indicator_bg);
         CommonNavigator commonNavigator = new CommonNavigator(this);
         commonNavigator.setAdapter(new CommonNavigatorAdapter() {
             @Override

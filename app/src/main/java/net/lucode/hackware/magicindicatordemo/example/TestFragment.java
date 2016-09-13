@@ -11,7 +11,7 @@ import android.widget.TextView;
 import net.lucode.hackware.magicindicatordemo.R;
 
 /**
- * Created by fbchen2 on 2016/9/13.
+ * Created by hackware on 2016/9/13.
  */
 
 public class TestFragment extends Fragment {

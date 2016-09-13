@@ -16,8 +16,7 @@
             android:id="@+id/magic_indicator1"
             android:layout_width="wrap_content"
             android:layout_height="@dimen/common_navigator_height"
-            android:layout_gravity="center_horizontal"
-            android:background="@drawable/round_indicator_bg" />
+            android:layout_gravity="center_horizontal" />
 
     </LinearLayout>
 
