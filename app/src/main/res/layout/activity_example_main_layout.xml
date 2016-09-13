@@ -57,6 +57,13 @@
             android:text="@string/tab_with_badge_view" />
 
         <Button
+            android:id="@+id/load_custom_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:onClick="onClick"
+            android:text="@string/tab_with_custom_layout" />
+
+        <Button
             android:id="@+id/custom_navigator"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
