@@ -3,6 +3,7 @@ package net.lucode.hackware.magicindicator;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.animation.ValueAnimator;
+import android.view.animation.AccelerateDecelerateInterpolator;
 import android.view.animation.Interpolator;
 
 
@@ -14,31 +15,49 @@ import android.view.animation.Interpolator;
 public class FragmentContainerHelper extends AnimatorListenerAdapter implements ValueAnimator.AnimatorUpdateListener {
     private MagicIndicator mMagicIndicator;
     private ValueAnimator mScrollAnimator;
-    private int mDuration = 200;
-    private Interpolator mInterpolator;
+    private int mLastSelectedIndex;
+    private int mDuration = 150;
+    private Interpolator mInterpolator = new AccelerateDecelerateInterpolator();
 
     public FragmentContainerHelper(MagicIndicator magicIndicator) {
         mMagicIndicator = magicIndicator;
     }
 
     public void handlePageSelected(int selectedIndex) {
-        if (mScrollAnimator == null || !mScrollAnimator.isRunning()) {
-            dispatchPageScrollStateChanged(ScrollState.SCROLL_STATE_SETTLING);
+        handlePageSelected(selectedIndex, true);
+    }
+
+    public void handlePageSelected(int selectedIndex, boolean smooth) {
+        if (mLastSelectedIndex == selectedIndex) {
+            return;
         }
-        dispatchPageSelected(selectedIndex);
-        float currentPositionOffsetSum = 0.0f; // position = 0, positionOffset = 0.0f
-        if (mScrollAnimator != null) {
-            currentPositionOffsetSum = (Float) mScrollAnimator.getAnimatedValue();
-            mScrollAnimator.cancel();
-            mScrollAnimator = null;
+        if (smooth) {
+            if (mScrollAnimator == null || !mScrollAnimator.isRunning()) {
+                dispatchPageScrollStateChanged(ScrollState.SCROLL_STATE_SETTLING);
+            }
+            dispatchPageSelected(selectedIndex);
+            float currentPositionOffsetSum = mLastSelectedIndex;
+            if (mScrollAnimator != null) {
+                currentPositionOffsetSum = (Float) mScrollAnimator.getAnimatedValue();
+                mScrollAnimator.cancel();
+                mScrollAnimator = null;
+            }
+            mScrollAnimator = new ValueAnimator();
+            mScrollAnimator.setFloatValues(currentPositionOffsetSum, selectedIndex);    // position = selectedIndex, positionOffset = 0.0f
+            mScrollAnimator.addUpdateListener(this);
+            mScrollAnimator.addListener(this);
+            mScrollAnimator.setInterpolator(mInterpolator);
+            mScrollAnimator.setDuration(mDuration);
+            mScrollAnimator.start();
+        } else {
+            dispatchPageSelected(selectedIndex);
+            if (mScrollAnimator != null && mScrollAnimator.isRunning()) {
+                dispatchPageScrolled(mLastSelectedIndex, 0.0f, 0);
+            }
+            dispatchPageScrollStateChanged(ScrollState.SCROLL_STATE_IDLE);
+            dispatchPageScrolled(selectedIndex, 0.0f, 0);
         }
-        mScrollAnimator = new ValueAnimator();
-        mScrollAnimator.setFloatValues(currentPositionOffsetSum, selectedIndex);    // position = selectedIndex, positionOffset = 0.0f
-        mScrollAnimator.addUpdateListener(this);
-        mScrollAnimator.addListener(this);
-        mScrollAnimator.setInterpolator(mInterpolator);
-        mScrollAnimator.setDuration(mDuration);
-        mScrollAnimator.start();
+        mLastSelectedIndex = selectedIndex;
     }
 
     public void setDuration(int duration) {
@@ -46,7 +65,11 @@ public class FragmentContainerHelper extends AnimatorListenerAdapter implements 
     }
 
     public void setInterpolator(Interpolator interpolator) {
-        mInterpolator = interpolator;
+        if (interpolator == null) {
+            mInterpolator = new AccelerateDecelerateInterpolator();
+        } else {
+            mInterpolator = interpolator;
+        }
     }
 
     private void dispatchPageSelected(int pageIndex) {
@@ -76,5 +99,6 @@ public class FragmentContainerHelper extends AnimatorListenerAdapter implements 
     @Override
     public void onAnimationEnd(Animator animation) {
         mMagicIndicator.onPageScrollStateChanged(ScrollState.SCROLL_STATE_IDLE);
+        mScrollAnimator = null;
     }
 }
