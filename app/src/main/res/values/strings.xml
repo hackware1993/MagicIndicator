@@ -7,4 +7,5 @@
     <string name="work_with_fragment_container">work with fragment container</string>
     <string name="tab_with_badge_view">tab with badge view</string>
     <string name="custom_navigator">custom navigator</string>
+    <string name="random_page">random page</string>
 </resources>

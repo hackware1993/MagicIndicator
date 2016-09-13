@@ -29,11 +29,11 @@ import java.util.Arrays;
 import java.util.List;
 
 public class FixedTabExampleActivity extends AppCompatActivity {
-    private ViewPager mViewPager;
-
-    private String[] channels = new String[]{"KITKAT", "NOUGAT", "DONUT"};
-    private List<String> mDataList = Arrays.asList(channels);
+    private static final String[] CHANNELS = new String[]{"KITKAT", "NOUGAT", "DONUT"};
+    private List<String> mDataList = Arrays.asList(CHANNELS);
     private ExamplePagerAdapter mExamplePagerAdapter = new ExamplePagerAdapter(mDataList);
+
+    private ViewPager mViewPager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

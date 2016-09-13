@@ -24,7 +24,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class FragmentContainerExampleActivity extends AppCompatActivity {
-    private String[] channels = new String[]{"KITKAT", "NOUGAT", "DONUT"};
+    private static final String[] CHANNELS = new String[]{"KITKAT", "NOUGAT", "DONUT"};
     private List<Fragment> mFragments = new ArrayList<Fragment>();
     private FragmentContainerHelper mFragmentContainerHelper = new FragmentContainerHelper();
 
@@ -63,10 +63,10 @@ public class FragmentContainerExampleActivity extends AppCompatActivity {
     }
 
     private void initFragments() {
-        for (int i = 0; i < channels.length; i++) {
+        for (int i = 0; i < CHANNELS.length; i++) {
             TestFragment testFragment = new TestFragment();
             Bundle bundle = new Bundle();
-            bundle.putString(TestFragment.EXTRA_TEXT, channels[i]);
+            bundle.putString(TestFragment.EXTRA_TEXT, CHANNELS[i]);
             testFragment.setArguments(bundle);
             mFragments.add(testFragment);
         }
@@ -78,13 +78,13 @@ public class FragmentContainerExampleActivity extends AppCompatActivity {
         commonNavigator.setAdapter(new CommonNavigatorAdapter() {
             @Override
             public int getCount() {
-                return channels.length;
+                return CHANNELS.length;
             }
 
             @Override
             public IPagerTitleView getTitleView(Context context, final int index) {
                 ClipPagerTitleView clipPagerTitleView = new ClipPagerTitleView(context);
-                clipPagerTitleView.setText(channels[index]);
+                clipPagerTitleView.setText(CHANNELS[index]);
                 clipPagerTitleView.setTextColor(Color.parseColor("#e94220"));
                 clipPagerTitleView.setClipColor(Color.WHITE);
                 clipPagerTitleView.setOnClickListener(new View.OnClickListener() {

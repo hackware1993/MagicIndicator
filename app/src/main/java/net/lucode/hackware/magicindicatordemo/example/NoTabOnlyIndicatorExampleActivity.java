@@ -22,11 +22,11 @@ import java.util.Arrays;
 import java.util.List;
 
 public class NoTabOnlyIndicatorExampleActivity extends AppCompatActivity {
-    private ViewPager mViewPager;
-
-    private String[] channels = new String[]{"CUPCAKE", "DONUT", "ECLAIR", "GINGERBREAD", "NOUGAT", "DONUT"};
-    private List<String> mDataList = Arrays.asList(channels);
+    private static final String[] CHANNELS = new String[]{"CUPCAKE", "DONUT", "ECLAIR", "GINGERBREAD", "NOUGAT", "DONUT"};
+    private List<String> mDataList = Arrays.asList(CHANNELS);
     private ExamplePagerAdapter mExamplePagerAdapter = new ExamplePagerAdapter(mDataList);
+
+    private ViewPager mViewPager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
