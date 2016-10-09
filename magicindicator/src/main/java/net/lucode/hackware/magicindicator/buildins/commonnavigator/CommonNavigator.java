@@ -47,7 +47,7 @@ public class CommonNavigator extends FrameLayout implements IPagerNavigator, Nav
     private boolean mFollowTouch = true;    // 是否手指跟随滚动
     private int mRightPadding;
     private int mLeftPadding;
-    private boolean mIndicatorOnTop;    // 指示器是否在title上方，默认为下方
+    private boolean mIndicatorOnTop;    // 指示器是否在title上层，默认为下层
     private boolean mSkimOver;  // 跨多页切换时，中间页是否显示 "掠过" 效果
     private boolean mReselectWhenLayout = true; // PositionData准备好时，是否重新选中当前页，为true可保证在极端情况下指示器状态正确
     /****************************************************/
@@ -219,7 +219,7 @@ public class CommonNavigator extends FrameLayout implements IPagerNavigator, Nav
             }
 
             // 手指跟随滚动
-            if (mScrollView != null && mPositionDataList.size() > 0) {
+            if (mScrollView != null && mPositionDataList.size() > 0 && position >= 0 && position < mPositionDataList.size()) {
                 if (mFollowTouch) {
                     int currentPosition = Math.min(mPositionDataList.size() - 1, position);
                     int nextPosition = Math.min(mPositionDataList.size() - 1, position + 1);

@@ -37,7 +37,7 @@ public class FragmentContainerHelper {
             int position = (int) positionOffsetSum;
             float positionOffset = positionOffsetSum - position;
             if (positionOffsetSum < 0) {
-                position = -1;
+                position = position - 1;
                 positionOffset = 1.0f + positionOffset;
             }
             dispatchPageScrolled(position, positionOffset, 0);
