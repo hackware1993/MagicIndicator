@@ -82,7 +82,8 @@ public class ClipPagerTitleView extends View implements IPagerTitleView {
     @Override
     protected void onDraw(Canvas canvas) {
         int x = (getWidth() - mTextBounds.width()) / 2;
-        int y = (getHeight() + mTextBounds.height()) / 2;
+        Paint.FontMetrics fontMetrics = mPaint.getFontMetrics();
+        int y = (int) (getHeight() / 2 - fontMetrics.bottom / 2 - fontMetrics.top / 2);
 
         // 画底层
         mPaint.setColor(mTextColor);
