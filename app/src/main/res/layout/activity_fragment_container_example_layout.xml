@@ -26,9 +26,4 @@
         android:layout_height="0dp"
         android:layout_weight="1" />
 
-    <net.lucode.hackware.magicindicator.MagicIndicator
-        android:id="@+id/magic_indicator2"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/common_navigator_height" />
-
 </LinearLayout>

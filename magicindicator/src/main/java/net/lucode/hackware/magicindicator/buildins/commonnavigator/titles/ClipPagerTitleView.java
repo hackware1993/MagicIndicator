@@ -7,14 +7,14 @@ import android.graphics.Rect;
 import android.view.View;
 
 import net.lucode.hackware.magicindicator.buildins.UIUtil;
-import net.lucode.hackware.magicindicator.buildins.commonnavigator.abs.IPagerTitleView;
+import net.lucode.hackware.magicindicator.buildins.commonnavigator.abs.IMeasurablePagerTitleView;
 
 /**
  * 类似今日头条切换效果的指示器标题
  * 博客: http://hackware.lucode.net
  * Created by hackware on 2016/6/26.
  */
-public class ClipPagerTitleView extends View implements IPagerTitleView {
+public class ClipPagerTitleView extends View implements IMeasurablePagerTitleView {
     private String mText;
     private int mTextColor;
     private int mClipColor;
@@ -83,7 +83,7 @@ public class ClipPagerTitleView extends View implements IPagerTitleView {
     protected void onDraw(Canvas canvas) {
         int x = (getWidth() - mTextBounds.width()) / 2;
         Paint.FontMetrics fontMetrics = mPaint.getFontMetrics();
-        int y = (int) (getHeight() / 2 - fontMetrics.bottom / 2 - fontMetrics.top / 2);
+        int y = (int) ((getHeight() - fontMetrics.bottom - fontMetrics.top) / 2);
 
         // 画底层
         mPaint.setColor(mTextColor);
@@ -161,5 +161,31 @@ public class ClipPagerTitleView extends View implements IPagerTitleView {
     public void setClipColor(int clipColor) {
         mClipColor = clipColor;
         invalidate();
+    }
+
+    @Override
+    public int getContentLeft() {
+        int contentWidth = mTextBounds.width();
+        return getLeft() + getWidth() / 2 - contentWidth / 2;
+    }
+
+    @Override
+    public int getContentTop() {
+        Paint.FontMetrics metrics = mPaint.getFontMetrics();
+        float contentHeight = metrics.bottom - metrics.top;
+        return (int) (getHeight() / 2 - contentHeight / 2);
+    }
+
+    @Override
+    public int getContentRight() {
+        int contentWidth = mTextBounds.width();
+        return getLeft() + getWidth() / 2 + contentWidth / 2;
+    }
+
+    @Override
+    public int getContentBottom() {
+        Paint.FontMetrics metrics = mPaint.getFontMetrics();
+        float contentHeight = metrics.bottom - metrics.top;
+        return (int) (getHeight() / 2 + contentHeight / 2);
     }
 }
