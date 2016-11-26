@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.animation.Interpolator;
 import android.view.animation.LinearInterpolator;
 
+import net.lucode.hackware.magicindicator.FragmentContainerHelper;
 import net.lucode.hackware.magicindicator.buildins.UIUtil;
 import net.lucode.hackware.magicindicator.buildins.commonnavigator.abs.IPagerIndicator;
 import net.lucode.hackware.magicindicator.buildins.commonnavigator.model.PositionData;
@@ -59,10 +60,8 @@ public class WrapPagerIndicator extends View implements IPagerIndicator {
         }
 
         // 计算锚点位置
-        int currentPosition = Math.min(mPositionDataList.size() - 1, position);
-        int nextPosition = Math.min(mPositionDataList.size() - 1, position + 1);
-        PositionData current = mPositionDataList.get(currentPosition);
-        PositionData next = mPositionDataList.get(nextPosition);
+        PositionData current = FragmentContainerHelper.getImitativePositionData(mPositionDataList, position);
+        PositionData next = FragmentContainerHelper.getImitativePositionData(mPositionDataList, position + 1);
 
         mRect.left = current.mContentLeft - mHorizontalPadding + (next.mContentLeft - current.mContentLeft) * mEndInterpolator.getInterpolation(positionOffset);
         mRect.top = current.mContentTop - mVerticalPadding;

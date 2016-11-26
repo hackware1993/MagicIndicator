@@ -140,14 +140,14 @@ public class NavigatorHelper {
         mSkimOver = skimOver;
     }
 
+    public int getTotalCount() {
+        return mTotalCount;
+    }
+
     public void setTotalCount(int totalCount) {
         mTotalCount = totalCount;
         mDeselectedItems.clear();
         mLeavedPercents.clear();
-    }
-
-    public int getTotalCount() {
-        return mTotalCount;
     }
 
     public int getCurrentIndex() {

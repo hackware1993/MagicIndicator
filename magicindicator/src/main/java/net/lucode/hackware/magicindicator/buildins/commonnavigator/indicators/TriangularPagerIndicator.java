@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.animation.Interpolator;
 import android.view.animation.LinearInterpolator;
 
+import net.lucode.hackware.magicindicator.FragmentContainerHelper;
 import net.lucode.hackware.magicindicator.buildins.UIUtil;
 import net.lucode.hackware.magicindicator.buildins.commonnavigator.abs.IPagerIndicator;
 import net.lucode.hackware.magicindicator.buildins.commonnavigator.model.PositionData;
@@ -75,10 +76,8 @@ public class TriangularPagerIndicator extends View implements IPagerIndicator {
         }
 
         // 计算锚点位置
-        int currentPosition = Math.min(mPositionDataList.size() - 1, position);
-        int nextPosition = Math.min(mPositionDataList.size() - 1, position + 1);
-        PositionData current = mPositionDataList.get(currentPosition);
-        PositionData next = mPositionDataList.get(nextPosition);
+        PositionData current = FragmentContainerHelper.getImitativePositionData(mPositionDataList, position);
+        PositionData next = FragmentContainerHelper.getImitativePositionData(mPositionDataList, position + 1);
 
         float leftX = current.mLeft + (current.mRight - current.mLeft) / 2;
         float rightX = next.mLeft + (next.mRight - next.mLeft) / 2;

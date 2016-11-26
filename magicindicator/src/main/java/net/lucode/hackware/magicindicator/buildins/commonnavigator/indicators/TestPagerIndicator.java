@@ -7,6 +7,7 @@ import android.graphics.Paint;
 import android.graphics.RectF;
 import android.view.View;
 
+import net.lucode.hackware.magicindicator.FragmentContainerHelper;
 import net.lucode.hackware.magicindicator.buildins.commonnavigator.abs.IPagerIndicator;
 import net.lucode.hackware.magicindicator.buildins.commonnavigator.model.PositionData;
 
@@ -54,10 +55,8 @@ public class TestPagerIndicator extends View implements IPagerIndicator {
         }
 
         // 计算锚点位置
-        int currentPosition = Math.min(mPositionDataList.size() - 1, position);
-        int nextPosition = Math.min(mPositionDataList.size() - 1, position + 1);
-        PositionData current = mPositionDataList.get(currentPosition);
-        PositionData next = mPositionDataList.get(nextPosition);
+        PositionData current = FragmentContainerHelper.getImitativePositionData(mPositionDataList, position);
+        PositionData next = FragmentContainerHelper.getImitativePositionData(mPositionDataList, position + 1);
 
         mOutRect.left = current.mLeft + (next.mLeft - current.mLeft) * positionOffset;
         mOutRect.top = current.mTop + (next.mTop - current.mTop) * positionOffset;

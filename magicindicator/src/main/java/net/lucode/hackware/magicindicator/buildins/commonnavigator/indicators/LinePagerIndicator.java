@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.animation.Interpolator;
 import android.view.animation.LinearInterpolator;
 
+import net.lucode.hackware.magicindicator.FragmentContainerHelper;
 import net.lucode.hackware.magicindicator.buildins.ArgbEvaluatorHolder;
 import net.lucode.hackware.magicindicator.buildins.UIUtil;
 import net.lucode.hackware.magicindicator.buildins.commonnavigator.abs.IPagerIndicator;
@@ -69,17 +70,15 @@ public class LinePagerIndicator extends View implements IPagerIndicator {
 
         // 计算颜色
         if (mColors != null && mColors.size() > 0) {
-            int currentColor = mColors.get(position % mColors.size());
-            int nextColor = mColors.get((position + 1) % mColors.size());
+            int currentColor = mColors.get(Math.abs(position) % mColors.size());
+            int nextColor = mColors.get(Math.abs(position + 1) % mColors.size());
             int color = ArgbEvaluatorHolder.eval(positionOffset, currentColor, nextColor);
             mPaint.setColor(color);
         }
 
         // 计算锚点位置
-        int currentPosition = Math.min(mPositionDataList.size() - 1, position);
-        int nextPosition = Math.min(mPositionDataList.size() - 1, position + 1);
-        PositionData current = mPositionDataList.get(currentPosition);
-        PositionData next = mPositionDataList.get(nextPosition);
+        PositionData current = FragmentContainerHelper.getImitativePositionData(mPositionDataList, position);
+        PositionData next = FragmentContainerHelper.getImitativePositionData(mPositionDataList, position + 1);
 
         float leftX;
         float nextLeftX;
