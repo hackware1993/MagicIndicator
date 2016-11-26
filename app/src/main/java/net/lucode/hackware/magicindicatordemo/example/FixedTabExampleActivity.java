@@ -9,8 +9,10 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.view.animation.AccelerateInterpolator;
 import android.view.animation.DecelerateInterpolator;
+import android.view.animation.OvershootInterpolator;
 import android.widget.LinearLayout;
 
+import net.lucode.hackware.magicindicator.FragmentContainerHelper;
 import net.lucode.hackware.magicindicator.MagicIndicator;
 import net.lucode.hackware.magicindicator.ViewPagerHelper;
 import net.lucode.hackware.magicindicator.buildins.UIUtil;
@@ -211,6 +213,8 @@ public class FixedTabExampleActivity extends AppCompatActivity {
             @Override
             public IPagerIndicator getIndicator(Context context) {
                 LinePagerIndicator linePagerIndicator = new LinePagerIndicator(context);
+                linePagerIndicator.setMode(LinePagerIndicator.MODE_EXACTLY);
+                linePagerIndicator.setLineWidth(UIUtil.dip2px(context, 10));
                 linePagerIndicator.setColors(Color.WHITE);
                 return linePagerIndicator;
             }
@@ -224,6 +228,15 @@ public class FixedTabExampleActivity extends AppCompatActivity {
                 return UIUtil.dip2px(FixedTabExampleActivity.this, 15);
             }
         });
-        ViewPagerHelper.bind(magicIndicator, mViewPager);
+
+        final FragmentContainerHelper fragmentContainerHelper = new FragmentContainerHelper(magicIndicator);
+        fragmentContainerHelper.setInterpolator(new OvershootInterpolator(2.0f));
+        fragmentContainerHelper.setDuration(300);
+        mViewPager.addOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener() {
+            @Override
+            public void onPageSelected(int position) {
+                fragmentContainerHelper.handlePageSelected(position);
+            }
+        });
     }
 }
