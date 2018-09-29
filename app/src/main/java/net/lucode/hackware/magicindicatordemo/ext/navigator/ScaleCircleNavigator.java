@@ -101,7 +101,11 @@ public class ScaleCircleNavigator extends View implements IPagerNavigator, Navig
                 break;
             case MeasureSpec.AT_MOST:
             case MeasureSpec.UNSPECIFIED:
-                result = (mCircleCount - 1) * mMinRadius * 2 + mMaxRadius * 2 + (mCircleCount - 1) * mCircleSpacing + getPaddingLeft() + getPaddingRight();
+                if (mCircleCount <= 0) {
+                    result = getPaddingLeft() + getPaddingRight();
+                } else {
+                    result = (mCircleCount - 1) * mMinRadius * 2 + mMaxRadius * 2 + (mCircleCount - 1) * mCircleSpacing + getPaddingLeft() + getPaddingRight();
+                }
                 break;
             default:
                 break;
@@ -209,7 +213,7 @@ public class ScaleCircleNavigator extends View implements IPagerNavigator, Navig
     @Override
     public void notifyDataSetChanged() {
         prepareCirclePoints();
-        invalidate();
+        requestLayout();
     }
 
     @Override
