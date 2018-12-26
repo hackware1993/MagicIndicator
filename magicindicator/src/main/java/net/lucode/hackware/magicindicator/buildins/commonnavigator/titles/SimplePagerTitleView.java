@@ -54,7 +54,16 @@ public class SimplePagerTitleView extends TextView implements IMeasurablePagerTi
     @Override
     public int getContentLeft() {
         Rect bound = new Rect();
-        getPaint().getTextBounds(getText().toString(), 0, getText().length(), bound);
+        String longestString = "";
+        if (getText().toString().contains("\n")) {
+            String[] brokenStrings = getText().toString().split("\\n");
+            for (String each : brokenStrings) {
+                if (each.length() > longestString.length()) longestString = each;
+            }
+        } else {
+            longestString = getText().toString();
+        }
+        getPaint().getTextBounds(longestString, 0, longestString.length(), bound);
         int contentWidth = bound.width();
         return getLeft() + getWidth() / 2 - contentWidth / 2;
     }
@@ -69,7 +78,16 @@ public class SimplePagerTitleView extends TextView implements IMeasurablePagerTi
     @Override
     public int getContentRight() {
         Rect bound = new Rect();
-        getPaint().getTextBounds(getText().toString(), 0, getText().length(), bound);
+        String longestString = "";
+        if (getText().toString().contains("\n")) {
+            String[] brokenStrings = getText().toString().split("\\n");
+            for (String each : brokenStrings) {
+                if (each.length() > longestString.length()) longestString = each;
+            }
+        } else {
+            longestString = getText().toString();
+        }
+        getPaint().getTextBounds(longestString, 0, longestString.length(), bound);
         int contentWidth = bound.width();
         return getLeft() + getWidth() / 2 + contentWidth / 2;
     }
