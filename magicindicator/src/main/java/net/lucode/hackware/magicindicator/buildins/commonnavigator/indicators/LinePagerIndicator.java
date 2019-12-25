@@ -2,8 +2,10 @@ package net.lucode.hackware.magicindicator.buildins.commonnavigator.indicators;
 
 import android.content.Context;
 import android.graphics.Canvas;
+import android.graphics.LinearGradient;
 import android.graphics.Paint;
 import android.graphics.RectF;
+import android.graphics.Shader;
 import android.view.View;
 import android.view.animation.Interpolator;
 import android.view.animation.LinearInterpolator;
@@ -42,6 +44,8 @@ public class LinePagerIndicator extends View implements IPagerIndicator {
     private Paint mPaint;
     private List<PositionData> mPositionDataList;
     private List<Integer> mColors;
+    //指示器颜色渐变，如果同时设置渐变色和颜色，优先显示渐变色
+    private List<Integer> mGradientColors;
 
     private RectF mLineRect = new RectF();
 
@@ -66,14 +70,6 @@ public class LinePagerIndicator extends View implements IPagerIndicator {
     public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
         if (mPositionDataList == null || mPositionDataList.isEmpty()) {
             return;
-        }
-
-        // 计算颜色
-        if (mColors != null && mColors.size() > 0) {
-            int currentColor = mColors.get(Math.abs(position) % mColors.size());
-            int nextColor = mColors.get(Math.abs(position + 1) % mColors.size());
-            int color = ArgbEvaluatorHolder.eval(positionOffset, currentColor, nextColor);
-            mPaint.setColor(color);
         }
 
         // 计算锚点位置
@@ -105,7 +101,20 @@ public class LinePagerIndicator extends View implements IPagerIndicator {
         mLineRect.right = rightX + (nextRightX - rightX) * mEndInterpolator.getInterpolation(positionOffset);
         mLineRect.top = getHeight() - mLineHeight - mYOffset;
         mLineRect.bottom = getHeight() - mYOffset;
-
+        //指示器颜色渐变
+        if(mGradientColors != null && mGradientColors.size() >= 2){
+            LinearGradient lg = new LinearGradient(mLineRect.left,mLineRect.top,mLineRect.right,mLineRect.bottom,
+                    mGradientColors.get(0),mGradientColors.get(1), Shader.TileMode.MIRROR);
+            mPaint.setShader(lg);
+        }else {
+            // 计算颜色
+            if (mColors != null && mColors.size() > 0) {
+                int currentColor = mColors.get(Math.abs(position) % mColors.size());
+                int nextColor = mColors.get(Math.abs(position + 1) % mColors.size());
+                int color = ArgbEvaluatorHolder.eval(positionOffset, currentColor, nextColor);
+                mPaint.setColor(color);
+            }
+        }
         invalidate();
     }
 
@@ -184,6 +193,10 @@ public class LinePagerIndicator extends View implements IPagerIndicator {
 
     public void setColors(Integer... colors) {
         mColors = Arrays.asList(colors);
+    }
+
+    public void setGradientColors(Integer... colors) {
+        mGradientColors = Arrays.asList(colors);
     }
 
     public Interpolator getStartInterpolator() {
