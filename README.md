@@ -1,7 +1,3 @@
-我创业了，从程序员转行经济学家。欢迎关注我的微博 @隆中后生仔
-，我要以一己之力吊打经济学界，吊打微信之父张小龙。
-我 26 岁，青年正当时，未来大有可为。
-
 # MagicIndicator
 
 A powerful, customizable and extensible ViewPager indicator framework. As the best alternative of ViewPagerIndicator, TabLayout and PagerSlidingTabStrip.
