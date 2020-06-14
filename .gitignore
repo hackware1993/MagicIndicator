@@ -241,3 +241,6 @@ Temporary Items
 .apdisk
 
 # End of https://www.gitignore.io/api/java,macos,android,androidstudio
+.idea
+app.iml
+magicindicator.iml
