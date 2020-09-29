@@ -16,7 +16,7 @@ Simple steps, you can integrate **MagicIndicator**:
 2. import module **magicindicator** and add dependency:
 
   ```groovy
-  compile project(':magicindicator')
+  implementation project(':magicindicator')
   ```
   
   **or**
@@ -31,7 +31,8 @@ Simple steps, you can integrate **MagicIndicator**:
   
   dependencies {
       ...
-      compile 'com.github.hackware1993:MagicIndicator:1.5.0'
+      implementation 'com.github.hackware1993:MagicIndicator:1.6.0' // for support lib
+      implementation 'com.github.hackware1993:MagicIndicator:1.7.0' // for androidx
   }
   ```
   
