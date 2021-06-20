@@ -46,6 +46,9 @@
             android:name=".example.LoadCustomLayoutExampleActivity"
             android:label="@string/tab_with_custom_layout" />
 
+        <activity android:name=".example.DynamicVerticalTabExampleActivity"
+            android:label="@string/dynamic_vertical_tab"/>
+
     </application>
 
 </manifest>

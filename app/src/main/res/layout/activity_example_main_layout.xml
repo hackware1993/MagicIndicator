@@ -36,6 +36,13 @@
             android:text="@string/dynamic_tab" />
 
         <Button
+            android:id="@+id/dynamic_vertical_tab"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:onClick="onClick"
+            android:text="@string/dynamic_vertical_tab" />
+
+        <Button
             android:id="@+id/no_tab_only_indicator"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

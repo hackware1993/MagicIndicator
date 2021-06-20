@@ -42,6 +42,9 @@ public class ExampleMainActivity extends AppCompatActivity {
             case R.id.custom_navigator:
                 startActivity(new Intent(this, CustomNavigatorExampleActivity.class));
                 break;
+            case R.id.dynamic_vertical_tab:
+                startActivity(new Intent(this, DynamicVerticalTabExampleActivity.class));
+                break;
             default:
                 break;
         }
