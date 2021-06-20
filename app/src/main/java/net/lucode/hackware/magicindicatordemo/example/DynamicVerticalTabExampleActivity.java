@@ -48,6 +48,8 @@ public class DynamicVerticalTabExampleActivity extends AppCompatActivity {
         mMagicIndicator.setBackgroundColor(Color.parseColor("#d43d3d"));
         mCommonNavigator = new VerticalNavigator(this);
         mCommonNavigator.setAdjustMode(false);
+        mCommonNavigator.setFollowTouch(false);
+        mCommonNavigator.setEnablePivotScroll(true);
         mCommonNavigator.setSkimOver(true);
         mCommonNavigator.setAdapter(new CommonNavigatorAdapter() {
 

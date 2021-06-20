@@ -344,11 +344,11 @@ public class VerticalNavigator extends FrameLayout implements IPagerNavigator, N
             int currentIndex = Math.min(mPositionDataList.size() - 1, index);
             PositionData current = mPositionDataList.get(currentIndex);
             if (mEnablePivotScroll) {
-                float scrollTo = current.horizontalCenter() - mScrollView.getWidth() * mScrollPivotX;
+                float scrollTo = current.verticalCenter() - mScrollView.getHeight() * mScrollPivotX;
                 if (mSmoothScroll) {
-                    mScrollView.smoothScrollTo((int) (scrollTo), 0);
+                    mScrollView.smoothScrollTo(0, (int) (scrollTo));
                 } else {
-                    mScrollView.scrollTo((int) (scrollTo), 0);
+                    mScrollView.scrollTo( 0, (int) (scrollTo));
                 }
             } else {
                 // 如果当前项被部分遮挡，则滚动显示完全
