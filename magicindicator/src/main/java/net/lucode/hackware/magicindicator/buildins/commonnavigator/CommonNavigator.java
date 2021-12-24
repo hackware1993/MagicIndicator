@@ -50,6 +50,7 @@ public class CommonNavigator extends FrameLayout implements IPagerNavigator, Nav
     private boolean mIndicatorOnTop;    // 指示器是否在title上层，默认为下层
     private boolean mSkimOver;  // 跨多页切换时，中间页是否显示 "掠过" 效果
     private boolean mReselectWhenLayout = true; // PositionData准备好时，是否重新选中当前页，为true可保证在极端情况下指示器状态正确
+    private int mFadingEdgeLength = 0; //pixel，默认0不显示，边缘渐变设置
     /****************************************************/
 
     // 保存每个title的位置信息，为扩展indicator提供保障
@@ -132,6 +133,12 @@ public class CommonNavigator extends FrameLayout implements IPagerNavigator, Nav
         mIndicatorContainer = (LinearLayout) root.findViewById(R.id.indicator_container);
         if (mIndicatorOnTop) {
             mIndicatorContainer.getParent().bringChildToFront(mIndicatorContainer);
+        }
+
+        //渐变边缘设置
+        if (!mAdjustMode && mFadingEdgeLength > 0) {
+            mScrollView.setHorizontalFadingEdgeEnabled(true);
+            mScrollView.setFadingEdgeLength(mFadingEdgeLength);
         }
 
         initTitlesAndIndicator();
@@ -421,5 +428,9 @@ public class CommonNavigator extends FrameLayout implements IPagerNavigator, Nav
 
     public void setReselectWhenLayout(boolean reselectWhenLayout) {
         mReselectWhenLayout = reselectWhenLayout;
+    }
+
+    public void setScrollFadingEdgeLength(int fadeLength) {
+        this.mFadingEdgeLength = fadeLength;
     }
 }
