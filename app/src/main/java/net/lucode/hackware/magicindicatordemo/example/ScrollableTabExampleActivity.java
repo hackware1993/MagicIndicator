@@ -1,6 +1,7 @@
 package net.lucode.hackware.magicindicatordemo.example;
 
 import android.content.Context;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
@@ -19,6 +20,7 @@ import net.lucode.hackware.magicindicator.buildins.commonnavigator.abs.IPagerInd
 import net.lucode.hackware.magicindicator.buildins.commonnavigator.abs.IPagerTitleView;
 import net.lucode.hackware.magicindicator.buildins.commonnavigator.indicators.BezierPagerIndicator;
 import net.lucode.hackware.magicindicator.buildins.commonnavigator.indicators.LinePagerIndicator;
+import net.lucode.hackware.magicindicator.buildins.commonnavigator.indicators.PicturePagerIndicator;
 import net.lucode.hackware.magicindicator.buildins.commonnavigator.indicators.TriangularPagerIndicator;
 import net.lucode.hackware.magicindicator.buildins.commonnavigator.indicators.WrapPagerIndicator;
 import net.lucode.hackware.magicindicator.buildins.commonnavigator.titles.ClipPagerTitleView;
@@ -55,6 +57,8 @@ public class ScrollableTabExampleActivity extends AppCompatActivity {
         initMagicIndicator7();
         initMagicIndicator8();
         initMagicIndicator9();
+        initMagicIndicator10();
+
     }
 
     private void initMagicIndicator1() {
@@ -399,6 +403,44 @@ public class ScrollableTabExampleActivity extends AppCompatActivity {
             public IPagerIndicator getIndicator(Context context) {
                 TriangularPagerIndicator indicator = new TriangularPagerIndicator(context);
                 indicator.setLineColor(Color.parseColor("#e94220"));
+                return indicator;
+            }
+        });
+        magicIndicator.setNavigator(commonNavigator);
+        ViewPagerHelper.bind(magicIndicator, mViewPager);
+    }
+
+    private void initMagicIndicator10(){
+        MagicIndicator magicIndicator = (MagicIndicator) findViewById(R.id.magic_indicator10);
+        magicIndicator.setBackgroundColor(Color.WHITE);
+        CommonNavigator commonNavigator = new CommonNavigator(this);
+        commonNavigator.setScrollPivotX(0.15f);
+        commonNavigator.setAdapter(new CommonNavigatorAdapter() {
+            @Override
+            public int getCount() {
+                return mDataList == null ? 0 : mDataList.size();
+            }
+
+            @Override
+            public IPagerTitleView getTitleView(Context context, final int index) {
+                SimplePagerTitleView simplePagerTitleView = new SimplePagerTitleView(context);
+                simplePagerTitleView.setText(mDataList.get(index));
+                simplePagerTitleView.setNormalColor(Color.parseColor("#333333"));
+                simplePagerTitleView.setSelectedColor(Color.parseColor("#e94220"));
+                simplePagerTitleView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        mViewPager.setCurrentItem(index);
+                    }
+                });
+                return simplePagerTitleView;
+            }
+
+            @Override
+            public IPagerIndicator getIndicator(Context context) {
+                PicturePagerIndicator indicator = new PicturePagerIndicator(context);
+                indicator.setPicGravity(2);
+                indicator.setmBitmap(BitmapFactory.decodeResource(getResources(),R.mipmap.radialindicator));
                 return indicator;
             }
         });

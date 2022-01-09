@@ -69,6 +69,12 @@
                 android:layout_height="@dimen/common_navigator_height"
                 android:layout_marginTop="@dimen/navigator_margin_top" />
 
+            <net.lucode.hackware.magicindicator.MagicIndicator
+                android:id="@+id/magic_indicator10"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/common_navigator_height"
+                android:layout_marginTop="@dimen/navigator_margin_top" />
+
         </LinearLayout>
 
     </ScrollView>
