@@ -1,0 +1,23 @@
+apply plugin: 'com.android.application'
+
+android {
+  compileSdkVersion 28
+  buildToolsVersion "28.0.3"
+
+  defaultConfig {
+    applicationId "net.lucode.hackware.magicindicatordemo"
+    minSdkVersion 14
+    targetSdkVersion 28
+  }
+  buildTypes {
+    release {
+      minifyEnabled false
+    }
+  }
+}
+
+dependencies {
+  implementation fileTree(dir: 'libs', include: ['*.jar'])
+  implementation project(':magicindicator')
+  implementation 'androidx.appcompat:appcompat:1.2.0'
+}

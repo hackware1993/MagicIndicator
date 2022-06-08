@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TextView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="12dp"
+    android:layout_height="12dp"
+    android:background="@drawable/simple_count_badge_bg"
+    android:gravity="center"
+    android:textColor="@android:color/white"
+    android:textSize="8dp" />

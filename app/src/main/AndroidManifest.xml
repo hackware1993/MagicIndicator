@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="net.lucode.hackware.magicindicatordemo">
+
+    <application
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:theme="@style/AppTheme">
+
+        <activity android:name=".example.ExampleMainActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <activity
+            android:name=".example.ScrollableTabExampleActivity"
+            android:label="@string/scrollable_tab" />
+
+        <activity
+            android:name=".example.FixedTabExampleActivity"
+            android:label="@string/fixed_tab" />
+
+        <activity
+            android:name=".example.DynamicTabExampleActivity"
+            android:label="@string/dynamic_tab" />
+
+        <activity
+            android:name=".example.NoTabOnlyIndicatorExampleActivity"
+            android:label="@string/no_tab_only_indicator" />
+
+        <activity
+            android:name=".example.FragmentContainerExampleActivity"
+            android:label="@string/work_with_fragment_container" />
+
+        <activity
+            android:name=".example.BadgeTabExampleActivity"
+            android:label="@string/tab_with_badge_view" />
+
+        <activity
+            android:name=".example.CustomNavigatorExampleActivity"
+            android:label="@string/custom_navigator" />
+
+        <activity
+            android:name=".example.LoadCustomLayoutExampleActivity"
+            android:label="@string/tab_with_custom_layout" />
+
+    </application>
+
+</manifest>

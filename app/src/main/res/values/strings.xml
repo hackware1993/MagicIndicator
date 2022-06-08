@@ -1,0 +1,12 @@
+<resources>
+    <string name="app_name">magicindicatordemo</string>
+    <string name="scrollable_tab">scrollable tab</string>
+    <string name="fixed_tab">fixed tab</string>
+    <string name="dynamic_tab">dynamic tab</string>
+    <string name="no_tab_only_indicator">no tab, only indicator</string>
+    <string name="work_with_fragment_container">work with fragment container</string>
+    <string name="tab_with_badge_view">tab with badge view</string>
+    <string name="custom_navigator">custom navigator</string>
+    <string name="random_page">random page</string>
+    <string name="tab_with_custom_layout">load custom layout</string>
+</resources>
