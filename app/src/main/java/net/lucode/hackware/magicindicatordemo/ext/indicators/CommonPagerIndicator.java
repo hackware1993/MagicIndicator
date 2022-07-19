@@ -23,6 +23,7 @@ public class CommonPagerIndicator extends View implements IPagerIndicator {
     public static final int MODE_MATCH_EDGE = 0;   // drawable宽度 == title宽度 - 2 * mXOffset
     public static final int MODE_WRAP_CONTENT = 1;    // drawable宽度 == title内容宽度 - 2 * mXOffset
     public static final int MODE_EXACTLY = 2;
+    public static final int MODE_ALIGN_CONTENT = 3;
 
     private int mMode;  // 默认为MODE_MATCH_EDGE模式
     private Drawable mIndicatorDrawable;
@@ -61,27 +62,40 @@ public class CommonPagerIndicator extends View implements IPagerIndicator {
         float nextLeftX;
         float rightX;
         float nextRightX;
-        if (mMode == MODE_MATCH_EDGE) {
-            leftX = current.mLeft + mXOffset;
-            nextLeftX = next.mLeft + mXOffset;
-            rightX = current.mRight - mXOffset;
-            nextRightX = next.mRight - mXOffset;
-            mDrawableRect.top = (int) mYOffset;
-            mDrawableRect.bottom = (int) (getHeight() - mYOffset);
-        } else if (mMode == MODE_WRAP_CONTENT) {
-            leftX = current.mContentLeft + mXOffset;
-            nextLeftX = next.mContentLeft + mXOffset;
-            rightX = current.mContentRight - mXOffset;
-            nextRightX = next.mContentRight - mXOffset;
-            mDrawableRect.top = (int) (current.mContentTop - mYOffset);
-            mDrawableRect.bottom = (int) (current.mContentBottom + mYOffset);
-        } else {    // MODE_EXACTLY
-            leftX = current.mLeft + (current.width() - mDrawableWidth) / 2;
-            nextLeftX = next.mLeft + (next.width() - mDrawableWidth) / 2;
-            rightX = current.mLeft + (current.width() + mDrawableWidth) / 2;
-            nextRightX = next.mLeft + (next.width() + mDrawableWidth) / 2;
-            mDrawableRect.top = (int) (getHeight() - mDrawableHeight - mYOffset);
-            mDrawableRect.bottom = (int) (getHeight() - mYOffset);
+        switch (mMode) {
+            case MODE_MATCH_EDGE:
+                leftX = current.mLeft + mXOffset;
+                nextLeftX = next.mLeft + mXOffset;
+                rightX = current.mRight - mXOffset;
+                nextRightX = next.mRight - mXOffset;
+                mDrawableRect.top = (int) mYOffset;
+                mDrawableRect.bottom = (int) (getHeight() - mYOffset);
+                break;
+            case MODE_WRAP_CONTENT:
+                leftX = current.mContentLeft + mXOffset;
+                nextLeftX = next.mContentLeft + mXOffset;
+                rightX = current.mContentRight - mXOffset;
+                nextRightX = next.mContentRight - mXOffset;
+                mDrawableRect.top = (int) (current.mContentTop - mYOffset);
+                mDrawableRect.bottom = (int) (current.mContentBottom + mYOffset);
+                break;
+            case MODE_ALIGN_CONTENT:
+                leftX = (current.mContentRight + current.mContentLeft - mDrawableWidth) / 2;
+                nextLeftX = (next.mContentRight + next.mContentLeft - mDrawableWidth) / 2;
+                rightX = leftX + mDrawableWidth;
+                nextRightX = nextLeftX + mDrawableWidth;
+                mDrawableRect.top = (int) (getHeight() - mDrawableHeight - mYOffset);
+                mDrawableRect.bottom = (int) (getHeight() - mYOffset);
+                break;
+            case MODE_EXACTLY:
+            default:
+                leftX = current.mLeft + (current.width() - mDrawableWidth) / 2;
+                nextLeftX = next.mLeft + (next.width() - mDrawableWidth) /2;
+                rightX = current.mLeft + (current.width() + mDrawableWidth) / 2;
+                nextRightX = next.mLeft + (next.width() + mDrawableWidth) / 2;
+                mDrawableRect.top = (int) (getHeight() - mDrawableHeight - mYOffset);
+                mDrawableRect.bottom = (int) (getHeight() - mYOffset);
+                break;
         }
 
         mDrawableRect.left = (int) (leftX + (nextLeftX - leftX) * mStartInterpolator.getInterpolation(positionOffset));
@@ -140,7 +154,7 @@ public class CommonPagerIndicator extends View implements IPagerIndicator {
     }
 
     public void setMode(int mode) {
-        if (mode == MODE_EXACTLY || mode == MODE_MATCH_EDGE || mode == MODE_WRAP_CONTENT) {
+        if (mode >= MODE_EXACTLY && mode <= MODE_ALIGN_CONTENT) {
             mMode = mode;
         } else {
             throw new IllegalArgumentException("mode " + mode + " not supported.");
