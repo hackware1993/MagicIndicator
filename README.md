@@ -10,7 +10,7 @@ A powerful, customizable and extensible ViewPager indicator framework. As the be
 [![Android Arsenal](https://img.shields.io/badge/Android%20Arsenal-MagicIndicator-green.svg?style=true)](https://android-arsenal.com/details/1/4252)
 [![Codewake](https://www.codewake.com/badges/ask_question.svg)](https://www.codewake.com/p/magicindicator)
 
-![magicindicaotor.gif](https://github.com/hackware1993/MagicIndicator/blob/master/magicindicator.gif)
+![magicindicaotor.gif](https://github.com/hackware1993/MagicIndicator/blob/main/magicindicator.gif)
 
 # Usage
 
