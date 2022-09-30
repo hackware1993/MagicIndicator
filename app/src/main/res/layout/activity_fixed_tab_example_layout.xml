@@ -56,6 +56,22 @@
 
     </LinearLayout>
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/navigator_margin_top"
+        android:background="@android:color/black"
+        android:orientation="vertical">
+
+        <net.lucode.hackware.magicindicator.MagicIndicator
+            android:id="@+id/magic_indicator5"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/common_navigator_height"
+            android:layout_gravity="center_horizontal" />
+
+    </LinearLayout>
+
+
     <androidx.viewpager.widget.ViewPager
         android:id="@+id/view_pager"
         android:layout_width="match_parent"
