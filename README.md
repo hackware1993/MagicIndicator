@@ -6,10 +6,6 @@ A powerful, customizable and extensible ViewPager indicator framework. As the be
 
 **I have developed the world's fastest general purpose sorting algorithm, which is on average 3 times faster than Quicksort and up to 20 times faster**, [ChenSort](https://github.com/hackware1993/ChenSort)
 
-下文《家有三孩的农村独子该如何面对父母双瘫？》
-https://mp.weixin.qq.com/s/lUYAa6IvGOLdwrTnsTpIPg?token=549085630&lang=zh_CN
-是我公众号的原创文章。我正在为当事人筹款，但我没有影响力，所以倍感艰难，希望大家多多支持。数以十万计的 App 从我的代码受益，希望大家也能帮帮我。
-
 [![](https://jitpack.io/v/hackware1993/MagicIndicator.svg)](https://jitpack.io/#hackware1993/MagicIndicator)
 [![Android Arsenal](https://img.shields.io/badge/Android%20Arsenal-MagicIndicator-green.svg?style=true)](https://android-arsenal.com/details/1/4252)
 [![Codewake](https://www.codewake.com/badges/ask_question.svg)](https://www.codewake.com/p/magicindicator)
