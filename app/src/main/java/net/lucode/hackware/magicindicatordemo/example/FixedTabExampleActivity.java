@@ -27,6 +27,7 @@ import net.lucode.hackware.magicindicator.buildins.commonnavigator.titles.ColorT
 import net.lucode.hackware.magicindicator.buildins.commonnavigator.titles.SimplePagerTitleView;
 import net.lucode.hackware.magicindicatordemo.R;
 import net.lucode.hackware.magicindicatordemo.ext.titles.ScaleTransitionPagerTitleView;
+import net.lucode.hackware.magicindicatordemo.ext.titles.WithIconTitleView;
 
 import java.util.Arrays;
 import java.util.List;
@@ -50,6 +51,7 @@ public class FixedTabExampleActivity extends AppCompatActivity {
         initMagicIndicator2();
         initMagicIndicator3();
         initMagicIndicator4();
+        initMagicIndicator5();
     }
 
     private void initMagicIndicator1() {
@@ -239,5 +241,54 @@ public class FixedTabExampleActivity extends AppCompatActivity {
                 fragmentContainerHelper.handlePageSelected(position);
             }
         });
+    }
+
+
+    private void initMagicIndicator5() {
+        MagicIndicator magicIndicator = (MagicIndicator) findViewById(R.id.magic_indicator5);
+        CommonNavigator commonNavigator = new CommonNavigator(this);
+        commonNavigator.setAdapter(new CommonNavigatorAdapter() {
+
+            @Override
+            public int getCount() {
+                return mDataList.size();
+            }
+
+            @Override
+            public IPagerTitleView getTitleView(Context context, final int index) {
+                IPagerTitleView view;
+                if (index == 1) {
+                    WithIconTitleView withIconTitleView = new WithIconTitleView(context);
+                    withIconTitleView.setNormalColor(Color.GRAY);
+                    withIconTitleView.setSelectedColor(Color.WHITE);
+                    view = withIconTitleView;
+                } else {
+                    SimplePagerTitleView simplePagerTitleView = new SimplePagerTitleView(context);
+                    simplePagerTitleView.setNormalColor(Color.GRAY);
+                    simplePagerTitleView.setSelectedColor(Color.WHITE);
+                    simplePagerTitleView.setText(mDataList.get(index));
+                    view = simplePagerTitleView;
+                }
+                ((View)view).setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        mViewPager.setCurrentItem(index);
+                    }
+                });
+                return view;
+            }
+
+            @Override
+            public IPagerIndicator getIndicator(Context context) {
+                LinePagerIndicator linePagerIndicator = new LinePagerIndicator(context);
+                linePagerIndicator.setMode(LinePagerIndicator.MODE_ALIGN);
+                linePagerIndicator.setLineHeight(UIUtil.dip2px(context, 4.0));
+                linePagerIndicator.setLineWidth(UIUtil.dip2px(context, 20.0));
+                linePagerIndicator.setColors(Color.BLUE);
+                return linePagerIndicator;
+            }
+        });
+        magicIndicator.setNavigator(commonNavigator);
+        ViewPagerHelper.bind(magicIndicator, mViewPager);
     }
 }
